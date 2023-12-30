@@ -7,7 +7,7 @@ import java.io.IOException;
 public class CsvReader {
 
 	public static void main(String[] args) {
-		String path = "C:\\Users\\Nicolas\\Desktop\\Hack\\CSV\\Test\\chaines.csv\\"; // Remplacez par le chemin de votre fichier CSV
+		String path = "src/test/resources/chaines.csv"; // Remplacez par le chemin de votre fichier CSV
         String line;
         
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
