@@ -1,0 +1,9 @@
+code;nom;quantite;uniteDeMesure
+E001;Circuit principal;200;pieces
+E002;Plastique;500;kilogrammes
+E003;Plaques aluminium;100;pieces
+E004;Servomoteurs;250;pieces
+E005;Propulsions;0;pieces
+E006;Coques;0;pieces
+E007;Drones;0;pieces
+Test1;Elem1;50;Test unité

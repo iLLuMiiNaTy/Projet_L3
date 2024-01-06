@@ -1,7 +1,9 @@
 package testCsv;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,8 +12,30 @@ import java.util.Map;
 
 public class Application {
 
-    private List <Element> elements;
+    private static List <Element> elements;
     private List <ChaineDeProduction> chaines;
+    
+    public static void main(String[] args) {
+		Application application = new Application();
+		application.chargerDonnees();
+		System.out.println("##########################");
+		System.out.println("AFFICHAGE ELEMENTS");
+		System.out.println("##########################");
+		application.afficherElements();
+		//System.out.println("##########################");
+		//System.out.println("AFFICHAGE CHAINES");
+		//System.out.println("##########################");
+		//application.afficherChaines();
+		Element element = new Element("Test1", "Elem1", 50, "Test unité");
+        elements.add(element);
+        application.sauvegarderElements();
+		System.out.println("##########################");
+		System.out.println("AFFICHAGE ELEMENTS VERSION 2");
+		System.out.println("##########################");
+		application.afficherElements();
+		
+
+	}
 
     public void chargerDonnees() {
         chargerElements();
@@ -63,10 +87,29 @@ public class Application {
             System.out.println("Nom: " + element.getNom());
             System.out.println("Quantité: " + element.getQuantite());
             System.out.println("Unité de mesure: " + element.getUniteDeMesure());
-            System.out.println("-----------------------------");
+            System.out.println("\n-----------------------------\n");
         }
     }
+    
+    public void sauvegarderElements() {
+        String elementsFilePath = "src/test/resources/elementsExport.csv";
 
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(elementsFilePath))) {
+            writer.write("code;nom;quantite;uniteDeMesure"); // Première ligne du fichier CSV
+
+            writer.newLine();
+
+            for (Element element : elements) {
+                String line = element.getCode() + ";" + element.getNom() + ";" + element.getQuantite() + ";" + element.getUniteDeMesure();
+                writer.write(line);
+                writer.newLine();
+            }
+
+            writer.flush();
+        } catch (IOException e) {
+            System.out.println("Erreur lors de la sauvegarde des éléments : " + e.getMessage());
+        }
+    }
     
     
 //#########################################################################################################    
@@ -143,7 +186,7 @@ public class Application {
                 System.out.println("- " + element.getNom() + " (" + quantite + " " + element.getUniteDeMesure() + ")");
             }
             System.out.println("Niveau d'activation : " + chaine.getNiveauActivation());
-            System.out.println("---------------------------------------");
+            System.out.println("\n---------------------------------------\n");
         }
     }
 
