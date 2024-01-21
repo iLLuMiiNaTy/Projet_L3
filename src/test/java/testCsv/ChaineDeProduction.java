@@ -1,6 +1,7 @@
 package testCsv;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class ChaineDeProduction {
     private String code;
@@ -16,21 +17,39 @@ public class ChaineDeProduction {
         this.elementsSortie = elementsSortie;
         this.niveauActivation = 1;
     }
+    
+    public String toString() {
+    	String s = "";
+    	s += 	"#####" + this.nom + "#####" +
+    			"\n|--------------------|" +
+    			"\n|Code : " + this.code +
+    			"\n|--------------------|" +
+    			"\n|Elements en entrée :";
+    	
+    	for (Map.Entry<Element, Float> entry : this.getElementsEntree().entrySet()) {
+            Element element = entry.getKey();
+            String quantite = entry.getValue().toString();
+            s += "\n|  - " + element.getNom() + " (" + quantite + " " + element.getUniteDeMesure() + ")"; 
+        }
+    	s += 	"\n|--------------------|" +
+    			"\n|Elements en sortie :";
+    	for (Map.Entry<Element, Float> entry : this.getElementsSortie().entrySet()) {
+            Element element = entry.getKey();
+            String quantite = entry.getValue().toString();
+            s += "\n|  - " + element.getNom() + " (" + quantite + " " + element.getUniteDeMesure() + ")";
+        }
+    	s += 	"\n|--------------------|" +
+    			"\n|Niveau d'activation : " + this.niveauActivation +
+    			"\n|--------------------|";
+    	return s;
+    }
 
     public String getCode() {
         return code;
     }
 
-    public void setCode(String code) {
-        this.code = code;
-    }
-
     public String getNom() {
         return nom;
-    }
-
-    public void setNom(String nom) {
-        this.nom = nom;
     }
 
     public HashMap<Element, Float> getElementsEntree() {

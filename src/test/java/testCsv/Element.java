@@ -5,19 +5,32 @@ public class Element {
 	private String nom;
 	private int quantite;
 	private String uniteDeMesure;
+	private String prixAchat;
+	private String prixVente;
 
-	public Element(String code, String nom, int quantite, String uniteDeMesure) {
+	public Element(String code, String nom, int quantite, String uniteDeMesure, String prixAchat, String prixVente) {
 		this.code = code;
 		this.nom = nom;
 		this.quantite = quantite;
 		this.uniteDeMesure = uniteDeMesure;
+		this.prixAchat = prixAchat;
+		this.prixVente = prixVente;
 	}
 
 	@Override
 	public String toString() {
 		String s = "";
-		s += "Code : " + this.code + "\nNom : " + this.nom + 
-				"\nQuantité : " + this.quantite + "\nUnité de mesure : " + this.uniteDeMesure;
+		s += 	"#####" + this.nom + "#####" +
+				"\n|--------------------|" +
+				"\n|Code : " + this.code +
+				"\n|--------------------|" +
+				"\n|Quantité : " + this.quantite +
+				" " + this.uniteDeMesure +
+				"\n|--------------------|" +
+				"\n|Prix d'achat : " + this.prixAchat + " € " +
+				"\n|--------------------|" +
+				"\n|Prix de vente : " + this.prixVente + " € " +
+				"\n|--------------------|";
 		return s;
 	}
 	
@@ -26,33 +39,28 @@ public class Element {
 	public String getCode() {
 		return code;
 	}
-
+	
 	public String getNom() {
 		return nom;
 	}
-
+	
 	public int getQuantite() {
 		return quantite;
 	}
-
+	
+	public void setQuantite(int quantite) {
+		this.quantite = quantite;
+	}
+	
 	public String getUniteDeMesure() {
 		return uniteDeMesure;
 	}
 
-	public void setCode(String code) {
-		this.code = code;
+	public String getPrixAchat() {
+		return prixAchat;
 	}
 
-	public void setNom(String nom) {
-		this.nom = nom;
+	public String getPrixVente() {
+		return prixVente;
 	}
-
-	public void setQuantite(int quantite) {
-		this.quantite = quantite;
-	}
-
-	public void setUniteDeMesure(String uniteDeMesure) {
-		this.uniteDeMesure = uniteDeMesure;
-	}
-
 }
