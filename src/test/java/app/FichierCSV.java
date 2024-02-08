@@ -14,12 +14,16 @@ public class FichierCSV {
 	
 	 private static List <Element> elements;
 	 private List <ChaineDeProduction> chaines;
+	 private List<Commande> commandes; // Liste pour stocker les commandes chargées
 	 private static String pathElement = "src/test/resources/elements.csv";
 	 private static String pathChaine = "src/test/resources/chaines.csv";
+	 private static String pathCommande = "src/test/resources/commandes.csv";
+	 
 	
 	public void chargerDonnees() {
         chargerElements(pathElement);
         chargerChaines(pathChaine);
+        chargerCommandes(pathCommande);
     }
 	
 //#########################################################################################################    
@@ -147,6 +151,50 @@ public class FichierCSV {
             
         }
     }
+
+//#########################################################################################################    
+										//COMMANDES
+//######################################################################################################### 
+	
+	
+	public void chargerCommandes(String pathCommande) {
+        commandes = new ArrayList<>(); // Initialisation de la liste des commandes
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(pathCommande))) {
+            String line;
+            boolean firstLine = true; // Variable pour suivre la première ligne
+            while ((line = reader.readLine()) != null) {
+                if (firstLine) {
+                    firstLine = false;
+                    continue; // Ignorer la première ligne
+                }
+
+                // Traitement des lignes suivantes
+                String[] data = line.split(";");
+                String numeroCommande = data[0];
+                String client = data[1];
+                String codeProduit = data[2];
+                String produit = data[3];
+                int quantite = Integer.parseInt(data[4]); // Conversion de la quantité en entier
+
+                Commande commande = new Commande(numeroCommande, client, codeProduit, produit, quantite);
+                commandes.add(commande);
+            }
+        } catch (IOException e) {
+            System.out.println("Erreur lors du chargement du fichier commandes.csv : " + e.getMessage());
+        }
+    }
+    
+    // Méthode pour afficher les commandes
+    public void afficherCommandes() {
+        System.out.println("\nAffichage des commandes :");
+        for (Commande commande : commandes) {
+            System.out.println("\n");
+            System.out.println(commande);
+        }
+    }
+    
+    
 	
 	private Element trouverElementParCode(String code) {
         for (Element element : elements) {
@@ -156,5 +204,8 @@ public class FichierCSV {
         }
         return null; // Si aucun élément correspondant n'est trouvé
     }
+    
+	
+ 
 
 }
