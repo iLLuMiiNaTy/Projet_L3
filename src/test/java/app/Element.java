@@ -1,4 +1,4 @@
-package testCsv;
+package app;
 
 public class Element {
 	private String code;
