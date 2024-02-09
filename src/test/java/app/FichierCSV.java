@@ -1,45 +1,47 @@
-package testCsv;
+package app;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Application {
-
-    private List <Element> elements;
-    private List <ChaineDeProduction> chaines;
-
-    public void chargerDonnees() {
-        chargerElements();
-        chargerChaines();
-        //chargerPrix();
+public class FichierCSV {
+	
+	 private static List <Element> elements;
+	 private List <ChaineDeProduction> chaines;
+	 private List<Commande> commandes; // Liste pour stocker les commandes chargées
+	 private static String pathElement = "src/test/resources/elements.csv";
+	 private static String pathChaine = "src/test/resources/chaines.csv";
+	 private static String pathCommande = "src/test/resources/commandes.csv";
+	 
+	
+	public void chargerDonnees() {
+        chargerElements(pathElement);
+        chargerChaines(pathChaine);
+        chargerCommandes(pathCommande);
     }
-    
+	
 //#########################################################################################################    
 										//ELEMENTS
 //#########################################################################################################  
-    
-    
-    
-    
-
-    private void chargerElements() {
-        String elementsFilePath = "src/test/resources/elements.csv";
-        
+	
+	public void chargerElements(String pathElement) {
         elements = new ArrayList<>();// Initialisation de la liste des éléments
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(elementsFilePath))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(pathElement))) {
             String line;
+            //Partie pour supprimer la première ligne des fichiers csv qui sert uniquement d'en tête
             boolean firstLine = true; // Variable pour suivre la première ligne
             while ((line = reader.readLine()) != null) {
                 if (firstLine) {
                     firstLine = false;
                     continue; // Ignorer la première ligne
-                }
+                }// Suppression de la première ligne terminée
 
                 // Traitement des lignes suivantes
                 String[] data = line.split(";");
@@ -47,8 +49,10 @@ public class Application {
                 String nom = data[1];
                 int quantite = Integer.parseInt(data[2]);
                 String uniteDeMesure = data[3];
+                String prixAchat = data[4];
+                String prixVente = data[5];
 
-                Element element = new Element(code, nom, quantite, uniteDeMesure);
+                Element element = new Element(code, nom, quantite, uniteDeMesure, prixAchat, prixVente);
                 elements.add(element);
                 //gestionnaireStock.ajouterStock(element, quantite);
             }
@@ -56,29 +60,43 @@ public class Application {
             System.out.println("Erreur lors du chargement du fichier elements.csv : " + e.getMessage());
         }
     }
-    
-    public void afficherElements() {
+	
+	public void afficherElements() {
+		System.out.println("\nAffichage des éléments :");
         for (Element element : elements) {
-            System.out.println("Code: " + element.getCode());
-            System.out.println("Nom: " + element.getNom());
-            System.out.println("Quantité: " + element.getQuantite());
-            System.out.println("Unité de mesure: " + element.getUniteDeMesure());
-            System.out.println("-----------------------------");
+        	System.out.println("\n");
+        	System.out.println(element);
         }
     }
+	
+	public void sauvegarderElements() {
+        String elementsFilePath = "src/test/resources/elementsExport.csv";
 
-    
-    
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(elementsFilePath))) {
+            writer.write("code;nom;quantite;uniteDeMesure"); // Première ligne du fichier CSV
+
+            writer.newLine();
+
+            for (Element element : elements) {
+                String line = element.getCode() + ";" + element.getNom() + ";" + element.getQuantite() + ";" + element.getUniteDeMesure();
+                writer.write(line);
+                writer.newLine();
+            }
+
+            writer.flush();
+        } catch (IOException e) {
+            System.out.println("Erreur lors de la sauvegarde des éléments : " + e.getMessage());
+        }
+    }
+	
 //#########################################################################################################    
-								//CHAINE DE PRODUCTION
+									//CHAINE DE PRODUCTION
 //######################################################################################################### 
 
-    private void chargerChaines() {
-        String chainesFilePath = "src/test/resources/chaines.csv";
-
+	private void chargerChaines(String pathChaine) {
         chaines = new ArrayList<>();// Initialisation de la liste des chaines
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(chainesFilePath))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(pathChaine))) {
             String line;
             boolean firstLine = true; // Variable pour suivre la première ligne
             while ((line = reader.readLine()) != null) {
@@ -124,51 +142,61 @@ public class Application {
             System.out.println("Erreur lors du chargement du fichier chaines.csv : " + e.getMessage());
         }
     }
-
-    public void afficherChaines() {
-        System.out.println("Liste des chaînes de production :");
+	
+	public void afficherChaines() {
+        System.out.println("\nListe des chaînes de production :");
         for (ChaineDeProduction chaine : chaines) {
-            System.out.println("Code : " + chaine.getCode());
-            System.out.println("Nom : " + chaine.getNom());
-            System.out.println("Elements en entrée :");
-            for (Map.Entry<Element, Float> entry : chaine.getElementsEntree().entrySet()) {
-                Element element = entry.getKey();
-                String quantite = entry.getValue().toString();
-                System.out.println("- " + element.getNom() + " (" + quantite + " " + element.getUniteDeMesure() + ")");
-            }
-            System.out.println("Elements en sortie :");
-            for (Map.Entry<Element, Float> entry : chaine.getElementsSortie().entrySet()) {
-                Element element = entry.getKey();
-                String quantite = entry.getValue().toString();
-                System.out.println("- " + element.getNom() + " (" + quantite + " " + element.getUniteDeMesure() + ")");
-            }
-            System.out.println("Niveau d'activation : " + chaine.getNiveauActivation());
-            System.out.println("---------------------------------------");
+        	System.out.println("\n");
+        	System.out.println(chaine);
+            
         }
     }
 
-    private void chargerPrix() {
-        String prixFilePath = "chemin/vers/fichier/prix.csv";
+//#########################################################################################################    
+										//COMMANDES
+//######################################################################################################### 
+	
+	
+	public void chargerCommandes(String pathCommande) {
+        commandes = new ArrayList<>(); // Initialisation de la liste des commandes
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(prixFilePath))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(pathCommande))) {
             String line;
+            boolean firstLine = true; // Variable pour suivre la première ligne
             while ((line = reader.readLine()) != null) {
-                String[] data = line.split(",");
-                String codeElement = data[0];
-                float prixAchat = data[1].equals("NA") ? 0.0f : Float.parseFloat(data[1]);
-                float prixVente = data[2].equals("NA") ? 0.0f : Float.parseFloat(data[2]);
-                int quantiteCommandee = Integer.parseInt(data[3]);
+                if (firstLine) {
+                    firstLine = false;
+                    continue; // Ignorer la première ligne
+                }
 
-                Element element = trouverElementParCode(codeElement);
-                Prix prix = new Prix(element, prixAchat, prixVente, quantiteCommandee);
-                //gestionnaireFinances.ajouterPrix(prix);
+                // Traitement des lignes suivantes
+                String[] data = line.split(";");
+                String numeroCommande = data[0];
+                String client = data[1];
+                String codeProduit = data[2];
+                String produit = data[3];
+                int quantite = Integer.parseInt(data[4]); // Conversion de la quantité en entier
+
+                Commande commande = new Commande(numeroCommande, client, codeProduit, produit, quantite);
+                commandes.add(commande);
             }
         } catch (IOException e) {
-            System.out.println("Erreur lors du chargement du fichier prix.csv : " + e.getMessage());
+            System.out.println("Erreur lors du chargement du fichier commandes.csv : " + e.getMessage());
         }
     }
-
-    private Element trouverElementParCode(String code) {
+    
+    // Méthode pour afficher les commandes
+    public void afficherCommandes() {
+        System.out.println("\nAffichage des commandes :");
+        for (Commande commande : commandes) {
+            System.out.println("\n");
+            System.out.println(commande);
+        }
+    }
+    
+    
+	
+	private Element trouverElementParCode(String code) {
         for (Element element : elements) {
             if (element.getCode().equals(code)) {
                 return element;
@@ -176,6 +204,8 @@ public class Application {
         }
         return null; // Si aucun élément correspondant n'est trouvé
     }
+    
+	
+ 
 
-    // ...
 }
