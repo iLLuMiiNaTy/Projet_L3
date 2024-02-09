@@ -9,13 +9,13 @@ public class Commande {
 	private int quantite;
 	
 	
-	public Commande(String numeroCommande, String client, String codeProduit, String produit, int quantite) {
+	public Commande(String numeroCommande, String client, String codeProduit, String produit, String quantite) {
 		super();
 		this.numeroCommande = numeroCommande;
 		this.client = client;
 		this.codeProduit = codeProduit;
 		this.produit = produit;
-		this.quantite = quantite;
+		this.quantite = Integer.parseInt(quantite);
 	}
 	
 	@Override

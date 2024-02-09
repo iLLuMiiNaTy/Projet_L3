@@ -5,16 +5,24 @@ public class Element {
 	private String nom;
 	private int quantite;
 	private String uniteDeMesure;
-	private String prixAchat;
-	private String prixVente;
+	private int prixAchat;
+	private int prixVente;
 
 	public Element(String code, String nom, int quantite, String uniteDeMesure, String prixAchat, String prixVente) {
 		this.code = code;
 		this.nom = nom;
 		this.quantite = quantite;
 		this.uniteDeMesure = uniteDeMesure;
-		this.prixAchat = prixAchat;
-		this.prixVente = prixVente;
+		if (prixAchat.equals("NA")) {
+			this.prixAchat = 0;
+		} else {
+			this.prixAchat = Integer.parseInt(prixAchat);
+		}
+		if (prixVente.equals("NA")) {
+			this.prixVente = 0;
+		} else {
+			this.prixVente = Integer.parseInt(prixVente);
+		}
 	}
 
 	@Override
@@ -56,11 +64,11 @@ public class Element {
 		return uniteDeMesure;
 	}
 
-	public String getPrixAchat() {
+	public int getPrixAchat() {
 		return prixAchat;
 	}
 
-	public String getPrixVente() {
+	public int getPrixVente() {
 		return prixVente;
 	}
 }
