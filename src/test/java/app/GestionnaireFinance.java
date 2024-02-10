@@ -33,5 +33,10 @@ public class GestionnaireFinance {
 	public void nouvelAchat(Element element, int quantite) {//récupère depuis une boucle la quantité, pour chaque élément qu'on souhaite acheter et fais ensuite un traitement similaire à la méthode nouvellVente
 		
 	}
+	
+	public void totalTransaction(String type) {//type = achat/vente, s'il est appelé par la fonction getTotalAchats, alors le paramètre sera achat, la méthode parcours alors toutes les transactions 
+												//et additionne celle qui sont des achats pour retourner le total des achats, même procédé pour les ventes
+		
+	}
 
 }
