@@ -26,7 +26,7 @@ public class Application {
 		System.out.println("\n##########################");
 		System.out.println("AFFICHAGE COMMANDES");
 		System.out.println("##########################");
-		csv.afficherCommandes(GeFi);
+		csv.afficherCommandes(/*GeFi*/); //paramètre mis en place pour des tests sur les transactions
 		
         csv.sauvegarderElements();
     }
@@ -37,6 +37,6 @@ public class Application {
     	System.out.println("\n##########################");
 		System.out.println("AFFICHAGE TRANSACTION");
 		System.out.println("##########################");
-    	GeFi.afficherVente();
+    	GeFi.afficherVentes();
     }
 }

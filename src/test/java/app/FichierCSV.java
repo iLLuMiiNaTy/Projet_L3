@@ -178,6 +178,8 @@ public class FichierCSV {
 
                 Commande commande = new Commande(numeroCommande, client, codeProduit, produit, quantite);
                 commandes.add(commande);
+                GestionnaireCommande gestionnaireCommande = new GestionnaireCommande();
+				gestionnaireCommande.ajouterCommande(commande);
             }
         } catch (IOException e) {
             System.out.println("Erreur lors du chargement du fichier commandes.csv : " + e.getMessage());
@@ -185,12 +187,12 @@ public class FichierCSV {
     }
     
     // Méthode pour afficher les commandes
-    public void afficherCommandes(GestionnaireFinance GeFi) {
+    public void afficherCommandes(/*GestionnaireFinance GeFi*/) {//paramètre pour test sur les transactions (à enlever ensuite)
         System.out.println("\nAffichage des commandes :");
         for (Commande commande : commandes) {
             System.out.println("\n");
             System.out.println(commande);
-            GeFi.nouvelleVente(commande);//Test pour ajouter de nouvelles vente
+            //GeFi.nouvelleVente(commande);//Test pour ajouter de nouvelles vente
         }
     }
     

@@ -19,7 +19,7 @@ public class Transaction {
 	@Override
 	public String toString() {
 		String s = "";
-		s += 	"##### Commande n°" + this.numCommande + "#####" +
+		s += 	"#####Commande n°" + this.numCommande + "#####" +
 				"\n|--------------------|" +
 				"\n|Nom produit : " + this. nomElement +
 				"\n|--------------------|" +

@@ -1,5 +1,6 @@
 package app;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,9 +8,7 @@ import java.util.Map.Entry;
 
 public class GestionnaireFinance {
 	
-	private List <Transaction> transactions;
-	private static HashMap<Element, Integer> listeAchat = new HashMap<>();
-	private static HashMap<Commande, Integer> listeVente = new HashMap<>();
+	private static List <Transaction> transactions = new ArrayList<>();;
 	
 	public void nouvelleVente(Commande com) {
     	String codeProduit = com.getCodeProduit();
@@ -21,21 +20,7 @@ public class GestionnaireFinance {
     	String type = "vente";
     	Transaction transaction = new Transaction(numCommande, nomElement, quantite, prix, type);
     	transactions.add(transaction);
-    	//ajouterVente(com, prix);
     }
-	
-	public static void ajouterVente(Commande com, int prix) {
-	}
-	
-	public void afficherVente() {
-		for(Entry<Commande, Integer> entry:listeVente.entrySet()) {
-			Commande com = entry.getKey();
-			String numComande = com.getNumeroCommande();
-			String produit = com.getProduit();
-			int quantite = entry.getValue();
-			System.out.println("\n");
-		}
-	}
 	
 	public void afficherVentes() {
 		System.out.println("\nAffichage des ventes :");
@@ -44,5 +29,9 @@ public class GestionnaireFinance {
         	System.out.println(transaction);
         }
     }
+	
+	public void nouvelAchat(Element element, int quantite) {//récupère depuis une boucle la quantité, pour chaque élément qu'on souhaite acheter et fais ensuite un traitement similaire à la méthode nouvellVente
+		
+	}
 
 }
