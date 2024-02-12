@@ -13,7 +13,7 @@ import java.util.Map;
 public class FichierCSV {
 	
 	 private static List <Element> elements;
-	 private List <ChaineDeProduction> chaines;
+	 private static List <ChaineDeProduction> chaines;
 	 private List<Commande> commandes; // Liste pour stocker les commandes chargées
 	 private static String pathElement = "src/test/resources/elements.csv";
 	 private static String pathChaine = "src/test/resources/chaines.csv";
@@ -204,6 +204,14 @@ public class FichierCSV {
         }
         return null; // Si aucun élément correspondant n'est trouvé
     }
+
+	//getter de la liste chaineDeProduction
+	public static List<ChaineDeProduction>  getChaines() {
+		
+		return chaines;
+	}
+
+
     
 	
  
