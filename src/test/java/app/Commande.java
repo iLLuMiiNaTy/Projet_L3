@@ -1,14 +1,14 @@
 package app;
 
 public class Commande {
-	
+
 	private String numeroCommande;
 	private String client;
 	private String codeProduit;
 	private String produit;
 	private int quantite;
-	
-	
+
+
 	public Commande(String numeroCommande, String client, String codeProduit, String produit, int quantite) {
 		super();
 		this.numeroCommande = numeroCommande;
@@ -17,7 +17,7 @@ public class Commande {
 		this.produit = produit;
 		this.quantite = quantite;
 	}
-	
+
 	@Override
 	public String toString() {
 		String s = "";
@@ -41,7 +41,7 @@ public class Commande {
 	public String getClient() {
 		return client;
 	}
-	
+
 	public String getCodeProduit() {
 		return codeProduit;
 	}
@@ -53,9 +53,9 @@ public class Commande {
 	public int getQuantite() {
 		return quantite;
 	}
-	
-	
-	
-	
+
+
+
+
 
 }

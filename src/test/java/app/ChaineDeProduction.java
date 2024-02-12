@@ -17,19 +17,20 @@ public class ChaineDeProduction {
         this.elementsSortie = elementsSortie;
         this.niveauActivation = 1;
     }
-    
-    public String toString() {
+
+    @Override
+	public String toString() {
     	String s = "";
     	s += 	"#####" + this.nom + "#####" +
     			"\n|--------------------|" +
     			"\n|Code : " + this.code +
     			"\n|--------------------|" +
     			"\n|Elements en entrée :";
-    	
+
     	for (Map.Entry<Element, Float> entry : this.getElementsEntree().entrySet()) {
             Element element = entry.getKey();
             String quantite = entry.getValue().toString();
-            s += "\n|  - " + element.getNom() + " (" + quantite + " " + element.getUniteDeMesure() + ")"; 
+            s += "\n|  - " + element.getNom() + " (" + quantite + " " + element.getUniteDeMesure() + ")";
         }
     	s += 	"\n|--------------------|" +
     			"\n|Elements en sortie :";

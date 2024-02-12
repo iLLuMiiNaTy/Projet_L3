@@ -8,28 +8,27 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class FichierCSV {
-	
+
 	 private static List <Element> elements;
 	 private List <ChaineDeProduction> chaines;
 	 private List<Commande> commandes; // Liste pour stocker les commandes chargées
 	 private static String pathElement = "src/test/resources/elements.csv";
 	 private static String pathChaine = "src/test/resources/chaines.csv";
 	 private static String pathCommande = "src/test/resources/commandes.csv";
-	 
-	
+
+
 	public void chargerDonnees() {
         chargerElements(pathElement);
         chargerChaines(pathChaine);
         chargerCommandes(pathCommande);
     }
-	
-//#########################################################################################################    
+
+//#########################################################################################################
 										//ELEMENTS
-//#########################################################################################################  
-	
+//#########################################################################################################
+
 	public void chargerElements(String pathElement) {
         elements = new ArrayList<>();// Initialisation de la liste des éléments
 
@@ -60,7 +59,7 @@ public class FichierCSV {
             System.out.println("Erreur lors du chargement du fichier elements.csv : " + e.getMessage());
         }
     }
-	
+
 	public void afficherElements() {
 		System.out.println("\nAffichage des éléments :");
         for (Element element : elements) {
@@ -68,7 +67,7 @@ public class FichierCSV {
         	System.out.println(element);
         }
     }
-	
+
 	public void sauvegarderElements() {
         String elementsFilePath = "src/test/resources/elementsExport.csv";
 
@@ -88,10 +87,10 @@ public class FichierCSV {
             System.out.println("Erreur lors de la sauvegarde des éléments : " + e.getMessage());
         }
     }
-	
-//#########################################################################################################    
+
+//#########################################################################################################
 									//CHAINE DE PRODUCTION
-//######################################################################################################### 
+//#########################################################################################################
 
 	private void chargerChaines(String pathChaine) {
         chaines = new ArrayList<>();// Initialisation de la liste des chaines
@@ -142,21 +141,21 @@ public class FichierCSV {
             System.out.println("Erreur lors du chargement du fichier chaines.csv : " + e.getMessage());
         }
     }
-	
+
 	public void afficherChaines() {
         System.out.println("\nListe des chaînes de production :");
         for (ChaineDeProduction chaine : chaines) {
         	System.out.println("\n");
         	System.out.println(chaine);
-            
+
         }
     }
 
-//#########################################################################################################    
+//#########################################################################################################
 										//COMMANDES
-//######################################################################################################### 
-	
-	
+//#########################################################################################################
+
+
 	public void chargerCommandes(String pathCommande) {
         commandes = new ArrayList<>(); // Initialisation de la liste des commandes
 
@@ -184,7 +183,7 @@ public class FichierCSV {
             System.out.println("Erreur lors du chargement du fichier commandes.csv : " + e.getMessage());
         }
     }
-    
+
     // Méthode pour afficher les commandes
     public void afficherCommandes() {
         System.out.println("\nAffichage des commandes :");
@@ -193,9 +192,9 @@ public class FichierCSV {
             System.out.println(commande);
         }
     }
-    
-    
-	
+
+
+
 	private Element trouverElementParCode(String code) {
         for (Element element : elements) {
             if (element.getCode().equals(code)) {
@@ -204,8 +203,8 @@ public class FichierCSV {
         }
         return null; // Si aucun élément correspondant n'est trouvé
     }
-    
-	
- 
+
+
+
 
 }
