@@ -13,12 +13,11 @@ public class GestionnaireFinance {
 	public void nouvelleVente(Commande com) {
     	String codeProduit = com.getCodeProduit();
     	Element element = FichierCSV.trouverElementParCode(codeProduit);
-    	String numCommande = com.getNumeroCommande();
     	String nomElement = element.getNom();
     	int quantite = com.getQuantite();
     	int prix = element.getPrixVente()* quantite;
     	String type = "vente";
-    	Transaction transaction = new Transaction(numCommande, nomElement, quantite, prix, type);
+    	Transaction transaction = new Transaction(nomElement, quantite, prix, type);
     	transactions.add(transaction);
     }
 	
@@ -30,8 +29,14 @@ public class GestionnaireFinance {
         }
     }
 	
-	public void nouvelAchat(Element element, int quantite) {//récupère depuis une boucle la quantité, pour chaque élément qu'on souhaite acheter et fais ensuite un traitement similaire à la méthode nouvellVente
-		
+	public void nouvelAchat(Element element, int quantite) {//récupère depuis une boucle la quantité (pour les paramètres), pour chaque élément qu'on souhaite acheter et fais ensuite un traitement similaire à la méthode nouvellVente
+		//String numCommande, String nomElement, int quantite, int prix, String type
+		String nomElement = element.getNom();
+		//la quantité est donnée en paramètre
+		int prix = element.getPrixAchat() * quantite;
+		String type = "achat";
+		Transaction transaction = new Transaction(nomElement, quantite, prix, type);
+    	transactions.add(transaction);
 	}
 	
 	public void totalTransaction(String type) {//type = achat/vente, s'il est appelé par la fonction getTotalAchats, alors le paramètre sera achat, la méthode parcours alors toutes les transactions 
