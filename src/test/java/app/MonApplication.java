@@ -1,8 +1,16 @@
 package app;
 
-public class Application {
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.stage.Stage;
+
+public class MonApplication extends Application{
 
     public static void main(String[] args) {
+    	
+    	launch(args);
+    	 
 		FichierCSV csv = new FichierCSV();
 		csv.chargerDonnees();
 
@@ -23,4 +31,14 @@ public class Application {
 
         csv.sauvegarderElements();
 	}
+    
+    @Override
+    public void start(Stage primaryStage) {
+        Label label = new Label("Hello, JavaFX!");
+        Scene scene = new Scene(label, 400, 300);
+        
+        primaryStage.setTitle("JavaFX App");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
 }
