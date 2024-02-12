@@ -1,12 +1,12 @@
 package app;
 
-public class Application {
+public class MonApplication {
     
     public static void main(String[] args) {
     	FichierCSV csv = new FichierCSV();
     	GestionnaireFinance GeFi = new GestionnaireFinance();
-		Application.affichageCSV(csv, GeFi);
-		Application.affichageTransaction(GeFi);
+		MonApplication.affichageCSV(csv, GeFi);
+		MonApplication.affichageTransaction(GeFi);
 		
 	}
     
