@@ -8,20 +8,19 @@ public class Commande {
 	private String produit;
 	private int quantite;
 
-
-	public Commande(String numeroCommande, String client, String codeProduit, String produit, int quantite) {
+	public Commande(String numeroCommande, String client, String codeProduit, String produit, String quantite) {
 		super();
 		this.numeroCommande = numeroCommande;
 		this.client = client;
 		this.codeProduit = codeProduit;
 		this.produit = produit;
-		this.quantite = quantite;
+		this.quantite = Integer.parseInt(quantite);
 	}
 
 	@Override
 	public String toString() {
 		String s = "";
-		s += 	"##### Commande n°" + this.numeroCommande + "#####" +
+		s += 	"#####Commande n°" + this.numeroCommande + "#####" +
 				"\n|--------------------|" +
 				"\n|Client : " + this. client +
 				"\n|--------------------|" +

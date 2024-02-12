@@ -12,8 +12,8 @@ import java.util.List;
 public class FichierCSV {
 
 	 private static List <Element> elements;
-	 private List <ChaineDeProduction> chaines;
-	 private List<Commande> commandes; // Liste pour stocker les commandes chargées
+	 private static List <ChaineDeProduction> chaines;
+	 private static List<Commande> commandes; // Liste pour stocker les commandes chargées
 	 private static String pathElement = "src/test/resources/elements.csv";
 	 private static String pathChaine = "src/test/resources/chaines.csv";
 	 private static String pathCommande = "src/test/resources/commandes.csv";
@@ -117,7 +117,7 @@ public class FichierCSV {
                     String elementCode = elementInfo[0];
                     float quantite = Float.parseFloat(elementInfo[1]);
 
-                    Element element = trouverElementParCode(elementCode); // Nous supposons que la méthode trouverElementParCode existe pour trouver l'élément correspondant au code
+                    Element element = trouverElementParCode(elementCode);
                     elementsEntree.put(element, quantite);
                 }
 
@@ -129,7 +129,7 @@ public class FichierCSV {
                     String elementCode = elementInfo[0];
                     float quantite = Float.parseFloat(elementInfo[1]);
 
-                    Element element = trouverElementParCode(elementCode); // Nous supposons que la méthode trouverElementParCode existe pour trouver l'élément correspondant au code
+                    Element element = trouverElementParCode(elementCode);
                     elementsSortie.put(element, quantite);
                 }
 
@@ -174,10 +174,12 @@ public class FichierCSV {
                 String client = data[1];
                 String codeProduit = data[2];
                 String produit = data[3];
-                int quantite = Integer.parseInt(data[4]); // Conversion de la quantité en entier
+                String quantite = data[4]; // Conversion de la quantité en entier
 
                 Commande commande = new Commande(numeroCommande, client, codeProduit, produit, quantite);
                 commandes.add(commande);
+                GestionnaireCommande gestionnaireCommande = new GestionnaireCommande();
+				gestionnaireCommande.ajouterCommande(commande);
             }
         } catch (IOException e) {
             System.out.println("Erreur lors du chargement du fichier commandes.csv : " + e.getMessage());
@@ -185,17 +187,16 @@ public class FichierCSV {
     }
 
     // Méthode pour afficher les commandes
-    public void afficherCommandes() {
+    public void afficherCommandes(/*GestionnaireFinance GeFi*/) {//paramètre pour test sur les transactions (à enlever ensuite)
         System.out.println("\nAffichage des commandes :");
         for (Commande commande : commandes) {
             System.out.println("\n");
             System.out.println(commande);
+            //GeFi.nouvelleVente(commande);//Test pour ajouter de nouvelles vente
         }
     }
 
-
-
-	private Element trouverElementParCode(String code) {
+	protected static Element trouverElementParCode(String code) {
         for (Element element : elements) {
             if (element.getCode().equals(code)) {
                 return element;
