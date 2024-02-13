@@ -187,12 +187,12 @@ public class FichierCSV {
     }
 
     // Méthode pour afficher les commandes
-    public void afficherCommandes(/*GestionnaireFinance GeFi*/) {//paramètre pour test sur les transactions (à enlever ensuite)
+    public void afficherCommandes(GestionnaireFinance GeFi) {//paramètre pour test sur les transactions (à enlever ensuite)
         System.out.println("\nAffichage des commandes :");
         for (Commande commande : commandes) {
             System.out.println("\n");
             System.out.println(commande);
-            //GeFi.nouvelleVente(commande);//Test pour ajouter de nouvelles vente
+            GeFi.nouvelleVente(commande);//Test pour ajouter de nouvelles vente
         }
     }
 

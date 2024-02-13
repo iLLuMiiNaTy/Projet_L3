@@ -27,7 +27,10 @@ public class MonApplication extends Application{
         primaryStage.show();
     }
     
+    
     private static void affichageCSV(FichierCSV csv, GestionnaireFinance GeFi) {
+    	
+    	System.out.println();
 		csv.chargerDonnees();
 		
 		System.out.println("##########################");
@@ -43,9 +46,9 @@ public class MonApplication extends Application{
 		System.out.println("\n##########################");
 		System.out.println("AFFICHAGE COMMANDES");
 		System.out.println("##########################");
-		csv.afficherCommandes(/*GeFi*/); //paramètre mis en place pour des tests sur les transactions
+		csv.afficherCommandes(GeFi); //paramètre mis en place pour des tests sur les transactions
 		
-        csv.sauvegarderElements();
+        //csv.sauvegarderElements();
     }
     
     
