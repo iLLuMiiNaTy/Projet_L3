@@ -9,7 +9,7 @@ public class MonApplication extends Application{
 
     public static void main(String[] args) {
     	
-    	launch(args);
+    	//launch(args);
     	
     	FichierCSV csv = new FichierCSV();
     	GestionnaireFinance GeFi = new GestionnaireFinance();
@@ -29,8 +29,6 @@ public class MonApplication extends Application{
     
     
     private static void affichageCSV(FichierCSV csv, GestionnaireFinance GeFi) {
-    	
-    	System.out.println();
 		csv.chargerDonnees();
 		
 		System.out.println("##########################");
@@ -58,5 +56,7 @@ public class MonApplication extends Application{
 		System.out.println("AFFICHAGE TRANSACTION");
 		System.out.println("##########################");
     	GeFi.afficherVentes();
+    	
+    	GeFi.getTotalVente();
     }
 }
