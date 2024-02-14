@@ -7,12 +7,14 @@ public class Element {
 	private String uniteDeMesure;
 	private int prixAchat;
 	private int prixVente;
+	private String image ;
 
-	public Element(String code, String nom, int quantite, String uniteDeMesure, String prixAchat, String prixVente) {
+	public Element(String code, String nom, int quantite, String uniteDeMesure, String prixAchat, String prixVente, String image) {
 		this.code = code;
 		this.nom = nom;
 		this.quantite = quantite;
 		this.uniteDeMesure = uniteDeMesure;
+		this.image = image ;
 		if (prixAchat.equals("NA")) {
 			this.prixAchat = 0;
 		} else {
@@ -70,5 +72,9 @@ public class Element {
 
 	public int getPrixVente() {
 		return prixVente;
+	}
+	
+	public String getImage() {
+		return this.image;
 	}
 }

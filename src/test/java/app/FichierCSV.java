@@ -50,8 +50,9 @@ public class FichierCSV {
                 String uniteDeMesure = data[3];
                 String prixAchat = data[4];
                 String prixVente = data[5];
+                String image = data[6];
 
-                Element element = new Element(code, nom, quantite, uniteDeMesure, prixAchat, prixVente);
+                Element element = new Element(code, nom, quantite, uniteDeMesure, prixAchat, prixVente,image);
                 elements.add(element);
                 //gestionnaireStock.ajouterStock(element, quantite);
             }
@@ -60,12 +61,14 @@ public class FichierCSV {
         }
     }
 
-	public void afficherElements() {
+	public ArrayList<Element>  afficherElements() {
 		System.out.println("\nAffichage des éléments :");
         for (Element element : elements) {
         	System.out.println("\n");
-        	System.out.println(element);
+        	
         }
+        return (ArrayList<Element>) elements ;
+
     }
 
 	public void sauvegarderElements() {
