@@ -192,7 +192,7 @@ public class FichierCSV {
         for (Commande commande : commandes) {
             System.out.println("\n");
             System.out.println(commande);
-            GeFi.nouvelleVente(commande);//Test pour ajouter de nouvelles vente
+            //GeFi.nouvelleVente(commande);//Test pour ajouter de nouvelles vente
         }
     }
 
