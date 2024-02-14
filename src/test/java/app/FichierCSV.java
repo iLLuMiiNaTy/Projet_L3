@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public class FichierCSV {
 
 	 private static List <Element> elements;
@@ -16,13 +19,11 @@ public class FichierCSV {
 	 private static List<Commande> commandes; // Liste pour stocker les commandes chargées
 	 private static String pathElement = "src/test/resources/elements.csv";
 	 private static String pathChaine = "src/test/resources/chaines.csv";
-	 private static String pathCommande = "src/test/resources/commandes.csv";
 
 
 	public void chargerDonnees() {
         chargerElements(pathElement);
         chargerChaines(pathChaine);
-        chargerCommandes(pathCommande);
     }
 
 //#########################################################################################################
@@ -156,10 +157,10 @@ public class FichierCSV {
 //#########################################################################################################
 
 
-	public void chargerCommandes(String pathCommande) {
-        commandes = new ArrayList<>(); // Initialisation de la liste des commandes
+	public ObservableList<Commande> chargerCommandes(GestionnaireCommande GeCom) {
+		ObservableList<Commande> listeCommande = FXCollections.observableArrayList();
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(pathCommande))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("src/test/resources/commandes.csv"))) {
             String line;
             boolean firstLine = true; // Variable pour suivre la première ligne
             while ((line = reader.readLine()) != null) {
@@ -177,23 +178,13 @@ public class FichierCSV {
                 String quantite = data[4]; // Conversion de la quantité en entier
 
                 Commande commande = new Commande(numeroCommande, client, codeProduit, produit, quantite);
-                commandes.add(commande);
-                GestionnaireCommande gestionnaireCommande = new GestionnaireCommande();
-				gestionnaireCommande.ajouterCommande(commande);
+                listeCommande.add(commande);
+				GeCom.ajouterCommande(commande);
             }
         } catch (IOException e) {
             System.out.println("Erreur lors du chargement du fichier commandes.csv : " + e.getMessage());
         }
-    }
-
-    // Méthode pour afficher les commandes
-    public void afficherCommandes(GestionnaireFinance GeFi) {//paramètre pour test sur les transactions (à enlever ensuite)
-        System.out.println("\nAffichage des commandes :");
-        for (Commande commande : commandes) {
-            System.out.println("\n");
-            System.out.println(commande);
-            //GeFi.nouvelleVente(commande);//Test pour ajouter de nouvelles vente
-        }
+		return listeCommande;
     }
 
 	protected static Element trouverElementParCode(String code) {

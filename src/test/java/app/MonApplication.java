@@ -1,5 +1,7 @@
 package app;
 
+import java.util.List;
+
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,6 +14,7 @@ import javafx.stage.Stage;
 public class MonApplication extends Application{
 	
 	TableView<Commande> table = new TableView<>();
+	TableView<Commande> table1 = new TableView<>();
     ObservableList<Commande> listeCommande = FXCollections.observableArrayList();
 
     public static void main(String[] args) {		
@@ -23,8 +26,7 @@ public class MonApplication extends Application{
     	
     	FichierCSV csv = new FichierCSV();
     	GestionnaireFinance GeFi = new GestionnaireFinance();
-		MonApplication.affichageCSV(csv, GeFi);
-		MonApplication.affichageTransaction(GeFi);
+    	GestionnaireCommande GeCom = new GestionnaireCommande();
 		
         primaryStage.setTitle("Mon Application JavaFX");
         
@@ -35,9 +37,8 @@ public class MonApplication extends Application{
         colonneClient.setCellValueFactory(cellData -> cellData.getValue().clientProperty());
         
         table.getColumns().addAll(colonneNumero, colonneClient); // ajoutez les autres colonnes ici
-        
-     // Exemple d'ajout de commande dans la liste
-        listeCommande.add(new Commande("001", "John Doe", "PRD001", "Produit Exemple", "5"));
+
+        listeCommande = csv.chargerCommandes(GeCom);
         
         table.setItems(listeCommande);
         
