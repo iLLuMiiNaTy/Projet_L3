@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -57,7 +58,14 @@ private Node creerVueChaines(ChaineDeProduction c) {
         Label code = new Label("Chaîne de production n°" + c.getCode());
         Label niveauActivation = new Label("Niveau d'activation: " + c.getNiveauActivation());
         
-        vueElement.getChildren().addAll(imageContainer, code, niveauActivation);
+        // Bouton pour ajuster le niveau d'activation
+        Button btnAjuster = new Button("Ajuster");
+        btnAjuster.setOnAction(e -> {
+            // Ici, insérez le code pour ajuster le niveau (ex : afficher une boîte de dialogue)
+            System.out.println("Ajustement du niveau d'activation pour : " + c.getCode());
+        });
+        
+        vueElement.getChildren().addAll(imageContainer, code, niveauActivation, btnAjuster);
         
         return vueElement;
     }
