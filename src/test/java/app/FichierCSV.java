@@ -14,15 +14,10 @@ import javafx.collections.ObservableList;
 
 public class FichierCSV {
 
-	 private static List <Element> elements;
-	 private static List <ChaineDeProduction> chaines;
-	 private static List<Commande> commandes; // Liste pour stocker les commandes chargées
-	 private static String pathElement = "src/test/resources/elements.csv";
 	 private static String pathChaine = "src/test/resources/chaines.csv";
 
 
 	public void chargerDonnees() {
-        chargerElements(pathElement);
         chargerChaines(pathChaine);
     }
 
@@ -30,10 +25,10 @@ public class FichierCSV {
 										//ELEMENTS
 //#########################################################################################################
 
-	public void chargerElements(String pathElement) {
-        elements = new ArrayList<>();// Initialisation de la liste des éléments
+	public ObservableList<Element> chargerElements(GestionnaireStock GeStock) {
+		ObservableList<Element> listeElement = FXCollections.observableArrayList();
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(pathElement))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("src/test/resources/elements.csv"))) {
             String line;
             //Partie pour supprimer la première ligne des fichiers csv qui sert uniquement d'en tête
             boolean firstLine = true; // Variable pour suivre la première ligne
@@ -51,22 +46,16 @@ public class FichierCSV {
                 String uniteDeMesure = data[3];
                 String prixAchat = data[4];
                 String prixVente = data[5];
+                String urlImage = data[6];
 
-                Element element = new Element(code, nom, quantite, uniteDeMesure, prixAchat, prixVente);
-                elements.add(element);
-                //gestionnaireStock.ajouterStock(element, quantite);
+                Element element = new Element(code, nom, quantite, uniteDeMesure, prixAchat, prixVente, urlImage);
+                listeElement.add(element);
+                //GeCom.ajouterStock(element, quantite);
             }
         } catch (IOException e) {
             System.out.println("Erreur lors du chargement du fichier elements.csv : " + e.getMessage());
         }
-    }
-
-	public void afficherElements() {
-		System.out.println("\nAffichage des éléments :");
-        for (Element element : elements) {
-        	System.out.println("\n");
-        	System.out.println(element);
-        }
+        return listeElement;
     }
 
 	public void sauvegarderElements() {

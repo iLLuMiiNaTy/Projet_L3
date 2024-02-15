@@ -7,8 +7,9 @@ public class Element {
 	private String uniteDeMesure;
 	private int prixAchat;
 	private int prixVente;
+	private String urlImage;
 
-	public Element(String code, String nom, int quantite, String uniteDeMesure, String prixAchat, String prixVente) {
+	public Element(String code, String nom, int quantite, String uniteDeMesure, String prixAchat, String prixVente, String urlImage) {
 		this.code = code;
 		this.nom = nom;
 		this.quantite = quantite;
@@ -23,6 +24,7 @@ public class Element {
 		} else {
 			this.prixVente = Integer.parseInt(prixVente);
 		}
+		this.urlImage = urlImage;
 	}
 
 	@Override
@@ -70,5 +72,9 @@ public class Element {
 
 	public int getPrixVente() {
 		return prixVente;
+	}
+	
+	public String getUrlImage() {
+		return urlImage;
 	}
 }

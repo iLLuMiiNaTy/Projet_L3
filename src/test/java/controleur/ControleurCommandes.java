@@ -10,10 +10,10 @@ public class ControleurCommandes {
     public ControleurCommandes(GestionnaireCommande gestionnaireCommande, VueCommandes vue) {
         this.gestionnaireCommande = gestionnaireCommande;
         this.vue = vue;
-        initContrôleur();
+        initControleur();
     }
 
-    private void initContrôleur() {
+    private void initControleur() {
         // Ajoutez la logique pour gérer les actions de l'utilisateur, comme des clics sur des boutons
     }
 }
