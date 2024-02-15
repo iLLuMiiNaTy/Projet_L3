@@ -66,6 +66,21 @@ public class Commande {
 		return client;
 	}
 
+	public StringProperty codeProduitProperty() {
+		// TODO Auto-generated method stub
+		return codeProduit;
+	}
+
+	public StringProperty ProduitProperty() {
+		// TODO Auto-generated method stub
+		return produit;
+	}
+
+	public StringProperty QuantiteProperty() {
+		// TODO Auto-generated method stub
+		return quantite;
+	}
+
 
 
 

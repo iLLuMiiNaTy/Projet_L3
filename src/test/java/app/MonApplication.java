@@ -2,6 +2,8 @@ package app;
 
 import java.util.List;
 
+import MVC.VueCommandes;
+import MVC.controller.ControleurCommandes;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,15 +14,33 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class MonApplication extends Application{
-	
-	TableView<Commande> table = new TableView<>();
-	TableView<Commande> table1 = new TableView<>();
-    ObservableList<Commande> listeCommande = FXCollections.observableArrayList();
 
     public static void main(String[] args) {		
 		launch(args);
 	}
     
+    @Override
+    public void start(Stage primaryStage){
+        // Supposons que FichierCSV contient une méthode pour récupérer une ObservableList de commandes
+        FichierCSV csv = new FichierCSV();
+        GestionnaireCommande GeCom = new GestionnaireCommande();
+        ObservableList<Commande> listeCommande = csv.chargerCommandes(GeCom); // Assurez-vous d'avoir une telle méthode
+        
+        VueCommandes vue = new VueCommandes(listeCommande);
+        ControleurCommandes ControlCom = new ControleurCommandes(GeCom, vue);
+
+        primaryStage.setTitle("Mon Application JavaFX");
+        Scene scene = new Scene(vue.getVue());
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+    
+    
+    
+    
+    
+    
+ /*   
     @Override
     public void start(Stage primaryStage){
     	
@@ -47,9 +67,9 @@ public class MonApplication extends Application{
         Scene scene = new Scene(vbox);
         primaryStage.setScene(scene);
         primaryStage.show();
-    }
+    }*/
     
-    private static void affichageCSV(FichierCSV csv, GestionnaireFinance GeFi) {
+   /* private static void affichageCSV(FichierCSV csv, GestionnaireFinance GeFi) {
 		csv.chargerDonnees();
 		
 		System.out.println("##########################");
@@ -77,5 +97,5 @@ public class MonApplication extends Application{
 		System.out.println("AFFICHAGE TRANSACTION");
 		System.out.println("##########################");
     	GeFi.afficherVentes();
-    }
+    }*/
 }
