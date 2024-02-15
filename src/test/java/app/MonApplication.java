@@ -2,8 +2,7 @@ package app;
 
 import java.util.List;
 
-import MVC.VueCommandes;
-import MVC.controller.ControleurCommandes;
+import controleur.ControleurCommandes;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,6 +11,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import vue.VueCommandes;
 
 public class MonApplication extends Application{
 

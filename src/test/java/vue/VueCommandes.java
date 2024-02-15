@@ -1,4 +1,4 @@
-package MVC;
+package vue;
 
 import app.Commande;
 import javafx.collections.FXCollections;
