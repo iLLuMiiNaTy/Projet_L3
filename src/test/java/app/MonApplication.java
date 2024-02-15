@@ -30,7 +30,7 @@ public class MonApplication extends Application{
         ControleurCommandes ControlCom = new ControleurCommandes(GeCom, vue);
 
         primaryStage.setTitle("Mon Application JavaFX");
-        Scene scene = new Scene(vue.getVue());
+        Scene scene = new Scene(vue.getVue(), 1920, 1080);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
