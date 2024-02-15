@@ -14,20 +14,14 @@ import javafx.collections.ObservableList;
 
 public class FichierCSV {
 
-	 private static String pathChaine = "src/test/resources/chaines.csv";
-
-
-	public void chargerDonnees() {
-        chargerChaines(pathChaine);
-    }
-
 //#########################################################################################################
 										//ELEMENTS
 //#########################################################################################################
+	
+	static ObservableList<Element> listeElement = FXCollections.observableArrayList();
 
 	public ObservableList<Element> chargerElements(GestionnaireStock GeStock) {
-		ObservableList<Element> listeElement = FXCollections.observableArrayList();
-
+		
         try (BufferedReader reader = new BufferedReader(new FileReader("src/test/resources/elements.csv"))) {
             String line;
             //Partie pour supprimer la première ligne des fichiers csv qui sert uniquement d'en tête
@@ -66,7 +60,7 @@ public class FichierCSV {
 
             writer.newLine();
 
-            for (Element element : elements) {
+            for (Element element : listeElement) {
                 String line = element.getCode() + ";" + element.getNom() + ";" + element.getQuantite() + ";" + element.getUniteDeMesure();
                 writer.write(line);
                 writer.newLine();
@@ -82,10 +76,10 @@ public class FichierCSV {
 									//CHAINE DE PRODUCTION
 //#########################################################################################################
 
-	private void chargerChaines(String pathChaine) {
-        chaines = new ArrayList<>();// Initialisation de la liste des chaines
+	public ObservableList<ChaineDeProduction> chargerChaines(GestionnaireProduction GeProd) {
+		ObservableList<ChaineDeProduction> listeChaine = FXCollections.observableArrayList();
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(pathChaine))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("src/test/resources/chaines.csv"))) {
             String line;
             boolean firstLine = true; // Variable pour suivre la première ligne
             while ((line = reader.readLine()) != null) {
@@ -122,23 +116,16 @@ public class FichierCSV {
                     Element element = trouverElementParCode(elementCode);
                     elementsSortie.put(element, quantite);
                 }
+                String urlImage = data[4];
 
-                ChaineDeProduction chaine = new ChaineDeProduction(code, nom, elementsEntree, elementsSortie);
-                chaines.add(chaine);
-                //gestionnaireProduction.ajouterChaine(chaine);
+                ChaineDeProduction chaine = new ChaineDeProduction(code, nom, elementsEntree, elementsSortie, urlImage);
+                listeChaine.add(chaine);
+                GeProd.ajouterChaine(chaine);
             }
         } catch (IOException e) {
             System.out.println("Erreur lors du chargement du fichier chaines.csv : " + e.getMessage());
         }
-    }
-
-	public void afficherChaines() {
-        System.out.println("\nListe des chaînes de production :");
-        for (ChaineDeProduction chaine : chaines) {
-        	System.out.println("\n");
-        	System.out.println(chaine);
-
-        }
+        return listeChaine;
     }
 
 //#########################################################################################################
@@ -177,7 +164,7 @@ public class FichierCSV {
     }
 
 	protected static Element trouverElementParCode(String code) {
-        for (Element element : elements) {
+        for (Element element : listeElement) {
             if (element.getCode().equals(code)) {
                 return element;
             }

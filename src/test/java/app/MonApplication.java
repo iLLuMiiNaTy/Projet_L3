@@ -2,6 +2,7 @@ package app;
 
 import java.util.List;
 
+import controleur.ControleurChaines;
 import controleur.ControleurCommandes;
 import controleur.ControleurStocks;
 import javafx.application.Application;
@@ -13,6 +14,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import vue.VueChaines;
 import vue.VueCommandes;
 import vue.VueStocks;
 
@@ -41,6 +43,16 @@ public class MonApplication extends Application{
     public void creerScenes(FichierCSV csv, BorderPane root) {
     	sceneStock(csv, root);
     	sceneCommande(csv, root);
+    	sceneChaine(csv, root);
+    }
+    
+    public void sceneStock(FichierCSV csv, BorderPane root) {
+    	GestionnaireStock GeStock = new GestionnaireStock();
+    	ObservableList<Element> listeElement = csv.chargerElements(GeStock);
+    	
+    	VueStocks vue = new VueStocks(listeElement);
+    	ControleurStocks ControlStock = new ControleurStocks(GeStock, vue);
+    	root.setTop(vue.getVue());
     }
     
     public void sceneCommande(FichierCSV csv, BorderPane root) {
@@ -52,14 +64,19 @@ public class MonApplication extends Application{
         root.setCenter(vue.getVue());
     }
     
-    public void sceneStock(FichierCSV csv, BorderPane root) {
-    	GestionnaireStock GeStock = new GestionnaireStock();
-    	ObservableList<Element> listeElement = csv.chargerElements(GeStock);
-    	
-    	VueStocks vue = new VueStocks(listeElement);
-    	ControleurStocks ControlStock = new ControleurStocks(GeStock, vue);
-    	root.setTop(vue.getVue());
-    }
+    private void sceneChaine(FichierCSV csv, BorderPane root) {
+		GestionnaireProduction GeProd = new GestionnaireProduction();
+		ObservableList<ChaineDeProduction> listeChaine = csv.chargerChaines(GeProd);
+		
+		VueChaines vue = new VueChaines(listeChaine);
+		ControleurChaines ControlChaine = new ControleurChaines(GeProd, vue);
+		root.setBottom(vue.getVue());
+		
+	}
+
+	
+    
+    
     
     
     

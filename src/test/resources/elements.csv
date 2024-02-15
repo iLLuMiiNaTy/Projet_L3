@@ -1,8 +1,8 @@
 Code;Nom;Quantite;unite;achat;vente;UrlImage
-E001;Circuit principal;200;pieces;50;20;circuit.png
-E002;Plastique;500;sacs;3;NA;plastique.png
-E003;Plaques aluminium;100;pieces;20;10;aluminium.png
-E004;Servomoteurs;250;pieces;15;10;servomoteur.png
-E005;Propulsions;0;pieces;NA;15;propulsion.png
-E006;Coques;0;pieces;NA;NA;coque.png
-E007;Drones;0;pieces;NA;150;drone.png
+E001;Circuit principal;200;pieces;50;20;images/circuit.png
+E002;Plastique;500;sacs;3;NA;images/plastique.png
+E003;Plaques aluminium;100;pieces;20;10;images/aluminium.png
+E004;Servomoteurs;250;pieces;15;10;images/servomoteur.png
+E005;Propulsions;0;pieces;NA;15;images/propulsion.png
+E006;Coques;0;pieces;NA;NA;images/coque.png
+E007;Drones;0;pieces;NA;150;images/drone.png
