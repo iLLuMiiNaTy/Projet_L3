@@ -11,6 +11,8 @@ import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.image.Image;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -30,13 +32,23 @@ public class MonApplication extends Application{
         BorderPane root = new BorderPane();
         
         creerScenes(csv, root);
+        primaryStage.setTitle("Stock Master");
         
-        primaryStage.setTitle("Mon Application JavaFX");
+        Image icon = new Image(getClass().getResourceAsStream("/images/stock.png"));
+        primaryStage.getIcons().add(icon); // Ajouter l'icône
         
-        Scene scene = new Scene(root, 1920, 1080);
+        Scene scene = new Scene(root, 750, 750);
         scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+      
         
+        // Full Screen
+     	//============
+        primaryStage.setFullScreen(true); 
+        primaryStage.setFullScreenExitHint("You can't escape unless you press q");
+        primaryStage.setFullScreenExitKeyCombination(KeyCombination.valueOf("q"));
+      
         primaryStage.setScene(scene);
+
         primaryStage.show();
     }
     
@@ -54,6 +66,7 @@ public class MonApplication extends Application{
     	ControleurStocks ControlStock = new ControleurStocks(GeStock, vue);
     	root.setTop(vue.getVue());
     }
+    
     
     public void sceneCommande(FichierCSV csv, BorderPane root) {
     	GestionnaireCommande GeCom = new GestionnaireCommande();

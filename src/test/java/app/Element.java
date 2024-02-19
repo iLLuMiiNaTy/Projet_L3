@@ -77,4 +77,5 @@ public class Element {
 	public String getUrlImage() {
 		return urlImage;
 	}
+
 }
