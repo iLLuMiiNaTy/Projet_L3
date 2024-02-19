@@ -79,7 +79,7 @@ public class VueStocks {
 
         Button buttonMinus = new Button("-");
         buttonMinus.getStyleClass().add("button-plus-minus");
-
+        //ça c'est pour l'emplacement du button
         HBox buttonsBox = new HBox(10, buttonPlus, buttonMoins); // 10 est l'espacement que vous pouvez ajuster selon vos besoins
         buttonsBox.setAlignment(Pos.CENTER);
 
