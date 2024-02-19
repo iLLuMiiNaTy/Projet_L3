@@ -66,7 +66,7 @@ public class VueStocks {
             e.setQuantite(e.getQuantite() + 1);
             quantite.setText("Quantité: " + e.getQuantite() + " " + e.getUniteDeMesure());
         });
-
+//code qui faut deplacer au controlleur 
         Button buttonMoins = new Button("-");
         buttonMoins.getStyleClass().add("button-plus-minus");
         buttonMoins.setOnAction(event -> {
