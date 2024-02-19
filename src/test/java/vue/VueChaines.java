@@ -56,7 +56,7 @@ private Node creerVueChaines(ChaineDeProduction c) {
         vueElement.getStyleClass().add("card");
         
         Label code = new Label("Chaîne de production n°" + c.getCode());
-        Label niveauActivation = new Label("Niveau d'activation: " + c.getNiveauActivation());
+        Label niveauActivation = new Label("Niveau d'activation: " + c.getActivation());
         
         // Bouton pour ajuster le niveau d'activation
         Button btnAjuster = new Button("Ajuster");

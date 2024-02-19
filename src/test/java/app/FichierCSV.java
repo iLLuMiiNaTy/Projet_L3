@@ -151,7 +151,8 @@ public class FichierCSV {
                 String client = data[1];
                 String codeProduit = data[2];
                 String produit = data[3];
-                String quantite = data[4]; // Conversion de la quantité en entier
+                String quantiteString = data[4]; // Conversion de la quantité en entier
+                int quantite = Integer.parseInt(quantiteString);
 
                 Commande commande = new Commande(numeroCommande, client, codeProduit, produit, quantite);
                 listeCommande.add(commande);
@@ -163,7 +164,7 @@ public class FichierCSV {
 		return listeCommande;
     }
 
-	protected static Element trouverElementParCode(String code) {
+	public static Element trouverElementParCode(String code) {
         for (Element element : listeElement) {
             if (element.getCode().equals(code)) {
                 return element;

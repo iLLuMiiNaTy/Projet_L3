@@ -1,16 +1,18 @@
 package app;
 
+import javafx.beans.property.SimpleIntegerProperty;
+
 public class Transaction {
 	
 	private String nomElement;
-	private int quantite;
-	private int prix;
+	private SimpleIntegerProperty quantite;
+	private SimpleIntegerProperty prix;
 	private String type;//achat ou vente
 	
 	public Transaction(String nomElement, int quantite, int prix, String type) {
 		this.nomElement = nomElement;
-		this.quantite = quantite;
-		this.prix = prix;
+		this.quantite = new SimpleIntegerProperty(quantite);
+		this.prix = new SimpleIntegerProperty(prix);
 		this.type = type;
 	}
 	
@@ -32,12 +34,12 @@ public class Transaction {
 		return nomElement;
 	}
 
-	public int getQuantite() {
-		return quantite;
+	public final int getQuantite() {
+		return quantite.get();
 	}
 
-	public int getPrix() {
-		return prix;
+	public final int getPrix() {
+		return prix.get();
 	}
 
 	public String getType() {

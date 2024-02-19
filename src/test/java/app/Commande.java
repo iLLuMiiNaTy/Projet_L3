@@ -10,14 +10,14 @@ public class Commande {
 	private SimpleStringProperty client;
 	private SimpleStringProperty codeProduit;
 	private SimpleStringProperty produit;
-	private SimpleStringProperty quantite;
+	private SimpleIntegerProperty quantite;
 
-	public Commande(String numeroCommande, String client, String codeProduit, String produit, String quantite) {
+	public Commande(String numeroCommande, String client, String codeProduit, String produit, int quantite) {
 		this.numeroCommande = new SimpleStringProperty(numeroCommande);
 		this.client = new SimpleStringProperty(client);
 		this.codeProduit = new SimpleStringProperty(codeProduit);
 		this.produit = new SimpleStringProperty(produit);
-		this.quantite = new SimpleStringProperty(quantite);
+		this.quantite = new SimpleIntegerProperty(quantite);
 	}
 
 	@Override
@@ -36,49 +36,24 @@ public class Commande {
 		return s;
 	}
 
-	public String getNumeroCommande() {
+	public final String getNumeroCommande() {
 		return numeroCommande.get();
 	}
 
-	public String getClient() {
+	public final String getClient() {
 		return client.get();
 	}
 
-	public String getCodeProduit() {
+	public final String getCodeProduit() {
 		return codeProduit.get();
 	}
 
-	public String getProduit() {
+	public final String getProduit() {
 		return produit.get();
 	}
 
-	public String getQuantite() {
+	public final int getQuantite() {
 		return quantite.get();
-	}
-
-	public StringProperty numeroCommandeProperty() {
-		// TODO Auto-generated method stub
-		return numeroCommande;
-	}
-
-	public StringProperty clientProperty() {
-		// TODO Auto-generated method stub
-		return client;
-	}
-
-	public StringProperty codeProduitProperty() {
-		// TODO Auto-generated method stub
-		return codeProduit;
-	}
-
-	public StringProperty ProduitProperty() {
-		// TODO Auto-generated method stub
-		return produit;
-	}
-
-	public StringProperty QuantiteProperty() {
-		// TODO Auto-generated method stub
-		return quantite;
 	}
 
 
