@@ -59,7 +59,7 @@ public class VueStocks {
         Label quantite = new Label("Quantité: " + e.getQuantite() + " " + e.getUniteDeMesure());
         Label prixVente = new Label("Prix vente: " + e.getPrixVente() + " €");
 
-        // Ajouter les boutons "+" et "-" pour augmenter/diminuer la quantité
+        // Ajouter les boutons "+" et "-" pour augmenter/diminuer la quantités
         Button buttonPlus = new Button("+");
         buttonPlus.getStyleClass().add("button-plus-minus");
         buttonPlus.setOnAction(event -> {
