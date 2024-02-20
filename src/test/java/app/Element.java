@@ -7,22 +7,13 @@ public class Element {
 	private String uniteDeMesure;
 	private int prixAchat;
 	private int prixVente;
-<<<<<<< HEAD
 	private String urlImage;
-=======
-	private String image ;
->>>>>>> refs/remotes/origin/TestIliasse
 
-<<<<<<< HEAD
 	public Element(String code, String nom, int quantite, String uniteDeMesure, String prixAchat, String prixVente, String urlImage) {
-=======
-	public Element(String code, String nom, int quantite, String uniteDeMesure, String prixAchat, String prixVente, String image) {
->>>>>>> refs/remotes/origin/TestIliasse
 		this.code = code;
 		this.nom = nom;
 		this.quantite = quantite;
 		this.uniteDeMesure = uniteDeMesure;
-		this.image = image ;
 		if (prixAchat.equals("NA")) {
 			this.prixAchat = 0;
 		} else {
@@ -83,14 +74,8 @@ public class Element {
 		return prixVente;
 	}
 	
-<<<<<<< HEAD
 	public String getUrlImage() {
 		return urlImage;
 	}
 
-=======
-	public String getImage() {
-		return this.image;
-	}
->>>>>>> refs/remotes/origin/TestIliasse
 }

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 public class GestionnaireStock {
 
-<<<<<<< HEAD
     private HashMap<Element, Integer> listeElementStock;
 
     public GestionnaireStock() {
@@ -57,6 +56,3 @@ public class GestionnaireStock {
         return listeCverifiée;
     }
 }
-=======
-}
->>>>>>> refs/remotes/origin/TestIliasse

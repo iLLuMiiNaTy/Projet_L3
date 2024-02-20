@@ -1,36 +1,13 @@
 package app;
 
-<<<<<<< HEAD
-import java.util.List;
-
 import controleur.ControleurChaines;
 import controleur.ControleurCommandes;
 import controleur.ControleurStocks;
-=======
-import java.util.ArrayList;
-
->>>>>>> refs/remotes/origin/TestIliasse
 import javafx.application.Application;
-<<<<<<< HEAD
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-=======
-import javafx.geometry.Orientation;
->>>>>>> refs/remotes/origin/TestIliasse
 import javafx.scene.Scene;
-<<<<<<< HEAD
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
-=======
-import javafx.scene.control.Label;
-import javafx.scene.control.Separator;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
->>>>>>> refs/remotes/origin/TestIliasse
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import vue.VueChaines;
 import vue.VueCommandes;
@@ -42,7 +19,6 @@ public class MonApplication extends Application{
 		launch(args);
 	}
     
-<<<<<<< HEAD
     @Override
     public void start(Stage primaryStage){
         FichierCSV csv = new FichierCSV();
@@ -52,7 +28,8 @@ public class MonApplication extends Application{
         primaryStage.setTitle("Stock Master");
         
         Image icon = new Image(getClass().getResourceAsStream("/images/stock.png"));
-        primaryStage.getIcons().add(icon); // Ajouter l'icône
+        primaryStage.getIcons().add(icon); 
+        //Ajouter l'icône
         
         Scene scene = new Scene(root, 750, 750);
         scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
@@ -61,16 +38,13 @@ public class MonApplication extends Application{
         // Full Screen
      	//============
         primaryStage.setFullScreen(true); 
-        primaryStage.setFullScreenExitHint("You can't escape unless you press q");
-        primaryStage.setFullScreenExitKeyCombination(KeyCombination.valueOf("q"));
+        //primaryStage.setFullScreenExitHint("You can't escape unless you press q");
+        //primaryStage.setFullScreenExitKeyCombination(KeyCombination.valueOf("q"));
       
         primaryStage.setScene(scene);
 
         primaryStage.show();
     }
-=======
-  
->>>>>>> refs/remotes/origin/TestIliasse
     
     public void creerScenes(FichierCSV csv, BorderPane root) {
     	sceneStock(csv, root);
@@ -216,18 +190,5 @@ public class MonApplication extends Application{
 		System.out.println("AFFICHAGE TRANSACTION");
 		System.out.println("##########################");
     	GeFi.afficherVentes();
-<<<<<<< HEAD
     }*/
-=======
-    }
-
-
-
-	
-	
-
-
-
-
->>>>>>> refs/remotes/origin/TestIliasse
 }

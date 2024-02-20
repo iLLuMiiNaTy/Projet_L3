@@ -40,39 +40,16 @@ public class FichierCSV {
                 String uniteDeMesure = data[3];
                 String prixAchat = data[4];
                 String prixVente = data[5];
-<<<<<<< HEAD
                 String urlImage = data[6];
-=======
-                String image = data[6];
->>>>>>> refs/remotes/origin/TestIliasse
 
-<<<<<<< HEAD
                 Element element = new Element(code, nom, quantite, uniteDeMesure, prixAchat, prixVente, urlImage);
                 listeElement.add(element);
                 //GeCom.ajouterStock(element, quantite);
-=======
-                Element element = new Element(code, nom, quantite, uniteDeMesure, prixAchat, prixVente,image);
-                elements.add(element);
-                //gestionnaireStock.ajouterStock(element, quantite);
->>>>>>> refs/remotes/origin/TestIliasse
             }
         } catch (IOException e) {
             System.out.println("Erreur lors du chargement du fichier elements.csv : " + e.getMessage());
         }
-<<<<<<< HEAD
         return listeElement;
-=======
-    }
-
-	public ArrayList<Element>  afficherElements() {
-		System.out.println("\nAffichage des éléments :");
-        for (Element element : elements) {
-        	System.out.println("\n");
-        	
-        }
-        return (ArrayList<Element>) elements ;
-
->>>>>>> refs/remotes/origin/TestIliasse
     }
 
 	public void sauvegarderElements() {
