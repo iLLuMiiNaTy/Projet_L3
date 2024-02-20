@@ -30,3 +30,30 @@
     cursor: pointer;
     border-radius: 12px;
 }
+
+/* Ajoutez ces règles CSS dans votre fichier CSS */
+
+/* Style pour les boutons "+" et "-" */
+.button-plus-minus {
+    -fx-background-color: transparent; /* Couleur de fond transparente */
+    -fx-text-fill: Black; /* Couleur du texte */
+    -fx-font-size: 18px; /* Taille de la police */
+    -fx-font-weight: bold; /* Gras */
+    -fx-padding: 0; /* Pas d'espacement intérieur */
+    -fx-border-radius: 50%; /* Rendre les boutons ronds */
+    -fx-min-width: 30px; /* Largeur minimale */
+    -fx-min-height: 30px; /* Hauteur minimale */
+    -fx-max-width: 30px; /* Largeur maximale */
+    -fx-max-height: 30px; /* Hauteur maximale */
+    -fx-cursor: hand; /* Curseur de type main */
+    -fx-background-radius: 50%; /* Rendre les coins arrondis */
+    -fx-border-width: 1px; /* Largeur de la bordure */
+    -fx-border-color: #000000; /* Couleur de la bordure */
+    -fx-alignment: center; /* Centrer le contenu */
+    -fx-content-display: center; /* Centrer le contenu à l'intérieur du bouton */
+}
+
+/* Style pour les boutons "+" et "-" au survol */
+.button-plus-minus:hover {
+    -fx-background-color: #FFFFFF; /* Couleur de fond au survol */
+}

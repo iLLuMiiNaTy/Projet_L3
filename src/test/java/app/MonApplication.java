@@ -1,18 +1,13 @@
 package app;
 
-import java.util.List;
-
 import controleur.ControleurChaines;
 import controleur.ControleurCommandes;
 import controleur.ControleurStocks;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import vue.VueChaines;
 import vue.VueCommandes;
@@ -30,12 +25,22 @@ public class MonApplication extends Application{
         BorderPane root = new BorderPane();
         
         creerScenes(csv, root);
+        primaryStage.setTitle("Stock Master");
         
-        primaryStage.setTitle("Mon Application JavaFX");
+        Image icon = new Image(getClass().getResourceAsStream("/images/stock.png"));
+        primaryStage.getIcons().add(icon); 
+        //Ajouter l'icône
         
         Scene scene = new Scene(root, 750, 750);
         scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+      
         
+        // Full Screen
+     	//============
+        primaryStage.setFullScreen(true); 
+        //primaryStage.setFullScreenExitHint("You can't escape unless you press q");
+        //primaryStage.setFullScreenExitKeyCombination(KeyCombination.valueOf("q"));
+      
         primaryStage.setScene(scene);
         primaryStage.setFullScreen(true);
         primaryStage.show();
@@ -56,6 +61,7 @@ public class MonApplication extends Application{
     	root.setTop(vue.getVue());
     }
     
+    
     public void sceneCommande(FichierCSV csv, BorderPane root) {
     	GestionnaireCommande GeCom = new GestionnaireCommande();
         ObservableList<Commande> listeCommande = csv.chargerCommandes(GeCom);
@@ -73,5 +79,5 @@ public class MonApplication extends Application{
 		ControleurChaines ControlChaine = new ControleurChaines(GeProd, vue);
 		root.setBottom(vue.getVue());
 		
-	}
+    }
 }
