@@ -45,7 +45,8 @@ public class GestionnaireStock {
     }
 
     public boolean verifierStockCommande(Commande c) { // estStockSuffisant()
-    	return (c.getQuantite() <= c.getProduit().getQuantite()); // getProduit() return Element
+    	Element produitStock = FichierCSV.trouverElementParCode(c.getCodeProduit());
+    	return (c.getQuantite() <= produitStock.getQuantite());
     }
 
     public HashMap<Commande,Boolean> verifierStockListeCommande(ArrayList<Commande> listeCommande) {

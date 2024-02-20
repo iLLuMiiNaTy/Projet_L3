@@ -35,27 +35,6 @@ public class VueCommandes {
             TitledPane pane = new TitledPane("Commande n° " + commande.getNumeroCommande() + " - " + commande.getClient(), contenuCommande);
             accordion.getPanes().add(pane);
         }
-    	/*
-    	 // Configuration du TableView et ajout des colonnes
-        TableColumn<Commande, String> colonneNumero = new TableColumn<>("Numéro");
-        colonneNumero.setCellValueFactory(cellData -> cellData.getValue().numeroCommandeProperty());
-
-        TableColumn<Commande, String> colonneClient = new TableColumn<>("Client");
-        colonneClient.setCellValueFactory(cellData -> cellData.getValue().clientProperty());
-
-        TableColumn<Commande, String> colonneCode = new TableColumn<>("Code Produit");
-        colonneCode.setCellValueFactory(cellData -> cellData.getValue().codeProduitProperty());
-        
-        TableColumn<Commande, String> colonneProduit = new TableColumn<>("Produit");
-        colonneProduit.setCellValueFactory(cellData -> cellData.getValue().ProduitProperty());
-        
-        TableColumn<Commande, String> colonneQuantite = new TableColumn<>("Quantité");
-        colonneQuantite.setCellValueFactory(cellData -> cellData.getValue().QuantiteProperty());
-
-        table.getColumns().addAll(colonneNumero, colonneClient, colonneCode, colonneProduit, colonneQuantite); // Ajoutez les autres colonnes ici
-
-        table.setItems(listeCommande); // Liaison des données
-        */
     }
 
     public Accordion getVue() {

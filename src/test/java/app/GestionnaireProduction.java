@@ -1,27 +1,28 @@
 package app;
 
-import java.util.ArrayList;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class GestionnaireProduction {
 
-private ArrayList <ChaineDeProduction>chaine;
+	ObservableList<ChaineDeProduction> listeChaine;
 	
 	public GestionnaireProduction(){
-		chaine = new ArrayList<>();
+		listeChaine = FXCollections.observableArrayList();
 	}
 	
 	public void ajouterChaine(ChaineDeProduction c) {
-		chaine.add(c);
+		listeChaine.add(c);
 	}
 	
 
-	public void ajusterNiveauActivation(String codeChaine, int niveauActivation) {
+	public void ajusterNiveauActivation(String codeChaine, SimpleIntegerProperty niveauActivation) {
 		boolean chaineOK = false;
-		for (ChaineDeProduction c: chaine) {
+		for (ChaineDeProduction c: listeChaine) {
 			if (c.getCode().equals(codeChaine)) {
-				c.setNiveauActivation(niveauActivation);
-				chaineOK = true;
 				c.activer(niveauActivation);
+				chaineOK = true;
 			}
 		}
 		if (chaineOK = false) {
