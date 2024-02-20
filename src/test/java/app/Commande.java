@@ -1,20 +1,23 @@
 package app;
 
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 public class Commande {
 
-	private String numeroCommande;
-	private String client;
-	private String codeProduit;
-	private String produit;
-	private int quantite;
+	private SimpleStringProperty numeroCommande;
+	private SimpleStringProperty client;
+	private SimpleStringProperty codeProduit;
+	private SimpleStringProperty produit;
+	private SimpleIntegerProperty quantite;
 
-	public Commande(String numeroCommande, String client, String codeProduit, String produit, String quantite) {
-		super();
-		this.numeroCommande = numeroCommande;
-		this.client = client;
-		this.codeProduit = codeProduit;
-		this.produit = produit;
-		this.quantite = Integer.parseInt(quantite);
+	public Commande(String numeroCommande, String client, String codeProduit, String produit, int quantite) {
+		this.numeroCommande = new SimpleStringProperty(numeroCommande);
+		this.client = new SimpleStringProperty(client);
+		this.codeProduit = new SimpleStringProperty(codeProduit);
+		this.produit = new SimpleStringProperty(produit);
+		this.quantite = new SimpleIntegerProperty(quantite);
 	}
 
 	@Override
@@ -33,24 +36,24 @@ public class Commande {
 		return s;
 	}
 
-	public String getNumeroCommande() {
-		return numeroCommande;
+	public final String getNumeroCommande() {
+		return numeroCommande.get();
 	}
 
-	public String getClient() {
-		return client;
+	public final String getClient() {
+		return client.get();
 	}
 
-	public String getCodeProduit() {
-		return codeProduit;
+	public final String getCodeProduit() {
+		return codeProduit.get();
 	}
 
-	public String getProduit() {
-		return produit;
+	public final String getProduit() {
+		return produit.get();
 	}
 
-	public int getQuantite() {
-		return quantite;
+	public final int getQuantite() {
+		return quantite.get();
 	}
 
 

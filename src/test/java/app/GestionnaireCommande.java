@@ -1,10 +1,11 @@
 package app;
 
-import java.util.ArrayList;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class GestionnaireCommande {
 	
-	private ArrayList<Commande> listeCommande = new ArrayList<>();
+	ObservableList<Commande> listeCommande = FXCollections.observableArrayList();
 	
 	public void ajouterCommande(Commande com) {
 		listeCommande.add(com);

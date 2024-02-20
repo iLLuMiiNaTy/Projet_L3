@@ -3,19 +3,24 @@ package app;
 import java.util.HashMap;
 import java.util.Map;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+
 public class ChaineDeProduction {
     private String code;
     private String nom;
     private HashMap<Element, Float> elementsEntree;
     private HashMap<Element, Float> elementsSortie;
-    private int niveauActivation;
+    private String urlImage;
+    private SimpleIntegerProperty niveauActivation;
 
-    public ChaineDeProduction(String code, String nom, HashMap<Element, Float> elementsEntree, HashMap<Element, Float> elementsSortie) {
+    public ChaineDeProduction(String code, String nom, HashMap<Element, Float> elementsEntree, HashMap<Element, Float> elementsSortie, String urlImage) {
         this.code = code;
         this.nom = nom;
         this.elementsEntree = elementsEntree;
         this.elementsSortie = elementsSortie;
-        this.niveauActivation = 1;
+        this.urlImage = urlImage;
+        this.niveauActivation = new SimpleIntegerProperty(1);
     }
 
     @Override
@@ -44,6 +49,10 @@ public class ChaineDeProduction {
     			"\n|--------------------|";
     	return s;
     }
+    
+    public void activer(SimpleIntegerProperty niveau) {
+        setNiveauActivation(niveau);
+    }
 
     public String getCode() {
         return code;
@@ -69,15 +78,15 @@ public class ChaineDeProduction {
         this.elementsSortie = elementsSortie;
     }
 
-    public int getNiveauActivation() {
-        return niveauActivation;
+    public final int getActivation() {
+        return niveauActivation.get();
     }
 
-    public void setNiveauActivation(int niveauActivation) {
+    public void setNiveauActivation(SimpleIntegerProperty niveauActivation) {
         this.niveauActivation = niveauActivation;
     }
-
-    public void activer(int niveau) {
-        this.niveauActivation = niveau;
+    
+    public String getUrlImage() {
+    	return urlImage;
     }
 }

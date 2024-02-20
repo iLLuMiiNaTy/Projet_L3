@@ -9,30 +9,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public class FichierCSV {
-
-	 private static List <Element> elements;
-	 private static List <ChaineDeProduction> chaines;
-	 private static List<Commande> commandes; // Liste pour stocker les commandes chargées
-	 private static String pathElement = "src/test/resources/elements.csv";
-	 private static String pathChaine = "src/test/resources/chaines.csv";
-	 private static String pathCommande = "src/test/resources/commandes.csv";
-
-
-	public void chargerDonnees() {
-        chargerElements(pathElement);
-        chargerChaines(pathChaine);
-        chargerCommandes(pathCommande);
-    }
 
 //#########################################################################################################
 										//ELEMENTS
 //#########################################################################################################
+	
+	static ObservableList<Element> listeElement = FXCollections.observableArrayList();
 
-	public void chargerElements(String pathElement) {
-        elements = new ArrayList<>();// Initialisation de la liste des éléments
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(pathElement))) {
+	public ObservableList<Element> chargerElements(GestionnaireStock GeStock) {
+		
+        try (BufferedReader reader = new BufferedReader(new FileReader("src/test/resources/elements.csv"))) {
             String line;
             //Partie pour supprimer la première ligne des fichiers csv qui sert uniquement d'en tête
             boolean firstLine = true; // Variable pour suivre la première ligne
@@ -50,22 +40,16 @@ public class FichierCSV {
                 String uniteDeMesure = data[3];
                 String prixAchat = data[4];
                 String prixVente = data[5];
+                String urlImage = data[6];
 
-                Element element = new Element(code, nom, quantite, uniteDeMesure, prixAchat, prixVente);
-                elements.add(element);
-                //gestionnaireStock.ajouterStock(element, quantite);
+                Element element = new Element(code, nom, quantite, uniteDeMesure, prixAchat, prixVente, urlImage);
+                listeElement.add(element);
+                //GeCom.ajouterStock(element, quantite);
             }
         } catch (IOException e) {
             System.out.println("Erreur lors du chargement du fichier elements.csv : " + e.getMessage());
         }
-    }
-
-	public void afficherElements() {
-		System.out.println("\nAffichage des éléments :");
-        for (Element element : elements) {
-        	System.out.println("\n");
-        	System.out.println(element);
-        }
+        return listeElement;
     }
 
 	public void sauvegarderElements() {
@@ -76,7 +60,7 @@ public class FichierCSV {
 
             writer.newLine();
 
-            for (Element element : elements) {
+            for (Element element : listeElement) {
                 String line = element.getCode() + ";" + element.getNom() + ";" + element.getQuantite() + ";" + element.getUniteDeMesure();
                 writer.write(line);
                 writer.newLine();
@@ -92,10 +76,10 @@ public class FichierCSV {
 									//CHAINE DE PRODUCTION
 //#########################################################################################################
 
-	private void chargerChaines(String pathChaine) {
-        chaines = new ArrayList<>();// Initialisation de la liste des chaines
+	public ObservableList<ChaineDeProduction> chargerChaines(GestionnaireProduction GeProd) {
+		ObservableList<ChaineDeProduction> listeChaine = FXCollections.observableArrayList();
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(pathChaine))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("src/test/resources/chaines.csv"))) {
             String line;
             boolean firstLine = true; // Variable pour suivre la première ligne
             while ((line = reader.readLine()) != null) {
@@ -132,23 +116,16 @@ public class FichierCSV {
                     Element element = trouverElementParCode(elementCode);
                     elementsSortie.put(element, quantite);
                 }
+                String urlImage = data[4];
 
-                ChaineDeProduction chaine = new ChaineDeProduction(code, nom, elementsEntree, elementsSortie);
-                chaines.add(chaine);
-                //gestionnaireProduction.ajouterChaine(chaine);
+                ChaineDeProduction chaine = new ChaineDeProduction(code, nom, elementsEntree, elementsSortie, urlImage);
+                listeChaine.add(chaine);
+                GeProd.ajouterChaine(chaine);
             }
         } catch (IOException e) {
             System.out.println("Erreur lors du chargement du fichier chaines.csv : " + e.getMessage());
         }
-    }
-
-	public void afficherChaines() {
-        System.out.println("\nListe des chaînes de production :");
-        for (ChaineDeProduction chaine : chaines) {
-        	System.out.println("\n");
-        	System.out.println(chaine);
-
-        }
+        return listeChaine;
     }
 
 //#########################################################################################################
@@ -156,10 +133,10 @@ public class FichierCSV {
 //#########################################################################################################
 
 
-	public void chargerCommandes(String pathCommande) {
-        commandes = new ArrayList<>(); // Initialisation de la liste des commandes
+	public ObservableList<Commande> chargerCommandes(GestionnaireCommande GeCom) {
+		ObservableList<Commande> listeCommande = FXCollections.observableArrayList();
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(pathCommande))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("src/test/resources/commandes.csv"))) {
             String line;
             boolean firstLine = true; // Variable pour suivre la première ligne
             while ((line = reader.readLine()) != null) {
@@ -174,30 +151,21 @@ public class FichierCSV {
                 String client = data[1];
                 String codeProduit = data[2];
                 String produit = data[3];
-                String quantite = data[4]; // Conversion de la quantité en entier
+                String quantiteString = data[4]; // Conversion de la quantité en entier
+                int quantite = Integer.parseInt(quantiteString);
 
                 Commande commande = new Commande(numeroCommande, client, codeProduit, produit, quantite);
-                commandes.add(commande);
-                GestionnaireCommande gestionnaireCommande = new GestionnaireCommande();
-				gestionnaireCommande.ajouterCommande(commande);
+                listeCommande.add(commande);
+				GeCom.ajouterCommande(commande);
             }
         } catch (IOException e) {
             System.out.println("Erreur lors du chargement du fichier commandes.csv : " + e.getMessage());
         }
+		return listeCommande;
     }
 
-    // Méthode pour afficher les commandes
-    public void afficherCommandes(/*GestionnaireFinance GeFi*/) {//paramètre pour test sur les transactions (à enlever ensuite)
-        System.out.println("\nAffichage des commandes :");
-        for (Commande commande : commandes) {
-            System.out.println("\n");
-            System.out.println(commande);
-            //GeFi.nouvelleVente(commande);//Test pour ajouter de nouvelles vente
-        }
-    }
-
-	protected static Element trouverElementParCode(String code) {
-        for (Element element : elements) {
+	public static Element trouverElementParCode(String code) {
+        for (Element element : listeElement) {
             if (element.getCode().equals(code)) {
                 return element;
             }

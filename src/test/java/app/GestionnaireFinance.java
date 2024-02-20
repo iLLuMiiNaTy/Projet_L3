@@ -30,7 +30,6 @@ public class GestionnaireFinance {
     }
 	
 	public void nouvelAchat(Element element, int quantite) {//récupère depuis une boucle la quantité (pour les paramètres), pour chaque élément qu'on souhaite acheter et fais ensuite un traitement similaire à la méthode nouvellVente
-		//String numCommande, String nomElement, int quantite, int prix, String type
 		String nomElement = element.getNom();
 		//la quantité est donnée en paramètre
 		int prix = element.getPrixAchat() * quantite;
@@ -39,9 +38,31 @@ public class GestionnaireFinance {
     	transactions.add(transaction);
 	}
 	
-	public void totalTransaction(String type) {//type = achat/vente, s'il est appelé par la fonction getTotalAchats, alors le paramètre sera achat, la méthode parcours alors toutes les transactions 
+	public int totalTransaction(String type) {//type = achat/vente, s'il est appelé par la fonction getTotalAchats, alors le paramètre sera achat, la méthode parcours alors toutes les transactions 
 												//et additionne celle qui sont des achats pour retourner le total des achats, même procédé pour les ventes
-		
+		int resultat = 0;
+		for (Transaction transaction : transactions) {
+			if (transaction.getType().equals(type)) {
+				resultat += transaction.getPrix();
+			}
+		}
+		return resultat;
+	}
+	
+	public int getTotalAchat() {
+		int resultat;
+		resultat = totalTransaction("achat");
+		System.out.println("\nTotal des achats :");
+		System.out.println(resultat);
+		return resultat;
+	}
+	
+	public int getTotalVente() {
+		int resultat;
+		resultat = totalTransaction("vente");
+		System.out.println("\nTotal des ventes :");
+		System.out.println(resultat);
+		return resultat;
 	}
 
 }
