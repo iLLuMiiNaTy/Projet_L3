@@ -33,10 +33,11 @@ public class MonApplication extends Application{
         
         primaryStage.setTitle("Mon Application JavaFX");
         
-        Scene scene = new Scene(root, 1920, 1080);
+        Scene scene = new Scene(root, 750, 750);
         scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
         
         primaryStage.setScene(scene);
+        primaryStage.setFullScreen(true);
         primaryStage.show();
     }
     
