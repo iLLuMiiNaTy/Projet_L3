@@ -3,6 +3,7 @@ package vue;
 import java.util.List;
 
 import app.Element;
+import controleur.ControleurStocks;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -17,9 +18,10 @@ import javafx.scene.layout.VBox;
 
 public class VueStocks {
     private HBox carrousel;
-    private List<Button> buttons;
+    private ControleurStocks  ControlStocks;
     
-    public VueStocks(ObservableList<Element> elements) {
+    public VueStocks(ObservableList<Element> elements, ControleurStocks ControlStocks) {
+    	this.ControlStocks = ControlStocks;
         this.carrousel = new HBox(10); // Espacement de 10 entre chaque élément du carrousel
         carrousel.setPadding(new javafx.geometry.Insets(15)); // Un peu d'espacement autour du carrousel
         afficherElements(elements);
@@ -63,22 +65,19 @@ public class VueStocks {
         Button buttonPlus = new Button("+");
         buttonPlus.getStyleClass().add("button-plus-minus");
         buttonPlus.setOnAction(event -> {
-            e.setQuantite(e.getQuantite() + 1);
+            ControlStocks.augmenterQuantite(e);
             quantite.setText("Quantité: " + e.getQuantite() + " " + e.getUniteDeMesure());
         });
 //code qui faut deplacer au controlleur 
         Button buttonMoins = new Button("-");
         buttonMoins.getStyleClass().add("button-plus-minus");
         buttonMoins.setOnAction(event -> {
-            if (e.getQuantite() > 0) {
-                e.setQuantite(e.getQuantite() - 1);
-                quantite.setText("Quantité: " + e.getQuantite() + " " + e.getUniteDeMesure());
-            }
+            ControlStocks.diminuerQuantite(e);
+            quantite.setText("Quantité: " + e.getQuantite() + " " + e.getUniteDeMesure());
+            
         });
        
 
-        Button buttonMinus = new Button("-");
-        buttonMinus.getStyleClass().add("button-plus-minus");
         //ça c'est pour l'emplacement du button
         HBox buttonsBox = new HBox(10, buttonPlus, buttonMoins); // 10 est l'espacement que vous pouvez ajuster selon vos besoins
         buttonsBox.setAlignment(Pos.CENTER);

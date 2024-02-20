@@ -56,8 +56,8 @@ public class MonApplication extends Application{
     	GestionnaireStock GeStock = new GestionnaireStock();
     	ObservableList<Element> listeElement = csv.chargerElements(GeStock);
     	
-    	VueStocks vue = new VueStocks(listeElement);
-    	ControleurStocks ControlStock = new ControleurStocks(GeStock, vue);
+    	ControleurStocks ControlStock = new ControleurStocks(GeStock);
+    	VueStocks vue = new VueStocks(listeElement, ControlStock);
     	root.setTop(vue.getVue());
     }
     
