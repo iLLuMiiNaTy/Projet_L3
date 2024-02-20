@@ -1,19 +1,35 @@
 package app;
 
+<<<<<<< HEAD
 import java.util.List;
 
 import controleur.ControleurChaines;
 import controleur.ControleurCommandes;
 import controleur.ControleurStocks;
+=======
+import java.util.ArrayList;
+
+>>>>>>> refs/remotes/origin/TestIliasse
 import javafx.application.Application;
+<<<<<<< HEAD
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+=======
+import javafx.geometry.Orientation;
+>>>>>>> refs/remotes/origin/TestIliasse
 import javafx.scene.Scene;
+<<<<<<< HEAD
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
+=======
+import javafx.scene.control.Label;
+import javafx.scene.control.Separator;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+>>>>>>> refs/remotes/origin/TestIliasse
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import vue.VueChaines;
@@ -26,6 +42,7 @@ public class MonApplication extends Application{
 		launch(args);
 	}
     
+<<<<<<< HEAD
     @Override
     public void start(Stage primaryStage){
         FichierCSV csv = new FichierCSV();
@@ -51,6 +68,9 @@ public class MonApplication extends Application{
 
         primaryStage.show();
     }
+=======
+  
+>>>>>>> refs/remotes/origin/TestIliasse
     
     public void creerScenes(FichierCSV csv, BorderPane root) {
     	sceneStock(csv, root);
@@ -146,12 +166,68 @@ public class MonApplication extends Application{
         csv.sauvegarderElements();
     }
     
-    
+   @Override
+    public void start(Stage primaryStage )throws Exception {
+	    FichierCSV csv = new FichierCSV();
+	    csv.chargerDonnees(); // Charger les données à partir du fichier CSV
+
+	    ArrayList<Element> elements = csv.afficherElements(); // Récupérer les éléments
+
+	    VBox vbox = new VBox();
+
+	    for (Element element : elements) {
+	    	
+	    	 Image image = new Image("file:" + element.getImage());
+	         
+	         // Calcul de la hauteur en conservant le rapport hauteur/largeur de l'image d'origine
+	         double aspectRatio = image.getWidth() / image.getHeight();
+	         double imageHeight = 100; // Vous pouvez ajuster cette valeur selon vos besoins
+	         double imageWidth = imageHeight * aspectRatio;
+	         
+	         ImageView imageView = new ImageView(image);
+	         imageView.setFitWidth(imageWidth);
+	         imageView.setFitHeight(imageHeight);
+	         
+	        Label codeLabel = new Label("Code : " + element.getCode());
+	        Label nomLabel = new Label("Nom : " + element.getNom());
+	        Label quantiteLabel = new Label("Quantité : " + element.getQuantite() + " " + element.getUniteDeMesure());
+	        Label prixAchatLabel = new Label("Prix d'achat : " + element.getPrixAchat() + " €");
+	        Label prixVenteLabel = new Label("Prix de vente : " + element.getPrixVente() + " €");
+
+
+
+	        vbox.getChildren().addAll(codeLabel, nomLabel, quantiteLabel, prixAchatLabel, prixVenteLabel);
+	        
+	        // Ajout d'un séparateur entre chaque élément
+	        vbox.getChildren().addAll(new Separator(Orientation.HORIZONTAL));
+	    }
+	    
+	    // Création de la scène avec la VBox comme racine
+	    Scene scene = new Scene(vbox, 600, 600);
+
+	    // Configuration de la scène et affichage de la fenêtre
+	    primaryStage.setScene(scene);
+	    primaryStage.setTitle("Affichage des éléments");
+	    primaryStage.show();
+	}
     
     private static void affichageTransaction(GestionnaireFinance GeFi) {
     	System.out.println("\n##########################");
 		System.out.println("AFFICHAGE TRANSACTION");
 		System.out.println("##########################");
     	GeFi.afficherVentes();
+<<<<<<< HEAD
     }*/
+=======
+    }
+
+
+
+	
+	
+
+
+
+
+>>>>>>> refs/remotes/origin/TestIliasse
 }
