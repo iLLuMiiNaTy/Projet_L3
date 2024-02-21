@@ -16,8 +16,8 @@ public class ControleurStocks {
         // Ajoutez la logique pour gérer les actions de l'utilisateur, comme des clics sur des boutons
     }
     
-    public void augmenterQuantite(Element e) {
-    	e.setQuantite(e.getQuantite() + 1);
+    public void augmenterQuantite(Element e, int quantite) {
+    	e.setQuantite(e.getQuantite() + quantite);
     }
 
     public void diminuerQuantite(Element e) {

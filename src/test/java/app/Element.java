@@ -1,5 +1,6 @@
 package app;
 
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class Element {
@@ -10,6 +11,7 @@ public class Element {
 	private int prixAchat;
 	private int prixVente;
 	private String urlImage;
+	private SimpleIntegerProperty quantiteTemporaire;
 
 	public Element(String code, String nom, int quantite, String uniteDeMesure, String prixAchat, String prixVente, String urlImage) {
 		this.code = code;
@@ -27,6 +29,7 @@ public class Element {
 			this.prixVente = Integer.parseInt(prixVente);
 		}
 		this.urlImage = urlImage;
+		this.quantiteTemporaire = new SimpleIntegerProperty(0);
 	}
 
 	@Override
@@ -78,6 +81,18 @@ public class Element {
 	
 	public String getUrlImage() {
 		return urlImage;
+	}
+	
+	public final int getQuantiteTemporaire() {
+		return quantiteTemporaire.get();
+	}
+	
+	public final void setQuantiteTemporaire(int quantite) {
+		this.quantiteTemporaire.set(quantite);
+	}
+
+	public IntegerProperty quantiteTemporaireProperty() {
+		return quantiteTemporaire;
 	}
 
 }

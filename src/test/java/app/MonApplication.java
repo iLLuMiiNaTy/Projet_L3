@@ -31,7 +31,7 @@ public class MonApplication extends Application{
         primaryStage.getIcons().add(icon); 
         //Ajouter l'icône
         
-        Scene scene = new Scene(root, 1100, 800);
+        Scene scene = new Scene(root, 1300, 850);
         scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
       
         primaryStage.setScene(scene);

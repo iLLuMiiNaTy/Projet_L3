@@ -1,7 +1,5 @@
 package vue;
 
-import java.util.List;
-
 import app.Element;
 import controleur.ControleurStocks;
 import javafx.collections.ObservableList;
@@ -10,6 +8,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -60,29 +59,46 @@ public class VueStocks {
         Label nom = new Label(e.getNom());
         Label quantite = new Label("Quantité: " + e.getQuantite() + " " + e.getUniteDeMesure());
         Label prixVente = new Label("Prix vente: " + e.getPrixVente() + " €");
+        TextField quantiteTemporaireText = new TextField("0");
+        quantiteTemporaireText.textProperty().bind(e.quantiteTemporaireProperty().asString().concat(" ").concat(e.getUniteDeMesure()));
 
         // Boutons "+" et "-" pour augmenter/diminuer la quantité
         Button buttonPlus = new Button("+");
         buttonPlus.getStyleClass().add("button-plus-minus");
         buttonPlus.setOnAction(event -> {
-            ControlStocks.augmenterQuantite(e);
-            quantite.setText("Quantité: " + e.getQuantite() + " " + e.getUniteDeMesure());
+            //ControlStocks.augmenterQuantite(e);
+        	e.setQuantiteTemporaire(e.getQuantiteTemporaire() + 1);//Modifie la quantité temporaire
+            //quantite.setText("Quantité: " + e.getQuantite() + " " + e.getUniteDeMesure());
+        	//quantiteTemporaireText.setText(String.valueOf(e.getQuantiteTemporaire()));//Met à jour l'affichage
         });
         
         Button buttonMoins = new Button("-");
         buttonMoins.getStyleClass().add("button-plus-minus");
         buttonMoins.setOnAction(event -> {
-            ControlStocks.diminuerQuantite(e);
-            quantite.setText("Quantité: " + e.getQuantite() + " " + e.getUniteDeMesure());
+            //ControlStocks.diminuerQuantite(e);
+            //quantite.setText("Quantité: " + e.getQuantite() + " " + e.getUniteDeMesure());
+            //quantite.textProperty().bind(e.quantiteTemporaireProperty().asString().concat(" ").concat(e.getUniteDeMesure()));
+            //Pour afficher dynamiquement les changements de quantités (pas encore au point)
+        	if (e.getQuantiteTemporaire() > 0) {//Empèche une diminution en dessous de 0
+        		e.setQuantiteTemporaire(e.getQuantiteTemporaire() - 1);
+        		//quantiteTemporaireText.setText(String.valueOf(e.getQuantiteTemporaire()));//Met à jour l'affichage
+        	}
             
+        });
+        
+        Button validerAchat = new Button("Valider Achat");
+        validerAchat.setOnAction(event ->{
+        	ControlStocks.augmenterQuantite(e, e.getQuantiteTemporaire());//Utilise la méthode du ControleurStocks pour ajouter la quantiteTemporaire au stock
+        	e.setQuantiteTemporaire(0);
+        	quantite.setText("Quantité: " + e.getQuantite() + " " + e.getUniteDeMesure());
         });
        
 
         //ça c'est pour l'emplacement du button
-        HBox buttonsBox = new HBox(10, buttonPlus, buttonMoins); // 10 est l'espacement que vous pouvez ajuster selon vos besoins
+        HBox buttonsBox = new HBox(10, buttonPlus, quantiteTemporaireText, buttonMoins); // 10 est l'espacement que vous pouvez ajuster selon vos besoins
         buttonsBox.setAlignment(Pos.CENTER);
 
-        vueElement.getChildren().addAll(imageContainer, nom, quantite, prixVente, buttonsBox);
+        vueElement.getChildren().addAll(imageContainer, nom, quantite, prixVente, buttonsBox, validerAchat);
 
         return vueElement;
     }
