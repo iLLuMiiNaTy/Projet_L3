@@ -1,6 +1,7 @@
 package app;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import javafx.collections.ObservableList;
 
@@ -9,15 +10,24 @@ import java.util.ArrayList;
 public class GestionnaireStock {
 
     private HashMap<Element, Integer> listeElementStock;
-    private ObservableList<Element> listeElement;
+    private static ObservableList<Element> listeElement;
 
     public GestionnaireStock() {
     	this.listeElementStock = new HashMap<>();
     	remplirListeElementStock();
     }
     
+    public static Element trouverElementParCode(String code) {
+        for (Element element : listeElement) {
+            if (element.getCode().equals(code)) {
+                return element;
+            }
+        }
+        return null; // Si aucun élément correspondant n'est trouvé
+    }
+    
     public void remplirListeElementStock(){
-    	this.listeElement = FichierCSV.getListeElement();
+    	listeElement = FichierCSV.getListeElement();
     	for(Element e : listeElement) {
     		ajouterStock(e, e.getQuantite());
     	}
@@ -56,9 +66,51 @@ public class GestionnaireStock {
         System.out.println(s);
     }
 
-    public static boolean verifierStockCommande(Commande c) { // estStockSuffisant()
+    /*public static boolean verifierStockCommande(Commande c) { // estStockSuffisant()
     	Element produitStock = FichierCSV.trouverElementParCode(c.getCodeProduit());
     	return (c.getQuantite() <= produitStock.getQuantite());
+    }*/
+    
+    public boolean verifierStockCommande(Commande commande) {
+        // Trouver le produit fini correspondant au code produit de la commande
+        Element produitFinal = trouverElementParCode(commande.getCodeProduit());
+
+        // Création d'une Map pour stocker les éléments nécessaires et leurs quantités requises pour la commande
+        HashMap<Element, Float> elementsNecessaires = new HashMap<>();
+
+        // Ajouter le produit final et sa quantité à la liste des éléments nécessaires
+        elementsNecessaires.put(produitFinal, (float)commande.getQuantite());
+
+        // Calcul des éléments nécessaires pour produire le produit final dans la quantité demandée
+        calculerElementsNecessaires(produitFinal, commande.getQuantite(), elementsNecessaires);
+
+        // Parcourir tous les éléments nécessaires pour vérifier si le stock est suffisant
+        for (Map.Entry<Element, Float> entree : elementsNecessaires.entrySet()) {
+        	Element element = entree.getKey();
+        	float quantiteNecessaire = entree.getValue();
+        	if (element.getQuantite() < quantiteNecessaire) {
+        	    return false; // Retourne faux si la quantité en stock d'un élément est insuffisante
+        	}
+        }
+
+        return true; // Tous les éléments nécessaires sont en quantité suffisante dans le stock
+    }
+    
+    private void calculerElementsNecessaires(Element element, float quantite, HashMap<Element, Float> elementsNecessaires) {
+        ChaineDeProduction chaine = GestionnaireProduction.getChaineParElementSortie(element); // Méthode pour obtenir la chaîne de production basée sur l'élément de sortie
+        if (chaine != null) {
+            for (Map.Entry<Element, Float> entree : chaine.getElementsEntree().entrySet()) {
+            	Element elemEntree = entree.getKey();
+            	float quantiteRequiseParUnitéProduite = entree.getValue();
+            	float quantiteTotaleRequise = quantite * quantiteRequiseParUnitéProduite;
+
+            	// Si l'élément existe déjà dans la Map, on additionne la quantité nécessaire
+            	elementsNecessaires.merge(elemEntree, quantiteTotaleRequise, Float::sum);
+
+            	// Récursivité pour prendre en compte les éléments d'entrée des éléments d'entrée
+            	calculerElementsNecessaires(elemEntree, quantiteTotaleRequise, elementsNecessaires);
+            }
+        }
     }
 
     public HashMap<Commande,Boolean> verifierStockListeCommande(ArrayList<Commande> listeCommande) {
@@ -70,6 +122,6 @@ public class GestionnaireStock {
     }
     
     public void satisfaireCommande (Commande c) {
-    	retirerStock(FichierCSV.trouverElementParCode(c.getCodeProduit()), c.getQuantite());
+    	retirerStock(trouverElementParCode(c.getCodeProduit()), c.getQuantite());
     }
 }

@@ -5,10 +5,7 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -79,10 +76,10 @@ public class FichierCSV {
 //#########################################################################################################
 									//CHAINE DE PRODUCTION
 //#########################################################################################################
-
-	static ObservableList<ChaineDeProduction> listeChaine = FXCollections.observableArrayList();
 	
 	public ObservableList<ChaineDeProduction> chargerChaines(GestionnaireProduction GeProd) {
+		
+		ObservableList<ChaineDeProduction> listeChaine = FXCollections.observableArrayList();
 
         try (BufferedReader reader = new BufferedReader(new FileReader("src/test/resources/chaines.csv"))) {
             String line;
@@ -106,7 +103,7 @@ public class FichierCSV {
                     String elementCode = elementInfo[0];
                     float quantite = Float.parseFloat(elementInfo[1]);
 
-                    Element element = trouverElementParCode(elementCode);
+                    Element element = GestionnaireStock.trouverElementParCode(elementCode);
                     elementsEntree.put(element, quantite);
                 }
 
@@ -118,32 +115,28 @@ public class FichierCSV {
                     String elementCode = elementInfo[0];
                     float quantite = Float.parseFloat(elementInfo[1]);
 
-                    Element element = trouverElementParCode(elementCode);
+                    Element element = GestionnaireStock.trouverElementParCode(elementCode);
                     elementsSortie.put(element, quantite);
                 }
                 String urlImage = data[4];
 
                 ChaineDeProduction chaine = new ChaineDeProduction(code, nom, elementsEntree, elementsSortie, urlImage);
                 listeChaine.add(chaine);
-                //GeProd.ajouterChaine(chaine);
+                GeProd.ajouterChaine(chaine);
             }
         } catch (IOException e) {
             System.out.println("Erreur lors du chargement du fichier chaines.csv : " + e.getMessage());
         }
         return listeChaine;
     }
-	
-	public static ObservableList<ChaineDeProduction> getListeChaine(){
-		return listeChaine;
-	}
 
 //#########################################################################################################
 										//COMMANDES
 //#########################################################################################################
-
-	static ObservableList<Commande> listeCommande = FXCollections.observableArrayList();
 	
 	public ObservableList<Commande> chargerCommandes(GestionnaireCommande GeCom) {
+		
+		ObservableList<Commande> listeCommande = FXCollections.observableArrayList();
 
         try (BufferedReader reader = new BufferedReader(new FileReader("src/test/resources/commandes.csv"))) {
             String line;
@@ -165,26 +158,13 @@ public class FichierCSV {
 
                 Commande commande = new Commande(numeroCommande, client, codeProduit, produit, quantite);
                 listeCommande.add(commande);
-				//GeCom.ajouterCommande(commande);
+				GeCom.ajouterCommande(commande);
             }
         } catch (IOException e) {
             System.out.println("Erreur lors du chargement du fichier commandes.csv : " + e.getMessage());
         }
         GeCom.simulerCommande();
 		return listeCommande;
-    }
-	
-	public static ObservableList<Commande> getListeCommande(){
-		return listeCommande;
-	}
-
-	public static Element trouverElementParCode(String code) {
-        for (Element element : listeElement) {
-            if (element.getCode().equals(code)) {
-                return element;
-            }
-        }
-        return null; // Si aucun élément correspondant n'est trouvé
     }
 
 

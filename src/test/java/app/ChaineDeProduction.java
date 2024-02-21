@@ -2,8 +2,6 @@ package app;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class ChaineDeProduction {
@@ -50,7 +48,7 @@ public class ChaineDeProduction {
     	return s;
     }
     
-    public void activer(SimpleIntegerProperty niveau) {
+    public void activer(int niveau) {
         setNiveauActivation(niveau);
     }
 
@@ -82,8 +80,8 @@ public class ChaineDeProduction {
         return niveauActivation.get();
     }
 
-    public void setNiveauActivation(SimpleIntegerProperty niveauActivation) {
-        this.niveauActivation = niveauActivation;
+    public void setNiveauActivation(int niveauActivation) {
+        this.niveauActivation = new SimpleIntegerProperty(niveauActivation);
     }
     
     public String getUrlImage() {

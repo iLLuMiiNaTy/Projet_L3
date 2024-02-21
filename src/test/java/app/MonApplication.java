@@ -39,13 +39,13 @@ public class MonApplication extends Application{
     }
     
     public void creerScenes(FichierCSV csv, BorderPane root) {
-    	sceneStock(csv, root);
-    	sceneCommande(csv, root);
-    	sceneChaine(csv, root);
+    	GestionnaireStock GeStock = new GestionnaireStock();
+    	sceneStock(csv, root, GeStock);
+    	sceneCommande(csv, root, GeStock);
+    	sceneChaine(csv, root, GeStock);
     }
     
-    public void sceneStock(FichierCSV csv, BorderPane root) {
-    	GestionnaireStock GeStock = new GestionnaireStock();
+    public void sceneStock(FichierCSV csv, BorderPane root, GestionnaireStock GeStock) {
     	ObservableList<Element> listeElement = csv.chargerElements(GeStock);
     	
     	ControleurStocks ControlStock = new ControleurStocks(GeStock);
@@ -54,8 +54,8 @@ public class MonApplication extends Application{
     }
     
     
-    public void sceneCommande(FichierCSV csv, BorderPane root) {
-    	GestionnaireCommande GeCom = new GestionnaireCommande();
+    public void sceneCommande(FichierCSV csv, BorderPane root, GestionnaireStock GeStock) {
+    	GestionnaireCommande GeCom = new GestionnaireCommande(GeStock);
         ObservableList<Commande> listeCommande = csv.chargerCommandes(GeCom);
         
         ControleurCommandes ControlCom = new ControleurCommandes(GeCom);
@@ -63,8 +63,8 @@ public class MonApplication extends Application{
         root.setCenter(vue.getVue());
     }
     
-    private void sceneChaine(FichierCSV csv, BorderPane root) {
-		GestionnaireProduction GeProd = new GestionnaireProduction();
+    private void sceneChaine(FichierCSV csv, BorderPane root, GestionnaireStock GeStock) {
+		GestionnaireProduction GeProd = new GestionnaireProduction(GeStock);
 		ObservableList<ChaineDeProduction> listeChaine = csv.chargerChaines(GeProd);
 		
 		ControleurChaines ControlChaine = new ControleurChaines(GeProd);

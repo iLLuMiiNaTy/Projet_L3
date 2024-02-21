@@ -2,6 +2,7 @@ package vue;
 
 import app.ChaineDeProduction;
 import app.Element;
+import app.GestionnaireProduction;
 import controleur.ControleurChaines;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -62,13 +63,12 @@ private Node creerVueChaines(ChaineDeProduction c) {
         Label niveauActivation = new Label("Niveau d'activation: " + c.getActivation());
         
         // Bouton pour ajuster le niveau d'activation
-        Button btnAjuster = new Button("Ajuster");
-        btnAjuster.setOnAction(e -> {
-            // Ici, insérez le code pour ajuster le niveau (ex : afficher une boîte de dialogue)
-            System.out.println("Ajustement du niveau d'activation pour : " + c.getCode());
+        Button btnSimuler = new Button("Lancer la simulation");
+        btnSimuler.setOnAction(e -> {
+            GestionnaireProduction.simulerProduction();
         });
         
-        vueElement.getChildren().addAll(imageContainer, code, niveauActivation, btnAjuster);
+        vueElement.getChildren().addAll(imageContainer, code, niveauActivation, btnSimuler);
         
         return vueElement;
     }
