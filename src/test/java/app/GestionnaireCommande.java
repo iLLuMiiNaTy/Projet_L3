@@ -17,7 +17,7 @@ public class GestionnaireCommande {
 	}
 	
 	public boolean simulerCommande() {
-		ObservableList<Element> listeElementTemporaire = FichierCSV.getListeElement();
+		ObservableList<Element> listeElementTemporaire = GestionnaireStock.getListeElement();
 		//GestionnaireProduction.simulerProduction(listeElementTemporaire, this.listeCommande);
 		//appel à simulerProduction avec en paramètre une liste d'éléments temporaires pour ne pas affecter le stocks d'éléments
 		return false;

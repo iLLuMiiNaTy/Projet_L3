@@ -14,10 +14,10 @@ public class FichierCSV {
 //#########################################################################################################
 										//ELEMENTS
 //#########################################################################################################
-	
-	static ObservableList<Element> listeElement = FXCollections.observableArrayList();
 
 	public ObservableList<Element> chargerElements(GestionnaireStock GeStock) {
+		
+		ObservableList<Element> listeElement = FXCollections.observableArrayList();
 		
         try (BufferedReader reader = new BufferedReader(new FileReader("src/test/resources/elements.csv"))) {
             String line;
@@ -41,15 +41,11 @@ public class FichierCSV {
 
                 Element element = new Element(code, nom, quantite, uniteDeMesure, prixAchat, prixVente, urlImage);
                 listeElement.add(element);
-                //GeStock.ajouterStock(element, quantite);
+                GeStock.ajouterStock(element, quantite);
             }
         } catch (IOException e) {
             System.out.println("Erreur lors du chargement du fichier elements.csv : " + e.getMessage());
         }
-        return listeElement;
-    }
-	
-	public static ObservableList<Element> getListeElement() { // Permet d'accéder à ma liste d'élément depuis n'importe où
         return listeElement;
     }
 
@@ -61,7 +57,7 @@ public class FichierCSV {
 
             writer.newLine();
 
-            for (Element element : listeElement) {
+            for (Element element : GestionnaireStock.getListeElement()) {
                 String line = element.getCode() + ";" + element.getNom() + ";" + element.getQuantite() + ";" + element.getUniteDeMesure();
                 writer.write(line);
                 writer.newLine();

@@ -3,19 +3,14 @@ package app;
 import java.util.HashMap;
 import java.util.Map;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 
 public class GestionnaireStock {
 
-    private HashMap<Element, Integer> listeElementStock;
-    private static ObservableList<Element> listeElement;
-
-    public GestionnaireStock() {
-    	this.listeElementStock = new HashMap<>();
-    	remplirListeElementStock();
-    }
+    private static ObservableList<Element> listeElement = FXCollections.observableArrayList();
     
     public static Element trouverElementParCode(String code) {
         for (Element element : listeElement) {
@@ -25,39 +20,30 @@ public class GestionnaireStock {
         }
         return null; // Si aucun élément correspondant n'est trouvé
     }
-    
-    public void remplirListeElementStock(){
-    	listeElement = FichierCSV.getListeElement();
-    	for(Element e : listeElement) {
-    		ajouterStock(e, e.getQuantite());
-    	}
-    }
 
     public void ajouterStock(Element e, int q) {
-        if (this.listeElementStock.containsKey(e)){
-            e.setQuantite(e.getQuantite() + q);
-            System.out.println("Quantité ajoutée\n");
+        for (Element elem : listeElement) {
+        	if (elem.equals(e)){
+        		e.setQuantite(e.getQuantite() + q);
+        	}
         }
-        else {
-            this.listeElementStock.put(e,q);
-            System.out.println("Quantité ajoutée (nouvel element)\n");
-        }
+        listeElement.add(e);
+        //System.out.println("Erreur aujouterStock | Classe GestionnaireStock\nListeElement ne contient pas cette élément");
+        
     }
 
     public void retirerStock(Element e, int q) {
-        if (! this.listeElementStock.containsKey(e)) {
-            System.out.println("Erreur : Element non stocké !\n");
-        }
-        else {
-            if (e.getQuantite() < q) {
-                System.out.println("Erreur : Stock insuffisant !\n");
-            }
-            else {
-                e.setQuantite(e.getQuantite() - q);
-            }
-        }
+    	for (Element elem : listeElement) {
+    		if (elem.equals(e)) {
+    			e.setQuantite(e.getQuantite() - q);
+    		}else {
+    			if (e.getQuantite() < q) {
+    				System.out.println("Erreur : Stock insuffisant !\n");
+    			}
+    		}
+    	}
     }
-    
+    /*
     public void afficherStock() { // need ?
         String s = "";
         for (Element e : this.listeElementStock.keySet()) {
@@ -65,6 +51,7 @@ public class GestionnaireStock {
         }
         System.out.println(s);
     }
+    */
 
     /*public static boolean verifierStockCommande(Commande c) { // estStockSuffisant()
     	Element produitStock = FichierCSV.trouverElementParCode(c.getCodeProduit());
@@ -123,5 +110,9 @@ public class GestionnaireStock {
     
     public void satisfaireCommande (Commande c) {
     	retirerStock(trouverElementParCode(c.getCodeProduit()), c.getQuantite());
+    }
+    
+    public static ObservableList<Element> getListeElement() { // Permet d'accéder à ma liste d'élément depuis n'importe où
+        return listeElement;
     }
 }
