@@ -17,7 +17,7 @@ public class ControleurStocks {
     }
     
     public void augmenterQuantite(Element e, int quantite) {
-    	e.setQuantite(e.getQuantite() + quantite);
+    	GeStock.ajouterStock(e, quantite);
     }
 
     public void diminuerQuantite(Element e) {

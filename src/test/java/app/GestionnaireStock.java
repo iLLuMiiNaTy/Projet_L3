@@ -1,14 +1,26 @@
 package app;
 
 import java.util.HashMap;
+
+import javafx.collections.ObservableList;
+
 import java.util.ArrayList;
 
 public class GestionnaireStock {
 
     private HashMap<Element, Integer> listeElementStock;
+    private ObservableList<Element> listeElement;
 
     public GestionnaireStock() {
-        this.listeElementStock = new HashMap<>();
+    	this.listeElementStock = new HashMap<>();
+    	remplirListeElementStock();
+    }
+    
+    public void remplirListeElementStock(){
+    	this.listeElement = FichierCSV.getListeElement();
+    	for(Element e : listeElement) {
+    		ajouterStock(e, e.getQuantite());
+    	}
     }
 
     public void ajouterStock(Element e, int q) {
@@ -44,7 +56,7 @@ public class GestionnaireStock {
         System.out.println(s);
     }
 
-    public boolean verifierStockCommande(Commande c) { // estStockSuffisant()
+    public static boolean verifierStockCommande(Commande c) { // estStockSuffisant()
     	Element produitStock = FichierCSV.trouverElementParCode(c.getCodeProduit());
     	return (c.getQuantite() <= produitStock.getQuantite());
     }
@@ -55,5 +67,9 @@ public class GestionnaireStock {
             listeCverifiée.put(c, verifierStockCommande(c));
         }
         return listeCverifiée;
+    }
+    
+    public void satisfaireCommande (Commande c) {
+    	retirerStock(FichierCSV.trouverElementParCode(c.getCodeProduit()), c.getQuantite());
     }
 }
