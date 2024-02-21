@@ -4,12 +4,10 @@ import app.GestionnaireCommande;
 import vue.VueCommandes;
 
 public class ControleurCommandes {
-    private GestionnaireCommande gestionnaireCommande;
-    private VueCommandes vue;
+    private GestionnaireCommande GeCom;
 
-    public ControleurCommandes(GestionnaireCommande gestionnaireCommande, VueCommandes vue) {
-        this.gestionnaireCommande = gestionnaireCommande;
-        this.vue = vue;
+    public ControleurCommandes(GestionnaireCommande GeCom) {
+        this.GeCom = GeCom;
         initControleur();
     }
 

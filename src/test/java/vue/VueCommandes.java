@@ -1,12 +1,10 @@
 package vue;
 
 import app.Commande;
-import javafx.collections.FXCollections;
+import controleur.ControleurCommandes;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.VBox;
 
@@ -14,9 +12,11 @@ public class VueCommandes {
     //private TableView<Commande> table = new TableView<>();
     private Accordion accordion = new Accordion();
     private ObservableList<Commande> listeCommande;
+    private ControleurCommandes ControlCom;
 
-    public VueCommandes(ObservableList<Commande> listeCommande) {
+    public VueCommandes(ObservableList<Commande> listeCommande, ControleurCommandes ControlCom) {
         this.listeCommande = listeCommande;
+        this.ControlCom = ControlCom;
         creerVueCommandes();
     }
 

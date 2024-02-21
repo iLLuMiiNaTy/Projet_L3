@@ -5,11 +5,9 @@ import vue.VueChaines;
 
 public class ControleurChaines {
 	private GestionnaireProduction GeProd;
-    private VueChaines vue;
 
-    public ControleurChaines(GestionnaireProduction GeProd, VueChaines vue) {
+    public ControleurChaines(GestionnaireProduction GeProd) {
         this.GeProd = GeProd;
-        this.vue = vue;
         initControleur();
     }
 

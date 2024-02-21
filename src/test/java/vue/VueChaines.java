@@ -2,6 +2,7 @@ package vue;
 
 import app.ChaineDeProduction;
 import app.Element;
+import controleur.ControleurChaines;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -17,10 +18,12 @@ import javafx.scene.layout.VBox;
 public class VueChaines {
 	
 	private HBox carrousel;
+	private ControleurChaines ControlChaine;
 
-	public VueChaines(ObservableList<ChaineDeProduction> listeChaine) {
+	public VueChaines(ObservableList<ChaineDeProduction> listeChaine, ControleurChaines ControlChaine) {
 		this.carrousel = new HBox(10); // Espacement de 10 entre chaque élément du carrousel
         carrousel.setPadding(new javafx.geometry.Insets(15)); // Un peu d'espacement autour du carrousel
+        this.ControlChaine = ControlChaine;
         afficherChaines(listeChaine);
 	}
 	

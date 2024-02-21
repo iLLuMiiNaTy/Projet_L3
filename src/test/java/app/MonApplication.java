@@ -31,18 +31,10 @@ public class MonApplication extends Application{
         primaryStage.getIcons().add(icon); 
         //Ajouter l'icône
         
-        Scene scene = new Scene(root, 750, 750);
+        Scene scene = new Scene(root, 1100, 800);
         scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
       
-        
-        // Full Screen
-     	//============
-        primaryStage.setFullScreen(true); 
-        //primaryStage.setFullScreenExitHint("You can't escape unless you press q");
-        //primaryStage.setFullScreenExitKeyCombination(KeyCombination.valueOf("q"));
-      
         primaryStage.setScene(scene);
-        primaryStage.setFullScreen(true);
         primaryStage.show();
     }
     
@@ -66,8 +58,8 @@ public class MonApplication extends Application{
     	GestionnaireCommande GeCom = new GestionnaireCommande();
         ObservableList<Commande> listeCommande = csv.chargerCommandes(GeCom);
         
-        VueCommandes vue = new VueCommandes(listeCommande);
-        ControleurCommandes ControlCom = new ControleurCommandes(GeCom, vue);
+        ControleurCommandes ControlCom = new ControleurCommandes(GeCom);
+        VueCommandes vue = new VueCommandes(listeCommande, ControlCom);
         root.setCenter(vue.getVue());
     }
     
@@ -75,8 +67,8 @@ public class MonApplication extends Application{
 		GestionnaireProduction GeProd = new GestionnaireProduction();
 		ObservableList<ChaineDeProduction> listeChaine = csv.chargerChaines(GeProd);
 		
-		VueChaines vue = new VueChaines(listeChaine);
-		ControleurChaines ControlChaine = new ControleurChaines(GeProd, vue);
+		ControleurChaines ControlChaine = new ControleurChaines(GeProd);
+		VueChaines vue = new VueChaines(listeChaine, ControlChaine);
 		root.setBottom(vue.getVue());
 		
     }

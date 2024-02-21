@@ -61,14 +61,14 @@ public class VueStocks {
         Label quantite = new Label("Quantité: " + e.getQuantite() + " " + e.getUniteDeMesure());
         Label prixVente = new Label("Prix vente: " + e.getPrixVente() + " €");
 
-        // Ajouter les boutons "+" et "-" pour augmenter/diminuer la quantités
+        // Boutons "+" et "-" pour augmenter/diminuer la quantité
         Button buttonPlus = new Button("+");
         buttonPlus.getStyleClass().add("button-plus-minus");
         buttonPlus.setOnAction(event -> {
             ControlStocks.augmenterQuantite(e);
             quantite.setText("Quantité: " + e.getQuantite() + " " + e.getUniteDeMesure());
         });
-//code qui faut deplacer au controlleur 
+        
         Button buttonMoins = new Button("-");
         buttonMoins.getStyleClass().add("button-plus-minus");
         buttonMoins.setOnAction(event -> {
@@ -91,43 +91,3 @@ public class VueStocks {
         return carrousel;
     }
 }
-
-
-
-
-/*
-public class VueCommandes {
-    private TableView<Commande> table = new TableView<>();
-    private ObservableList<Commande> listeCommande;
-
-    public VueCommandes(ObservableList<Commande> listeCommande) {
-        this.listeCommande = listeCommande;
-        creerTableauCommandes();
-    }
-
-    private void creerTableauCommandes() {
-    	 // Configuration du TableView et ajout des colonnes
-        TableColumn<Commande, String> colonneNumero = new TableColumn<>("Numéro");
-        colonneNumero.setCellValueFactory(cellData -> cellData.getValue().numeroCommandeProperty());
-
-        TableColumn<Commande, String> colonneClient = new TableColumn<>("Client");
-        colonneClient.setCellValueFactory(cellData -> cellData.getValue().clientProperty());
-
-        TableColumn<Commande, String> colonneCode = new TableColumn<>("Code Produit");
-        colonneCode.setCellValueFactory(cellData -> cellData.getValue().codeProduitProperty());
-        
-        TableColumn<Commande, String> colonneProduit = new TableColumn<>("Produit");
-        colonneProduit.setCellValueFactory(cellData -> cellData.getValue().ProduitProperty());
-        
-        TableColumn<Commande, String> colonneQuantite = new TableColumn<>("Quantité");
-        colonneQuantite.setCellValueFactory(cellData -> cellData.getValue().QuantiteProperty());
-
-        table.getColumns().addAll(colonneNumero, colonneClient, colonneCode, colonneProduit, colonneQuantite); // Ajoutez les autres colonnes ici
-
-        table.setItems(listeCommande); // Liaison des données
-    }
-
-    public VBox getVue() {
-        return new VBox(table);
-    }
-}*/
