@@ -97,7 +97,7 @@ public class FichierCSV {
                     elementData = elementData.replaceAll("[()\\s]+", "");
                     String[] elementInfo = elementData.split(":");
                     String elementCode = elementInfo[0];
-                    float quantite = Float.parseFloat(elementInfo[1]);
+                    Float quantite = Float.parseFloat(elementInfo[1]);
 
                     Element element = GestionnaireStock.trouverElementParCode(elementCode);
                     elementsEntree.put(element, quantite);

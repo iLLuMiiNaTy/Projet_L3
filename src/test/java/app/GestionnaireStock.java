@@ -21,7 +21,7 @@ public class GestionnaireStock {
         return null; // Si aucun élément correspondant n'est trouvé
     }
 
-    public void ajouterStock(Element e, float q) {
+    /*public void ajouterStock(Element e, float q) {
         for (Element elem : listeElement) {
         	if (elem.equals(e)){
         		e.setQuantite(e.getQuantite() + q);
@@ -29,7 +29,25 @@ public class GestionnaireStock {
         }
         listeElement.add(e);
         //System.out.println("Erreur aujouterStock | Classe GestionnaireStock\nListeElement ne contient pas cette élément");
+    }*/
+    
+    public void ajouterStock(Element element, float quantite) {
+        // Vérifier si l'élément existe déjà dans la liste
+        boolean existe = false;
+        for (Element e : listeElement) {
+            // Si le code de l'élément correspond à un élément existant dans le stock
+            if (e.getCode().equals(element.getCode())) {
+                // Mise à jour de la quantité de l'élément
+                e.setQuantite(e.getQuantite() + quantite);
+                existe = true;
+                break;
+            }
+        }
         
+        // Si l'élément n'existe pas, l'ajouter à la liste
+        if (!existe) {
+            listeElement.add(element);
+        }
     }
 
     public void retirerStock(Element e, int q) {
@@ -67,13 +85,11 @@ public class GestionnaireStock {
 
         // Calcul des éléments nécessaires pour produire le produit final dans la quantité demandée
         calculerElementsNecessaires(produitFinal, commande.getQuantite(), elementsNecessaires);
-        
-        System.out.println(commande);
 
         // Parcourir tous les éléments nécessaires pour vérifier si le stock est suffisant
         for (Map.Entry<Element, Float> entree : elementsNecessaires.entrySet()) {
-        	System.out.println("________________________________________________________________________");
-        	System.out.println(entree);
+        	//System.out.println("________________________________________________________________________");
+        	//System.out.println(entree);
         	Element element = entree.getKey();
         	float quantiteNecessaire = entree.getValue();
         	if (element.getQuantite() < quantiteNecessaire) {

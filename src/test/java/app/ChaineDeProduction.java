@@ -24,7 +24,7 @@ public class ChaineDeProduction {
     @Override
 	public String toString() {
     	String s = "";
-    	s += 	"#####" + this.nom + "#####" +
+    	s += 	"\n#####" + this.nom + "#####" +
     			"\n|--------------------|" +
     			"\n|Code : " + this.code +
     			"\n|--------------------|" +

@@ -33,7 +33,7 @@ public class Element {
 		this.quantiteTemporaire = new SimpleIntegerProperty(0);
 	}
 
-	@Override
+	/*@Override
 	public String toString() {
 		String s = "";
 		s += 	"#####" + this.nom + "#####" +
@@ -47,6 +47,12 @@ public class Element {
 				"\n|--------------------|" +
 				"\n|Prix de vente : " + this.prixVente + " € " +
 				"\n|--------------------|";
+		return s;
+	}*/
+	
+	public String toString() {
+		String s = "";
+		s += 	"#####" + this.nom + "#####" + " Quantité : " + this.quantite;
 		return s;
 	}
 

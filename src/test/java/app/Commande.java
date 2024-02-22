@@ -24,7 +24,7 @@ public class Commande {
 	@Override
 	public String toString() {
 		String s = "";
-		s += 	"#####Commande n°" + this.numeroCommande + "#####" +
+		s += 	"\n#####Commande n°" + this.numeroCommande + "#####" +
 				"\n|--------------------|" +
 				"\n|Client : " + this. client +
 				"\n|--------------------|" +
