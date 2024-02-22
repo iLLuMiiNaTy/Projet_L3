@@ -1,22 +1,23 @@
 package app;
 
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class Element {
 	private String code;
 	private String nom;
-	private SimpleIntegerProperty quantite;
+	private SimpleFloatProperty quantite;
 	private String uniteDeMesure;
 	private int prixAchat;
 	private int prixVente;
 	private String urlImage;
 	private SimpleIntegerProperty quantiteTemporaire;
 
-	public Element(String code, String nom, int quantite, String uniteDeMesure, String prixAchat, String prixVente, String urlImage) {
+	public Element(String code, String nom, float quantite, String uniteDeMesure, String prixAchat, String prixVente, String urlImage) {
 		this.code = code;
 		this.nom = nom;
-		this.quantite = new SimpleIntegerProperty(quantite);
+		this.quantite = new SimpleFloatProperty(quantite);
 		this.uniteDeMesure = uniteDeMesure;
 		if (prixAchat.equals("NA")) {
 			this.prixAchat = 0;
@@ -59,12 +60,12 @@ public class Element {
 		return nom;
 	}
 
-	public final int getQuantite() {
+	public final float getQuantite() {
 		return quantite.get();
 	}
 
-	public void setQuantite(int quantite) {
-		this.quantite = new SimpleIntegerProperty(quantite);
+	public void setQuantite(float quantite) {
+		this.quantite = new SimpleFloatProperty(quantite);
 	}
 
 	public String getUniteDeMesure() {

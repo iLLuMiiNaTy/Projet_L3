@@ -30,21 +30,7 @@ public class GestionnaireProduction {
 					}
 			    }
 			    return null;
-			}
-	/*
-	public void ajusterNiveauActivation(String codeChaine, SimpleIntegerProperty niveauActivation) {
-		boolean chaineOK = false;
-		for (ChaineDeProduction c: listeChaine) {
-			if (c.getCode().equals(codeChaine)) {
-				c.activer(niveauActivation);
-				chaineOK = true;
-			}
-		}
-		if (chaineOK = false) {
-			System.out.println("Aucune chaîne de production trouvée avec le code : " + codeChaine);
-		}
-	}*/
-	
+			}	
 	
 //#########################################################################################################
 //Définir dynamiquement le niveau d'activation des 3 Chaînes de Production pour réaliser une certaine Commande
@@ -56,7 +42,7 @@ public class GestionnaireProduction {
 	 * - Appelle une méthode qui prend en paramètre 
 	 * ce même produit final et la quantité de ce produit demandé sur la commande
 	 */
-	public void calculerNiveauActivationPourCommande(Commande commande) {
+	public static void calculerNiveauActivationPourCommande(Commande commande) {
 	    Element produitFinal = GestionnaireStock.trouverElementParCode(commande.getCodeProduit());
 	    calculerNiveauActivation(produitFinal, commande.getQuantite());
 	}
@@ -65,7 +51,7 @@ public class GestionnaireProduction {
 	 * - Définit le niveau d'activation adéquat pour la chaîne qui s'occupe de l'élément passé en paramètre
 	 * selon la quantité indiquée
 	 */
-	private void calculerNiveauActivation(Element element, float quantiteRequise) {
+	private static void calculerNiveauActivation(Element element, float quantiteRequise) {
 	    ChaineDeProduction chaine = getChaineParElementSortie(element);//renvoie la chaine de production qui produit cet élément
 
 	    if (chaine != null) {
@@ -90,10 +76,9 @@ public class GestionnaireProduction {
 	
 	public static void simulerProduction() {
 	    for (Commande commande : GestionnaireCommande.getListeCommande()) {
+	    	calculerNiveauActivationPourCommande(commande);
 	        if (GeStock.verifierStockCommande(commande)) {
-	        	System.out.println("test");
 	            // Calcul des niveaux d'activation pour chaque commande
-	            //calculerNiveauActivationPourCommande(commande);
 	            // Production et mise à jour des quantités dans le stock
 	            produireSelonCommande(commande);
 	        } else {
@@ -103,7 +88,7 @@ public class GestionnaireProduction {
 	    }
 	}
 	
-	private static void produireSelonCommande(Commande commande) {
+	static void produireSelonCommande(Commande commande) {
 	    Element elementProduit = GestionnaireStock.trouverElementParCode(commande.getCodeProduit());
 	    // On suppose que ce produit final est produit par une chaîne principale. L'étape initiale.
 	    produire(elementProduit, commande.getQuantite());

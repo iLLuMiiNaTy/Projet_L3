@@ -33,7 +33,7 @@ public class FichierCSV {
                 String[] data = line.split(";");
                 String code = data[0];
                 String nom = data[1];
-                int quantite = Integer.parseInt(data[2]);
+                float quantite = Float.parseFloat(data[2]);
                 String uniteDeMesure = data[3];
                 String prixAchat = data[4];
                 String prixVente = data[5];

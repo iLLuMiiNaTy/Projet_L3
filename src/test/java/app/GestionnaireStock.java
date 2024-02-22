@@ -21,7 +21,7 @@ public class GestionnaireStock {
         return null; // Si aucun élément correspondant n'est trouvé
     }
 
-    public void ajouterStock(Element e, int q) {
+    public void ajouterStock(Element e, float q) {
         for (Element elem : listeElement) {
         	if (elem.equals(e)){
         		e.setQuantite(e.getQuantite() + q);
@@ -65,48 +65,62 @@ public class GestionnaireStock {
         // Création d'une Map pour stocker les éléments nécessaires et leurs quantités requises pour la commande
         HashMap<Element, Float> elementsNecessaires = new HashMap<>();
 
-        // Ajouter le produit final et sa quantité à la liste des éléments nécessaires
-        elementsNecessaires.put(produitFinal, (float)commande.getQuantite());
-
         // Calcul des éléments nécessaires pour produire le produit final dans la quantité demandée
         calculerElementsNecessaires(produitFinal, commande.getQuantite(), elementsNecessaires);
+        
+        System.out.println(commande);
 
         // Parcourir tous les éléments nécessaires pour vérifier si le stock est suffisant
         for (Map.Entry<Element, Float> entree : elementsNecessaires.entrySet()) {
+        	System.out.println("________________________________________________________________________");
+        	System.out.println(entree);
         	Element element = entree.getKey();
         	float quantiteNecessaire = entree.getValue();
         	if (element.getQuantite() < quantiteNecessaire) {
         	    return false; // Retourne faux si la quantité en stock d'un élément est insuffisante
         	}
         }
-
+        System.out.println("\n##### Commande validé #####\n");
         return true; // Tous les éléments nécessaires sont en quantité suffisante dans le stock
     }
     
     private void calculerElementsNecessaires(Element element, float quantite, HashMap<Element, Float> elementsNecessaires) {
+    	if (estMatierePremiere(element)) {
+            // Si l'élément est une matière première, on l'ajoute simplement à la liste des éléments nécessaires avec sa quantité
+            elementsNecessaires.merge(element, quantite, Float::sum);
+            return; // On sort de la méthode car il n'y a pas de décomposition à faire
+        }
+    	
         ChaineDeProduction chaine = GestionnaireProduction.getChaineParElementSortie(element); // Méthode pour obtenir la chaîne de production basée sur l'élément de sortie
         if (chaine != null) {
-            for (Map.Entry<Element, Float> entree : chaine.getElementsEntree().entrySet()) {
-            	Element elemEntree = entree.getKey();
-            	float quantiteRequiseParUnitéProduite = entree.getValue();
-            	float quantiteTotaleRequise = quantite * quantiteRequiseParUnitéProduite;
-
-            	// Si l'élément existe déjà dans la Map, on additionne la quantité nécessaire
-            	elementsNecessaires.merge(elemEntree, quantiteTotaleRequise, Float::sum);
-
+            for (Map.Entry<Element, Float> entree : chaine.getElementsEntree().entrySet()) {           	
+            	Element elemEntree = entree.getKey();           	
+            	float quantiteRequiseParUniteProduite = entree.getValue();            	
+            	float quantiteTotaleRequise = quantite * quantiteRequiseParUniteProduite;
+            	
             	// Récursivité pour prendre en compte les éléments d'entrée des éléments d'entrée
             	calculerElementsNecessaires(elemEntree, quantiteTotaleRequise, elementsNecessaires);
             }
         }
     }
+    
+    public boolean estMatierePremiere(Element element) {
+    	for (ChaineDeProduction chaine : GestionnaireProduction.getListeChaine()) {
+    		if (chaine.getElementsSortie().containsKey(element)) {
+    			return false;
+    		}
+    	}
+    	//si l'élément n'est dans la sortie d'aucune chaîne, c'est une matière première
+    	return true;
+    }
 
-    public HashMap<Commande,Boolean> verifierStockListeCommande(ArrayList<Commande> listeCommande) {
+    /*public HashMap<Commande,Boolean> verifierStockListeCommande(ArrayList<Commande> listeCommande) {
         HashMap<Commande,Boolean> listeCverifiée = new HashMap<>();
         for (Commande c : listeCommande) {
             listeCverifiée.put(c, verifierStockCommande(c));
         }
         return listeCverifiée;
-    }
+    }*/
     
     public void satisfaireCommande (Commande c) {
     	retirerStock(trouverElementParCode(c.getCodeProduit()), c.getQuantite());

@@ -43,7 +43,7 @@ public class ChaineDeProduction {
             s += "\n|  - " + element.getNom() + " (" + quantite + " " + element.getUniteDeMesure() + ")";
         }
     	s += 	"\n|--------------------|" +
-    			"\n|Niveau d'activation : " + this.niveauActivation +
+    			"\n|Niveau d'activation : " + this.getActivation() +
     			"\n|--------------------|";
     	return s;
     }
