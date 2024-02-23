@@ -55,7 +55,7 @@ public class VueChaines {
 	private Node creerVueChaines(ChaineDeProduction c) {
     	
     	StackPane imageContainer = new StackPane();
-    	imageContainer.setPrefSize(280, 200); // Taille désirée du conteneur
+    	imageContainer.setPrefSize(100, 100); // Taille désirée du conteneur
     	
     	//Charge l'image depuis une URL
     	ImageView imageView = null;

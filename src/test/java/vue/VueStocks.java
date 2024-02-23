@@ -34,7 +34,7 @@ public class VueStocks {
     
     private Node creerVueElement(Element e) {
         StackPane imageContainer = new StackPane();
-        imageContainer.setPrefSize(280, 200); // Taille désirée du conteneur
+        imageContainer.setPrefSize(100, 100); // Taille désirée du conteneur
 
         //Charge l'image depuis une URL
         ImageView imageView = null;
@@ -66,22 +66,15 @@ public class VueStocks {
         Button buttonPlus = new Button("+");
         buttonPlus.getStyleClass().add("button-plus-minus");
         buttonPlus.setOnAction(event -> {
-            //ControlStocks.augmenterQuantite(e);
         	e.setQuantiteTemporaire(e.getQuantiteTemporaire() + 1);//Modifie la quantité temporaire
-            //quantite.setText("Quantité: " + e.getQuantite() + " " + e.getUniteDeMesure());
-        	//quantiteTemporaireText.setText(String.valueOf(e.getQuantiteTemporaire()));//Met à jour l'affichage
-        });
+        	});
         
         Button buttonMoins = new Button("-");
         buttonMoins.getStyleClass().add("button-plus-minus");
         buttonMoins.setOnAction(event -> {
-            //ControlStocks.diminuerQuantite(e);
-            //quantite.setText("Quantité: " + e.getQuantite() + " " + e.getUniteDeMesure());
-            //quantite.textProperty().bind(e.quantiteTemporaireProperty().asString().concat(" ").concat(e.getUniteDeMesure()));
-            //Pour afficher dynamiquement les changements de quantités (pas encore au point)
+            //Pour afficher dynamiquement les changements de quantités
         	if (e.getQuantiteTemporaire() > 0) {//Empèche une diminution en dessous de 0
-        		e.setQuantiteTemporaire(e.getQuantiteTemporaire() - 1);
-        		//quantiteTemporaireText.setText(String.valueOf(e.getQuantiteTemporaire()));//Met à jour l'affichage
+        		e.setQuantiteTemporaire(e.getQuantiteTemporaire() - 1);	
         	}
             
         });
