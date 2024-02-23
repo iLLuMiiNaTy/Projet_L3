@@ -1,6 +1,8 @@
 package controleur;
 
+import app.Commande;
 import app.GestionnaireCommande;
+import app.GestionnaireProduction;
 import vue.VueCommandes;
 
 public class ControleurCommandes {
@@ -8,10 +10,9 @@ public class ControleurCommandes {
 
     public ControleurCommandes(GestionnaireCommande GeCom) {
         this.GeCom = GeCom;
-        initControleur();
     }
 
-    private void initControleur() {
-        // Ajoutez la logique pour gérer les actions de l'utilisateur, comme des clics sur des boutons
-    }
+	public void simulerCommande(Commande commande) {
+		GestionnaireProduction.simulerProduction(commande);
+	}
 }

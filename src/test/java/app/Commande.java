@@ -1,7 +1,10 @@
 package app;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableBooleanValue;
 
 public class Commande {
 
@@ -10,7 +13,7 @@ public class Commande {
 	private SimpleStringProperty codeProduit;
 	private SimpleStringProperty produit;
 	private SimpleIntegerProperty quantite;
-	private boolean realisable;
+	private SimpleBooleanProperty realisable;
 
 	public Commande(String numeroCommande, String client, String codeProduit, String produit, int quantite) {
 		this.numeroCommande = new SimpleStringProperty(numeroCommande);
@@ -18,7 +21,7 @@ public class Commande {
 		this.codeProduit = new SimpleStringProperty(codeProduit);
 		this.produit = new SimpleStringProperty(produit);
 		this.quantite = new SimpleIntegerProperty(quantite);
-		this.realisable = false;
+		this.realisable = new SimpleBooleanProperty(false);
 	}
 
 	@Override
@@ -57,12 +60,16 @@ public class Commande {
 		return quantite.get();
 	}
 	
-	public boolean isRealisable() {
-		return realisable;
+	public final boolean getRealisable() {
+		return realisable.get();
 	}
 	
 	public void setRealisable(boolean realisable) {
-		this.realisable = realisable;
+	    this.realisable.set(realisable); // Utilisez `.set(realisable)` sur l'instance existante.
+	}
+
+	public BooleanProperty realisableProperty() {
+	    return realisable;
 	}
 
 

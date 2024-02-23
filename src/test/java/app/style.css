@@ -57,3 +57,10 @@
 .button-plus-minus:hover {
     -fx-background-color: #FFFFFF; /* Couleur de fond au survol */
 }
+
+.table-row-cell:empty {
+         -fx-background-color: transparent;
+     }
+     .table-row-cell:empty .table-cell {
+         -fx-border-width: 0px;
+     }

@@ -16,14 +16,6 @@ public class GestionnaireCommande {
 		listeCommande.add(com);
 	}
 	
-	public boolean simulerCommande() {
-		ObservableList<Element> listeElementTemporaire = GestionnaireStock.getListeElement();
-		//GestionnaireProduction.simulerProduction(listeElementTemporaire, this.listeCommande);
-		//appel à simulerProduction avec en paramètre une liste d'éléments temporaires pour ne pas affecter le stocks d'éléments
-		return false;
-		
-	}
-	
 	public static ObservableList<Commande> getListeCommande(){
 		return listeCommande;
 	}

@@ -96,7 +96,7 @@ public class GestionnaireStock {
         	    return false; // Retourne faux si la quantité en stock d'un élément est insuffisante
         	}
         }
-        System.out.println("\n##### Commande validé #####\n");
+        commande.setRealisable(true);
         return true; // Tous les éléments nécessaires sont en quantité suffisante dans le stock
     }
     
@@ -128,18 +128,6 @@ public class GestionnaireStock {
     	}
     	//si l'élément n'est dans la sortie d'aucune chaîne, c'est une matière première
     	return true;
-    }
-
-    /*public HashMap<Commande,Boolean> verifierStockListeCommande(ArrayList<Commande> listeCommande) {
-        HashMap<Commande,Boolean> listeCverifiée = new HashMap<>();
-        for (Commande c : listeCommande) {
-            listeCverifiée.put(c, verifierStockCommande(c));
-        }
-        return listeCverifiée;
-    }*/
-    
-    public void satisfaireCommande (Commande c) {
-    	retirerStock(trouverElementParCode(c.getCodeProduit()), c.getQuantite());
     }
     
     public static ObservableList<Element> getListeElement() { // Permet d'accéder à ma liste d'élément depuis n'importe où

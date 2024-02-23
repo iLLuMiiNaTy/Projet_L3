@@ -74,21 +74,14 @@ public class GestionnaireProduction {
 	
 	
 	
-	public static void simulerProduction() {
-		System.out.println("\n##################################\n" + GestionnaireStock.getListeElement());
-	    for (Commande commande : GestionnaireCommande.getListeCommande()) {
-	    	calculerNiveauActivationPourCommande(commande);
-	        if (GeStock.verifierStockCommande(commande)) {
-	            // Calcul des niveaux d'activation pour chaque commande
-	            // Production et mise à jour des quantités dans le stock
-	            produireSelonCommande(commande);
-	        } else {
-	            System.out.println("Stock insuffisant pour la commande: " + commande.getNumeroCommande());
-	            // Vous pouvez ici ajouter une logique pour lister les éléments manquants, si nécessaire
-	        }
-	    }
-	    System.out.println("\n##################################\n" + GestionnaireStock.getListeElement());
-	}
+	public static void simulerProduction(Commande commande) {
+		calculerNiveauActivationPourCommande(commande);
+		GeStock.verifierStockCommande(commande);
+			// Calcul des niveaux d'activation pour chaque commande
+			// Production et mise à jour des quantités dans le stock
+			//#############
+			//produireSelonCommande(commande);
+		}
 	
 	static void produireSelonCommande(Commande commande) {
 	    Element elementProduit = GestionnaireStock.trouverElementParCode(commande.getCodeProduit());
@@ -105,27 +98,18 @@ public class GestionnaireProduction {
 	            Element elementEntree = entree.getKey();
 	            int quantiteEntreeRequise = (int) (entree.getValue() * chainePrincipale.getActivation());
 	            ChaineDeProduction chaineSecondaire = getChaineParElementSortie(elementEntree);
-	            //System.out.println("\n________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________\n" + GestionnaireStock.getListeElement());
-	            
 	            if (chaineSecondaire != null) {
-	            	System.out.println("Récursif");
 	                // Si l'élément d'entrée est également produit par une autre chaîne, produire cet élément en premier
 	                produire(elementEntree, quantiteEntreeRequise);
-	                System.out.println("fin récursif");
-	                //System.out.println("\n##########################################################################################################################################################################################################################################################################################################################################################################################################################################################\n" + GestionnaireStock.getListeElement());
 	            } else {
-	            	System.out.println("Pas de récursif");
 	                // Sinon, ça signifie que l'élément doit déjà être disponible en stock
-	            	System.out.println("\nRetirer du stock : " + elementEntree + " " + quantiteEntreeRequise);
 	                GeStock.retirerStock(elementEntree, quantiteEntreeRequise);
 	            }
 	        }
 
 	        // Après s'être assuré de la disponibilité des éléments d'entrée, produit l'élément de sortie
 	        float quantiteProduite = chainePrincipale.getElementsSortie().get(element) * chainePrincipale.getActivation();
-	        System.out.println("\n##########################################################################################################################################################################################################################################################################################################################################################################################################################################################\n" + GestionnaireStock.getListeElement());
-	        GeStock.ajouterStock(element, Math.round(quantiteProduite));
-	        System.out.println("\n________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________\n" + GestionnaireStock.getListeElement());
+	        GeStock.ajouterStock(element, Math.round(quantiteProduite));  
 	    }
 	}
 }

@@ -159,7 +159,6 @@ public class FichierCSV {
         } catch (IOException e) {
             System.out.println("Erreur lors du chargement du fichier commandes.csv : " + e.getMessage());
         }
-        GeCom.simulerCommande();
 		return listeCommande;
     }
 

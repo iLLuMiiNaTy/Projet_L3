@@ -12,12 +12,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 public class VueChaines {
 	
+	private VBox vuePrincipale; // Pour organiser verticalement
 	private HBox carrousel;
 	private ControleurChaines ControlChaine;
 
@@ -25,7 +27,23 @@ public class VueChaines {
 		this.carrousel = new HBox(10); // Espacement de 10 entre chaque élément du carrousel
         carrousel.setPadding(new javafx.geometry.Insets(15)); // Un peu d'espacement autour du carrousel
         this.ControlChaine = ControlChaine;
+        
+        // Initialisation de la VBox principale
+        this.vuePrincipale = new VBox(20); // Espacement de 20 entre les éléments
+        vuePrincipale.setAlignment(Pos.CENTER); // Centre les éléments dans la VBox
+        
         afficherChaines(listeChaine);
+        
+        // Ajout du carrousel à la vue principale
+        vuePrincipale.getChildren().add(carrousel);
+        
+        // Création et ajout du bouton 'Lancer la production' à la vue principale
+        Button btnLancerProd = new Button("Lancer la production");
+        btnLancerProd.setOnAction(e -> {
+            
+        });
+        
+        vuePrincipale.getChildren().add(btnLancerProd);
 	}
 	
 	private void afficherChaines(ObservableList<ChaineDeProduction> listeChaine) {
@@ -34,7 +52,7 @@ public class VueChaines {
         }
     }
 	
-private Node creerVueChaines(ChaineDeProduction c) {
+	private Node creerVueChaines(ChaineDeProduction c) {
     	
     	StackPane imageContainer = new StackPane();
     	imageContainer.setPrefSize(280, 200); // Taille désirée du conteneur
@@ -63,12 +81,12 @@ private Node creerVueChaines(ChaineDeProduction c) {
         Label niveauActivation = new Label("Niveau d'activation: " + c.getActivation());
         
         // Bouton pour ajuster le niveau d'activation
-        Button btnSimuler = new Button("Lancer la simulation");
+        /*Button btnSimuler = new Button("Lancer la simulation");
         btnSimuler.setOnAction(e -> {
             GestionnaireProduction.simulerProduction();
-        });
+        });*/
         
-        vueElement.getChildren().addAll(imageContainer, code, niveauActivation, btnSimuler);
+        vueElement.getChildren().addAll(imageContainer, code, niveauActivation/*, btnSimuler*/);
         
         return vueElement;
     }

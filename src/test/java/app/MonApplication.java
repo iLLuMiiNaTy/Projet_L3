@@ -5,9 +5,13 @@ import controleur.ControleurCommandes;
 import controleur.ControleurStocks;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import vue.VueChaines;
 import vue.VueCommandes;
@@ -23,6 +27,13 @@ public class MonApplication extends Application{
     public void start(Stage primaryStage){
         FichierCSV csv = new FichierCSV();
         BorderPane root = new BorderPane();
+        
+     // Créer un ScrollPane et y ajouter le BorderPane comme son contenu
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setContent(root);
+        // Activer les barres de défilement selon le besoin
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         
         creerScenes(csv, root);
         primaryStage.setTitle("Stock Master");
@@ -70,6 +81,5 @@ public class MonApplication extends Application{
 		ControleurChaines ControlChaine = new ControleurChaines(GeProd);
 		VueChaines vue = new VueChaines(listeChaine, ControlChaine);
 		root.setBottom(vue.getVue());
-		
     }
 }
