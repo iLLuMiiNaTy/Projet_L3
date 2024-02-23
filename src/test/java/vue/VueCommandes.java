@@ -75,6 +75,8 @@ public class VueCommandes {
         colonneSimulation.setCellFactory(cellFactory);
 
         table.getColumns().addAll(colonneNumero, colonneClient, colonneProduit, colonneQuantite, colonneRealisable, colonneSimulation);
+        //table.setRowHeight(20);
+        table.setMaxHeight(121);
         table.setItems(listeCommande);
     }
 

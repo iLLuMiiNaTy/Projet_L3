@@ -34,7 +34,7 @@ public class VueStocks {
     
     private Node creerVueElement(Element e) {
         StackPane imageContainer = new StackPane();
-        imageContainer.setPrefSize(100, 100); // Taille désirée du conteneur
+        imageContainer.setPrefSize(90, 90); // Taille désirée du conteneur
 
         //Charge l'image depuis une URL
         ImageView imageView = null;
@@ -60,6 +60,7 @@ public class VueStocks {
         Label quantite = new Label("Quantité: " + e.getQuantite() + " " + e.getUniteDeMesure());
         Label prixVente = new Label("Prix vente: " + e.getPrixVente() + " €");
         TextField quantiteTemporaireText = new TextField("0");
+        quantiteTemporaireText.setMaxWidth(65);
         quantiteTemporaireText.textProperty().bind(e.quantiteTemporaireProperty().asString().concat(" ").concat(e.getUniteDeMesure()));
 
         // Boutons "+" et "-" pour augmenter/diminuer la quantité
