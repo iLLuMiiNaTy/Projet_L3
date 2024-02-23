@@ -49,7 +49,7 @@ public class VueCommandes {
             @Override
             public TableCell<Commande, Void> call(final TableColumn<Commande, Void> param) {
                 final TableCell<Commande, Void> cell = new TableCell<Commande, Void>() {
-                    private final Button btn = new Button("Lancer Simulation");
+                    private final Button btn = new Button("Lancer Vérification");
 
                     {
                         btn.setOnAction((ActionEvent event) -> {
@@ -75,8 +75,8 @@ public class VueCommandes {
         colonneSimulation.setCellFactory(cellFactory);
 
         table.getColumns().addAll(colonneNumero, colonneClient, colonneProduit, colonneQuantite, colonneRealisable, colonneSimulation);
-        //table.setRowHeight(20);
-        table.setMaxHeight(121);
+        table.setMinWidth(685);
+        //table.setMaxHeight(200);
         table.setItems(listeCommande);
     }
 
