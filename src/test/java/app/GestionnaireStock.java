@@ -48,6 +48,7 @@ public class GestionnaireStock {
     	for (Element elem : listeElement) {
     		if (elem.equals(e)) {
     			e.setQuantite(e.getQuantite() - q);
+    			stockElementCommande.put(e, e.getQuantite() - q);
     		}else {
     			if (e.getQuantite() < q) {
     				System.out.println("Erreur : Stock insuffisant !\n");
