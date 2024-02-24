@@ -63,7 +63,7 @@ public class VueChaines {
         Label code = new Label("Chaîne de production n°" + c.getCode());
         Label niveauActivation = new Label("Niveau d'activation: " + c.getActivation());
         
-        vueElement.getChildren().addAll(imageContainer, code, niveauActivation/*, btnSimuler*/);
+        vueElement.getChildren().addAll(imageContainer, code, niveauActivation);
         
         return vueElement;
     }

@@ -69,29 +69,23 @@ public class GestionnaireProduction {
 	    }
 	}
 	
-	
-	
-	
-	
-	
 	public static void simulerProduction(Commande commande) {
 		calculerNiveauActivationPourCommande(commande);
 		GeStock.verifierStockCommande(commande);
-			// Calcul des niveaux d'activation pour chaque commande
-			// Production et mise à jour des quantités dans le stock
-			//#############
-			//produireSelonCommande(commande);
 		}
 	
-	static void produireSelonCommande(Commande commande) {
-	    Element elementProduit = GestionnaireStock.trouverElementParCode(commande.getCodeProduit());
-	    // On suppose que ce produit final est produit par une chaîne principale. L'étape initiale.
-	    produire(elementProduit, commande.getQuantite());
+	public static void produireCommande() {
+		for (Commande commande : GestionnaireCommande.getListeCommande()) {
+			if (commande.getRealisable()) {
+				Element elementProduit = GestionnaireStock.trouverElementParCode(commande.getCodeProduit());
+			    // On suppose que ce produit final est produit par une chaîne principale. L'étape initiale.
+			    produire(elementProduit, commande.getQuantite());
+			}
+		}
 	}
 	
 	private static void produire(Element element, float quantiteNecessaire) {
 	    ChaineDeProduction chainePrincipale = getChaineParElementSortie(element);
-	    
 	    if (chainePrincipale != null) {	        
 	        // Pour chaque élément d'entrée de cette chaîne, vérifier si un autre besoin de production est nécessaire
 	        for (Map.Entry<Element, Float> entree : chainePrincipale.getElementsEntree().entrySet()) {

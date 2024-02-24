@@ -1,6 +1,7 @@
 package controleur;
 
 import app.Element;
+import app.GestionnaireProduction;
 import app.GestionnaireStock;
 import vue.VueStocks;
 
@@ -9,11 +10,6 @@ public class ControleurStocks {
 
     public ControleurStocks(GestionnaireStock GeStock) {
         this.GeStock = GeStock;
-        initControleur();
-    }
-
-    private void initControleur() {
-        // Ajoutez la logique pour gérer les actions de l'utilisateur, comme des clics sur des boutons
     }
     
     public void augmenterQuantite(Element e, int quantite) {

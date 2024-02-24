@@ -1,10 +1,12 @@
 package app;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.FloatProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
-public class Element {
+public class Element{
 	private String code;
 	private String nom;
 	private SimpleFloatProperty quantite;
@@ -66,12 +68,16 @@ public class Element {
 		return nom;
 	}
 
+	public void setQuantite(float quantite) {
+		this.quantite.set(quantite);
+	}
+	
 	public final float getQuantite() {
 		return quantite.get();
 	}
 
-	public void setQuantite(float quantite) {
-		this.quantite = new SimpleFloatProperty(quantite);
+	public FloatProperty quantiteProperty() {
+	    return quantite;
 	}
 
 	public String getUniteDeMesure() {

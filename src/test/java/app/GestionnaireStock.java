@@ -31,6 +31,7 @@ public class GestionnaireStock {
             if (e.getCode().equals(element.getCode())) {
                 // Mise à jour de la quantité de l'élément
                 e.setQuantite(e.getQuantite() + quantite);
+                stockElementCommande.put(element, quantite);
                 existe = true;
                 break;
             }
@@ -54,33 +55,64 @@ public class GestionnaireStock {
     		}
     	}
     }
-    /*
-    public void afficherStock() { // need ?
-        String s = "";
-        for (Element e : this.listeElementStock.keySet()) {
-            s += e.getNom() + " : " + e.getQuantite() + "\n";
-        }
-        System.out.println(s);
-    }
-    */
-
-    /*public static boolean verifierStockCommande(Commande c) { // estStockSuffisant()
-    	Element produitStock = FichierCSV.trouverElementParCode(c.getCodeProduit());
-    	return (c.getQuantite() <= produitStock.getQuantite());
-    }*/
     
     public boolean verifierStockCommande(Commande commande) {
         // Trouver le produit fini correspondant au code produit de la commande
         Element produitFinal = trouverElementParCode(commande.getCodeProduit());
 
         // Création d'une Map pour stocker les éléments nécessaires et leurs quantités requises pour la commande
-        HashMap<Element, Float> elementsNecessaires = new HashMap<>();
+        //HashMap<Element, Float> elementsNecessaires = new HashMap<>();
+        HashMap<Element, Float> produitsFinauxNecessaires = new HashMap<>();
+        HashMap<Element, Float> produitsIntermediairesNecessaires = new HashMap<>();
+        HashMap<Element, Float> matieresPremieresNecessaires = new HashMap<>();
 
         // Calcul des éléments nécessaires pour produire le produit final dans la quantité demandée
-        calculerElementsNecessaires(produitFinal, commande.getQuantite(), elementsNecessaires);
+        //calculerElementsNecessaires(produitFinal, commande.getQuantite(), dronesNecessaires, coquesEtPropulsionsNecessaires, matieresPremieresNecessaires);
+        calculerProduitsFinauxNecessaires(produitFinal, commande.getQuantite(), produitsFinauxNecessaires, produitsIntermediairesNecessaires, matieresPremieresNecessaires);
+        //####Test pour afficher la liste d'éléments nécessaires
+        /*for (Map.Entry<Element, Float> entry : matieresPremieresNecessaires.entrySet()) {
+            Element element = entry.getKey();
+            Float quantiteNecessaire = entry.getValue();
+            
+            System.out.println("Elément : " + element + "|| Quantité Nécessaires : " + quantiteNecessaire);
+        } */
+        
+        if (verifierStockProduit(produitsFinauxNecessaires)) {
+        	commande.setRealisable(true);
+        	for (Map.Entry<Element, Float> entry : produitsFinauxNecessaires.entrySet()) {
+                Element element = entry.getKey();
+                Float quantiteNecessaire = entry.getValue();
 
-        // Parcourir tous les éléments nécessaires pour vérifier si le stock est suffisant
-        for (Map.Entry<Element, Float> entree : elementsNecessaires.entrySet()) {
+                stockElementCommande.put(element, stockElementCommande.get(element) - quantiteNecessaire);
+            }        
+            return true; // Tous les éléments nécessaires sont en quantité suffisante dans le stock
+        } 
+        if (verifierStockProduit(produitsIntermediairesNecessaires)){
+        	commande.setRealisable(true);
+        	for (Map.Entry<Element, Float> entry : produitsIntermediairesNecessaires.entrySet()) {
+                Element element = entry.getKey();
+                Float quantiteNecessaire = entry.getValue();
+
+                stockElementCommande.put(element, stockElementCommande.get(element) - quantiteNecessaire);
+            }        
+            return true; // Tous les éléments nécessaires sont en quantité suffisante dans le stock
+        }
+        if (verifierStockProduit(matieresPremieresNecessaires)){
+        	commande.setRealisable(true);
+        	for (Map.Entry<Element, Float> entry : matieresPremieresNecessaires.entrySet()) {
+                Element element = entry.getKey();
+                Float quantiteNecessaire = entry.getValue();
+
+                stockElementCommande.put(element, stockElementCommande.get(element) - quantiteNecessaire);
+            }        
+            return true; // Tous les éléments nécessaires sont en quantité suffisante dans le stock
+        }
+        return false;
+        }
+    
+    public boolean verifierStockProduit(HashMap<Element, Float> stockNecessaire) {
+    	// Parcourir tous les éléments nécessaires pour vérifier si le stock est suffisant
+        for (Map.Entry<Element, Float> entree : stockNecessaire.entrySet()) {
         	Element element = entree.getKey();
         	float quantiteNecessaire = entree.getValue();
         	float quantiteEnStock = stockElementCommande.get(element);
@@ -88,49 +120,54 @@ public class GestionnaireStock {
         	    return false; // Retourne faux si la quantité en stock d'un élément est insuffisante
         	}
         }
-        commande.setRealisable(true);
-        
-        for (Map.Entry<Element, Float> entry : elementsNecessaires.entrySet()) {
-            Element element = entry.getKey();
-            Float quantiteNecessaire = entry.getValue();
-
-            stockElementCommande.put(element, stockElementCommande.get(element) - quantiteNecessaire);
-            // Traitez l'élément et sa quantité ici
-            System.out.println("_____________________");
-            System.out.println("Elément : " + element + ", Quantité : " + quantiteNecessaire);
-        }
-        
-     // Affiche le stock après la mise à jour
-        for (Map.Entry<Element, Float> entry : stockElementCommande.entrySet()) {
-            Element element = entry.getKey();
-            Float quantite = entry.getValue();
-
-            System.out.println("####################");
-            System.out.println("Elément : " + element + ", Quantité : " + quantite);
-        }
-
-        
-        return true; // Tous les éléments nécessaires sont en quantité suffisante dans le stock
+        return true;
     }
     
-    private void calculerElementsNecessaires(Element element, float quantite, HashMap<Element, Float> elementsNecessaires) {
-    	if (estMatierePremiere(element)) {
-            // Si l'élément est une matière première, on l'ajoute simplement à la liste des éléments nécessaires avec sa quantité
-            elementsNecessaires.merge(element, quantite, Float::sum);
-            return; // On sort de la méthode car il n'y a pas de décomposition à faire
-        }
-    	
+    
+    
+    
+    
+    
+    
+    
+    private void calculerProduitsFinauxNecessaires(Element element, float quantite, HashMap<Element, Float> produitsFinauxNecessaires, HashMap<Element, Float> produitsIntermediairesNecessaires, HashMap<Element, Float> matieresPremieresNecessaires) {
+    	produitsFinauxNecessaires.merge(element, quantite, Float::sum);
         ChaineDeProduction chaine = GestionnaireProduction.getChaineParElementSortie(element); // Méthode pour obtenir la chaîne de production basée sur l'élément de sortie
         if (chaine != null) {
             for (Map.Entry<Element, Float> entree : chaine.getElementsEntree().entrySet()) {           	
             	Element elemEntree = entree.getKey();           	
-            	float quantiteRequiseParUniteProduite = entree.getValue();            	
-            	float quantiteTotaleRequise = quantite * quantiteRequiseParUniteProduite;
+            	float quantiteRequiseParUniteProduite = entree.getValue();
+            	float quantiteTotaleRequise = chaine.getActivation() * quantiteRequiseParUniteProduite;
             	
             	// Récursivité pour prendre en compte les éléments d'entrée des éléments d'entrée
-            	calculerElementsNecessaires(elemEntree, quantiteTotaleRequise, elementsNecessaires);
+            	calculerProduitsIntermediairesNecessaires(elemEntree, quantiteTotaleRequise, produitsIntermediairesNecessaires, matieresPremieresNecessaires);
             }
         }
+        return;
+    }
+    
+    private void calculerProduitsIntermediairesNecessaires(Element element, float quantite, HashMap<Element, Float> produitsIntermediairesNecessaires, HashMap<Element, Float> matieresPremieresNecessaires) {
+        ChaineDeProduction chaine = GestionnaireProduction.getChaineParElementSortie(element); // Méthode pour obtenir la chaîne de production basée sur l'élément de sortie
+        if (chaine != null) {
+        	produitsIntermediairesNecessaires.merge(element, quantite, Float::sum);
+            for (Map.Entry<Element, Float> entree : chaine.getElementsEntree().entrySet()) {           	
+            	Element elemEntree = entree.getKey();           	
+            	float quantiteRequiseParUniteProduite = entree.getValue();
+            	float quantiteTotaleRequise = chaine.getActivation() * quantiteRequiseParUniteProduite;
+            	
+            	// Récursivité pour prendre en compte les éléments d'entrée des éléments d'entrée
+            	calculerMatieresPremieresNecessaires(elemEntree, quantiteTotaleRequise, matieresPremieresNecessaires);
+            }
+        }
+        if (estMatierePremiere(element)) {
+        	calculerMatieresPremieresNecessaires(element, quantite, matieresPremieresNecessaires);// Si ce n'est pas un produit intermédiaire, alors on appel la foncion pour les matières premières
+        }
+        return;
+    }
+    
+    private void calculerMatieresPremieresNecessaires(Element element, float quantite, HashMap<Element, Float> matieresPremieresNecessaires) {
+    	matieresPremieresNecessaires.merge(element, quantite, Float::sum);
+        return;
     }
     
     public boolean estMatierePremiere(Element element) {

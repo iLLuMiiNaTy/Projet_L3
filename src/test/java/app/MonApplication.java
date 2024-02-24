@@ -67,6 +67,16 @@ public class MonApplication extends Application {
         ControleurStocks ControlStock = new ControleurStocks(GeStock);
         VueStocks vue = new VueStocks(listeElement, ControlStock);
         root.add(vue.getVue(), 0, 0); // Position dans le GridPane
+        
+     // Création et ajout du bouton 'Lancer la production'
+        Button btnLancerProd = new Button("Lancer la production");
+        btnLancerProd.setOnAction(e -> {
+        	GestionnaireProduction.produireCommande();
+        });
+        HBox hboxButton = new HBox();
+        hboxButton.setAlignment(Pos.TOP_CENTER);
+        hboxButton.getChildren().add(btnLancerProd);
+        root.add(hboxButton, 0, 3);
     }
 
     public void sceneCommande(FichierCSV csv, GridPane root, GestionnaireStock GeStock) {
@@ -89,14 +99,5 @@ public class MonApplication extends Application {
         hbox.setAlignment(Pos.CENTER);
         hbox.getChildren().add(vue.getVue());
         root.add(hbox, 0, 2);
-        // Création et ajout du bouton 'Lancer la production'
-        Button btnLancerProd = new Button("Lancer la production");
-        btnLancerProd.setOnAction(e -> {
-            System.out.println("test");
-        });
-        HBox hboxButton = new HBox();
-        hboxButton.setAlignment(Pos.TOP_CENTER);
-        hboxButton.getChildren().add(btnLancerProd);
-        root.add(hboxButton, 0, 3);
     }
 }

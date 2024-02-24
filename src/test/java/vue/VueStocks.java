@@ -1,6 +1,7 @@
 package vue;
 
 import app.Element;
+import app.GestionnaireStock;
 import controleur.ControleurStocks;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -15,9 +16,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
-public class VueStocks {
+public class VueStocks{
     private HBox carrousel;
-    private ControleurStocks  ControlStocks;
+    private static ControleurStocks  ControlStocks;
     
     public VueStocks(ObservableList<Element> elements, ControleurStocks ControlStocks) {
     	this.ControlStocks = ControlStocks;
@@ -58,6 +59,7 @@ public class VueStocks {
 
         Label nom = new Label(e.getNom());
         Label quantite = new Label("Quantité: " + e.getQuantite() + " " + e.getUniteDeMesure());
+        quantite.textProperty().bind(e.quantiteProperty().asString());
         Label prixVente = new Label("Prix vente: " + e.getPrixVente() + " €");
         TextField quantiteTemporaireText = new TextField("0");
         quantiteTemporaireText.setMaxWidth(65);
@@ -84,7 +86,7 @@ public class VueStocks {
         validerAchat.setOnAction(event ->{
         	ControlStocks.augmenterQuantite(e, e.getQuantiteTemporaire());//Utilise la méthode du ControleurStocks pour ajouter la quantiteTemporaire au stock
         	e.setQuantiteTemporaire(0);
-        	quantite.setText("Quantité: " + e.getQuantite() + " " + e.getUniteDeMesure());
+        	//quantite.setText("Quantité: " + e.getQuantite() + " " + e.getUniteDeMesure());
         });
        
 
