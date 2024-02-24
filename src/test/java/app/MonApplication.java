@@ -37,6 +37,7 @@ public class MonApplication extends Application {
         
         creerScenes(csv, root);
         primaryStage.setTitle("Stock Master");
+        primaryStage.setFullScreen(true);
         
         Image icon = new Image(getClass().getResourceAsStream("/images/stock.png"));
         primaryStage.getIcons().add(icon); // Ajouter l'icône

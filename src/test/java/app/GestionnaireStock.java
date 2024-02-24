@@ -11,6 +11,8 @@ import java.util.ArrayList;
 public class GestionnaireStock {
 
     private static ObservableList<Element> listeElement = FXCollections.observableArrayList();
+    //private ObservableList<Element> listeElementCommande = FXCollections.observableArrayList();
+    HashMap<Element, Float> stockElementCommande = new HashMap<>(); // HashMap pour vérifications de stocks au niveau des commandes
     
     public static Element trouverElementParCode(String code) {
         for (Element element : listeElement) {
@@ -20,16 +22,6 @@ public class GestionnaireStock {
         }
         return null; // Si aucun élément correspondant n'est trouvé
     }
-
-    /*public void ajouterStock(Element e, float q) {
-        for (Element elem : listeElement) {
-        	if (elem.equals(e)){
-        		e.setQuantite(e.getQuantite() + q);
-        	}
-        }
-        listeElement.add(e);
-        //System.out.println("Erreur aujouterStock | Classe GestionnaireStock\nListeElement ne contient pas cette élément");
-    }*/
     
     public void ajouterStock(Element element, float quantite) {
         // Vérifier si l'élément existe déjà dans la liste
@@ -47,6 +39,7 @@ public class GestionnaireStock {
         // Si l'élément n'existe pas, l'ajouter à la liste
         if (!existe) {
             listeElement.add(element);
+            stockElementCommande.put(element, quantite);// Ajoute aussi les éléments dans une liste parallèle qui sert pour des vérifications, sans modifications de stocks réels
         }
     }
 
@@ -88,15 +81,35 @@ public class GestionnaireStock {
 
         // Parcourir tous les éléments nécessaires pour vérifier si le stock est suffisant
         for (Map.Entry<Element, Float> entree : elementsNecessaires.entrySet()) {
-        	//System.out.println("________________________________________________________________________");
-        	//System.out.println(entree);
         	Element element = entree.getKey();
         	float quantiteNecessaire = entree.getValue();
-        	if (element.getQuantite() < quantiteNecessaire) {
+        	float quantiteEnStock = stockElementCommande.get(element);
+        	if (quantiteEnStock < quantiteNecessaire) {
         	    return false; // Retourne faux si la quantité en stock d'un élément est insuffisante
         	}
         }
         commande.setRealisable(true);
+        
+        for (Map.Entry<Element, Float> entry : elementsNecessaires.entrySet()) {
+            Element element = entry.getKey();
+            Float quantiteNecessaire = entry.getValue();
+
+            stockElementCommande.put(element, stockElementCommande.get(element) - quantiteNecessaire);
+            // Traitez l'élément et sa quantité ici
+            System.out.println("_____________________");
+            System.out.println("Elément : " + element + ", Quantité : " + quantiteNecessaire);
+        }
+        
+     // Affiche le stock après la mise à jour
+        for (Map.Entry<Element, Float> entry : stockElementCommande.entrySet()) {
+            Element element = entry.getKey();
+            Float quantite = entry.getValue();
+
+            System.out.println("####################");
+            System.out.println("Elément : " + element + ", Quantité : " + quantite);
+        }
+
+        
         return true; // Tous les éléments nécessaires sont en quantité suffisante dans le stock
     }
     
