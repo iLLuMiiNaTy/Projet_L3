@@ -57,7 +57,7 @@ public class VueCommandes {
                             ControlCom.simulerCommande(commande);
                         });
                     }
-
+                    
                     @Override
                     public void updateItem(Void item, boolean empty) {
                         super.updateItem(item, empty);
@@ -71,11 +71,16 @@ public class VueCommandes {
                 return cell;
             }
         };
+        
+        TableColumn<Commande, String> colonneStatut = new TableColumn<>("Statut");
+        colonneStatut.setCellValueFactory(cellData -> Bindings.when(cellData.getValue().statutProperty())
+        	    .then("Complète")
+        	    .otherwise("En cours"));
 
         colonneSimulation.setCellFactory(cellFactory);
 
-        table.getColumns().addAll(colonneNumero, colonneClient, colonneProduit, colonneQuantite, colonneRealisable, colonneSimulation);
-        table.setMinWidth(695);
+        table.getColumns().addAll(colonneNumero, colonneClient, colonneProduit, colonneQuantite, colonneRealisable, colonneStatut, colonneSimulation);
+        table.setMinWidth(762);
         table.setMaxHeight(300);
         table.setItems(listeCommande);
     }

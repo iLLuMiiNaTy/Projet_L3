@@ -11,7 +11,6 @@ import java.util.ArrayList;
 public class GestionnaireStock {
 
     private static ObservableList<Element> listeElement = FXCollections.observableArrayList();
-    //private ObservableList<Element> listeElementCommande = FXCollections.observableArrayList();
     HashMap<Element, Float> stockElementCommande = new HashMap<>(); // HashMap pour vérifications de stocks au niveau des commandes
     
     public static Element trouverElementParCode(String code) {
@@ -44,17 +43,31 @@ public class GestionnaireStock {
         }
     }
 
-    public void retirerStock(Element e, int q) {
+    public void retirerStock(Element e, float quantiteNecessaire) {
     	for (Element elem : listeElement) {
     		if (elem.equals(e)) {
-    			e.setQuantite(e.getQuantite() - q);
-    			stockElementCommande.put(e, e.getQuantite() - q);
-    		}else {
-    			if (e.getQuantite() < q) {
+    			if (elem.getQuantite() < quantiteNecessaire) {
     				System.out.println("Erreur : Stock insuffisant !\n");
+    				System.out.println("Element en stock : " + elem + " | " + elem.getQuantite());
+    				System.out.println("Element à retirer : " + e + " | " + quantiteNecessaire);
+    			} else {
+    				e.setQuantite(e.getQuantite() - quantiteNecessaire);
+        			stockElementCommande.put(e, e.getQuantite() - quantiteNecessaire);
     			}
     		}
     	}
+    }
+    
+    public boolean verifierStockElement(Element element, float quantite) {
+    	// Parcourir tous les éléments nécessaires pour vérifier si le stock est suffisant
+        for (Element e: listeElement) {
+        	if (e.equals(element)) {
+        		if (e.getQuantite() >= quantite) {
+        			return true;
+        		}
+        	}
+        }
+        return false;
     }
     
     public boolean verifierStockCommande(Commande commande) {
@@ -122,14 +135,7 @@ public class GestionnaireStock {
         	}
         }
         return true;
-    }
-    
-    
-    
-    
-    
-    
-    
+    }    
     
     private void calculerProduitsFinauxNecessaires(Element element, float quantite, HashMap<Element, Float> produitsFinauxNecessaires, HashMap<Element, Float> produitsIntermediairesNecessaires, HashMap<Element, Float> matieresPremieresNecessaires) {
     	produitsFinauxNecessaires.merge(element, quantite, Float::sum);

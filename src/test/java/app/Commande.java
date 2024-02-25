@@ -14,6 +14,7 @@ public class Commande {
 	private SimpleStringProperty produit;
 	private SimpleIntegerProperty quantite;
 	private SimpleBooleanProperty realisable;
+	private SimpleBooleanProperty statut;
 
 	public Commande(String numeroCommande, String client, String codeProduit, String produit, int quantite) {
 		this.numeroCommande = new SimpleStringProperty(numeroCommande);
@@ -22,6 +23,7 @@ public class Commande {
 		this.produit = new SimpleStringProperty(produit);
 		this.quantite = new SimpleIntegerProperty(quantite);
 		this.realisable = new SimpleBooleanProperty(false);
+		this.statut = new SimpleBooleanProperty(false);
 	}
 
 	@Override
@@ -70,6 +72,18 @@ public class Commande {
 
 	public BooleanProperty realisableProperty() {
 	    return realisable;
+	}
+	
+	public final boolean getStatut() {
+		return statut.get();
+	}
+	
+	public void setStatut(boolean statut) {
+		this.statut.set(statut);
+	}
+	
+	public BooleanProperty statutProperty() {
+		return statut;
 	}
 
 

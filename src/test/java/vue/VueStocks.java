@@ -91,7 +91,7 @@ public class VueStocks{
        
 
         //ça c'est pour l'emplacement du button
-        HBox buttonsBox = new HBox(10, buttonPlus, quantiteTemporaireText, buttonMoins); // 10 est l'espacement que vous pouvez ajuster selon vos besoins
+        HBox buttonsBox = new HBox(9, buttonPlus, quantiteTemporaireText, buttonMoins); // 10 est l'espacement que vous pouvez ajuster selon vos besoins
         buttonsBox.setAlignment(Pos.CENTER);
 
         vueElement.getChildren().addAll(imageContainer, nom, quantite, prixVente, buttonsBox, validerAchat);
