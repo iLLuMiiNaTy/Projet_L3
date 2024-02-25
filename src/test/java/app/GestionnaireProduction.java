@@ -121,7 +121,7 @@ public class GestionnaireProduction {
 		        // Pour chaque élément d'entrée de cette chaîne, vérifier si un autre besoin de production est nécessaire
 		        for (Map.Entry<Element, Float> entree : chainePrincipale.getElementsEntree().entrySet()) {
 		            Element elementEntree = entree.getKey();
-		            int quantiteEntreeRequise = (int) (entree.getValue() * chainePrincipale.getActivation());
+		            float quantiteEntreeRequise = (float) Math.round((entree.getValue() * chainePrincipale.getActivation()) * 10) / 10;//Permet d'arrondir au dixième près, afin d'éviter les valeurs avec trop de chiffres après la virgule
 		            ChaineDeProduction chaineSecondaire = getChaineParElementSortie(elementEntree);
 		            if (chaineSecondaire != null) {
 		                // Si l'élément d'entrée est également produit par une autre chaîne, produire cet élément en premier
