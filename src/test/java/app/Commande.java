@@ -2,6 +2,7 @@ package app;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableBooleanValue;
@@ -12,16 +13,16 @@ public class Commande {
 	private SimpleStringProperty client;
 	private SimpleStringProperty codeProduit;
 	private SimpleStringProperty produit;
-	private SimpleIntegerProperty quantite;
+	private SimpleFloatProperty quantite;
 	private SimpleBooleanProperty realisable;
 	private SimpleBooleanProperty statut;
 
-	public Commande(String numeroCommande, String client, String codeProduit, String produit, int quantite) {
+	public Commande(String numeroCommande, String client, String codeProduit, String produit, float quantite) {
 		this.numeroCommande = new SimpleStringProperty(numeroCommande);
 		this.client = new SimpleStringProperty(client);
 		this.codeProduit = new SimpleStringProperty(codeProduit);
 		this.produit = new SimpleStringProperty(produit);
-		this.quantite = new SimpleIntegerProperty(quantite);
+		this.quantite = new SimpleFloatProperty(quantite);
 		this.realisable = new SimpleBooleanProperty(false);
 		this.statut = new SimpleBooleanProperty(false);
 	}
@@ -58,7 +59,7 @@ public class Commande {
 		return produit.get();
 	}
 
-	public final int getQuantite() {
+	public final float getQuantite() {
 		return quantite.get();
 	}
 	

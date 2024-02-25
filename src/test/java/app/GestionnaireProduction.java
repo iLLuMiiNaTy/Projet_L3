@@ -11,7 +11,7 @@ public class GestionnaireProduction {
 	private static GestionnaireStock GeStock;
 	
 	public GestionnaireProduction(GestionnaireStock GeStock){
-		this.GeStock = GeStock;
+		GestionnaireProduction.GeStock = GeStock;
 	}
 	
 	public void ajouterChaine(ChaineDeProduction c) {
@@ -101,10 +101,9 @@ public class GestionnaireProduction {
 				commande.setStatut(true);// On passe le statut de la commande à true pour indiquer qu'elle est faite et ne sera donc pas à refaire
 				Element elementProduit = GestionnaireStock.trouverElementParCode(commande.getCodeProduit());
 			    // On suppose que ce produit final est produit par une chaîne principale. L'étape initiale.
-				System.out.println("\n  Produire : " + elementProduit + "  | " + commande.getQuantite());
 			    produire(elementProduit, commande.getQuantite());
 			    GeStock.retirerStock(elementProduit, commande.getQuantite());
-			    System.out.println("  Retirer (If) : " + elementProduit + "  | " + commande.getQuantite());
+			    GestionnaireStock.actualiserStockElementCommande();
 			}
 		}
 	}
@@ -115,31 +114,25 @@ public class GestionnaireProduction {
 			GeStock.retirerStock(element, quantiteNecessaire);
 		} else {
 			ChaineDeProduction chainePrincipale = getChaineParElementSortie(element);
-			System.out.println("Chaine de prod : " + element);
-			System.out.println("Activation : " + chainePrincipale.getActivation());
 		    if (chainePrincipale != null) {	        
 		        // Pour chaque élément d'entrée de cette chaîne, vérifier si un autre besoin de production est nécessaire
 		        for (Map.Entry<Element, Float> entree : chainePrincipale.getElementsEntree().entrySet()) {
 		            Element elementEntree = entree.getKey();
-		            float quantiteEntreeRequise = (float) Math.round((entree.getValue() * chainePrincipale.getActivation()) * 10) / 10;//Permet d'arrondir au dixième près, afin d'éviter les valeurs avec trop de chiffres après la virgule
+		            float quantiteEntreeRequise = entree.getValue() * chainePrincipale.getActivation();
 		            ChaineDeProduction chaineSecondaire = getChaineParElementSortie(elementEntree);
 		            if (chaineSecondaire != null) {
 		                // Si l'élément d'entrée est également produit par une autre chaîne, produire cet élément en premier
-		            	System.out.println("  Produire : " + elementEntree + "  | " + quantiteEntreeRequise);
 		                produire(elementEntree, quantiteEntreeRequise);
 		                GeStock.retirerStock(elementEntree, quantiteEntreeRequise);
-		                System.out.println("  Retirer (If) : " + elementEntree + "  | " + quantiteEntreeRequise);
 		            } else {
 		                // Sinon, ça signifie que l'élément doit déjà être disponible en stock
 		                GeStock.retirerStock(elementEntree, quantiteEntreeRequise);
-		                System.out.println("  Retirer (Else) : " + elementEntree + "  | " + quantiteEntreeRequise);
 		            }
 		        }
 
 		        // Après s'être assuré de la disponibilité des éléments d'entrée, produit l'élément de sortie
 		        float quantiteProduite = chainePrincipale.getElementsSortie().get(element) * chainePrincipale.getActivation();
 		        GeStock.ajouterStock(element, (quantiteProduite));  
-		        System.out.println("Ajout Stock : " + element + " | " + (quantiteProduite));
 		    }
 		}
 	}

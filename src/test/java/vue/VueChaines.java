@@ -61,9 +61,16 @@ public class VueChaines {
         vueElement.getStyleClass().add("card");
         
         Label code = new Label("Chaîne de production n°" + c.getCode());
-        Label niveauActivation = new Label("Niveau d'activation: " + c.getActivation());
+        Label niveauActivation = new Label();
+        niveauActivation.textProperty().bind(c.activationProperty().asString());
         
-        vueElement.getChildren().addAll(imageContainer, code, niveauActivation);
+        HBox hbox = new HBox();
+        hbox.getChildren().add(new Label("Niveau d'activation: "));
+        hbox.getChildren().add(niveauActivation);
+        hbox.setAlignment(Pos.CENTER_LEFT);
+
+        
+        vueElement.getChildren().addAll(imageContainer, code, hbox);
         
         return vueElement;
     }

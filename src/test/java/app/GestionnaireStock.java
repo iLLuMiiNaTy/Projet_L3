@@ -6,12 +6,30 @@ import java.util.Map;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class GestionnaireStock {
 
     private static ObservableList<Element> listeElement = FXCollections.observableArrayList();
-    HashMap<Element, Float> stockElementCommande = new HashMap<>(); // HashMap pour vérifications de stocks au niveau des commandes
+    static HashMap<Element, Float> stockElementCommande = new HashMap<>(); // HashMap pour vérifications de stocks au niveau des commandes
+    
+    public static void test() {
+    	for (Element e : listeElement) {
+    		System.out.println("Liste element : " + e);
+    	}
+    	for (Map.Entry<Element, Float> entry : stockElementCommande.entrySet()) {
+            Element element = entry.getKey();
+            Float quantite = entry.getValue();
+            System.out.println("HashMap element : " + element + " | " + quantite);
+    	}
+    }
+    
+    public static void actualiserStockElementCommande() {
+    	for (Element e : listeElement) {
+    		stockElementCommande.put(e, e.getQuantite());
+    	}
+    }
     
     public static Element trouverElementParCode(String code) {
         for (Element element : listeElement) {
@@ -46,13 +64,13 @@ public class GestionnaireStock {
     public void retirerStock(Element e, float quantiteNecessaire) {
     	for (Element elem : listeElement) {
     		if (elem.equals(e)) {
-    			if (elem.getQuantite() < quantiteNecessaire) {
-    				System.out.println("Erreur : Stock insuffisant !\n");
-    				System.out.println("Element en stock : " + elem + " | " + elem.getQuantite());
-    				System.out.println("Element à retirer : " + e + " | " + quantiteNecessaire);
-    			} else {
-    				e.setQuantite(e.getQuantite() - quantiteNecessaire);
-        			stockElementCommande.put(e, e.getQuantite() - quantiteNecessaire);
+    			if (elem.getQuantite() >= quantiteNecessaire) {
+    				
+    				DecimalFormat df = new DecimalFormat("#.##");
+                	String resultatFormate = df.format(e.getQuantite() - quantiteNecessaire);
+                	String resultatFloatString = resultatFormate.replace(",", ".");
+                	float res = Float.parseFloat(resultatFloatString);
+    				e.setQuantite(res);
     			}
     		}
     	}
@@ -116,8 +134,14 @@ public class GestionnaireStock {
         	for (Map.Entry<Element, Float> entry : matieresPremieresNecessaires.entrySet()) {
                 Element element = entry.getKey();
                 Float quantiteNecessaire = entry.getValue();
+                // On arrondi la quantité au dixième près pour empécher les erreurs les erreurs de précision entre les différents nombres
+                // Cette manière de faire est aussi présente pour la méthode produire() pour maintenir la cohérence des résultats
+                DecimalFormat df = new DecimalFormat("#.##");
+            	String resultatFormate = df.format(stockElementCommande.get(element) - quantiteNecessaire);
+            	String resultatFloatString = resultatFormate.replace(",", ".");
+            	float res = Float.parseFloat(resultatFloatString);
 
-                stockElementCommande.put(element, stockElementCommande.get(element) - quantiteNecessaire);
+                stockElementCommande.put(element, res);
             }        
             return true; // Tous les éléments nécessaires sont en quantité suffisante dans le stock
         }

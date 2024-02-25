@@ -60,6 +60,16 @@ public class VueStocks{
         Label nom = new Label(e.getNom());
         Label quantite = new Label("Quantité: " + e.getQuantite() + " " + e.getUniteDeMesure());
         quantite.textProperty().bind(e.quantiteProperty().asString());
+        Label uMesure = new Label(e.getUniteDeMesure());
+        
+        HBox hbox = new HBox();
+        hbox.getChildren().add(new Label("Quantité: "));
+        hbox.getChildren().add(quantite);
+        hbox.getChildren().add(new Label(" "));
+        hbox.getChildren().add(uMesure);
+        hbox.setAlignment(Pos.CENTER_LEFT);
+        
+        Label prixAchat = new Label("Prix achat: " + e.getPrixAchat() + " €");
         Label prixVente = new Label("Prix vente: " + e.getPrixVente() + " €");
         TextField quantiteTemporaireText = new TextField("0");
         quantiteTemporaireText.setMaxWidth(65);
@@ -94,7 +104,7 @@ public class VueStocks{
         HBox buttonsBox = new HBox(9, buttonPlus, quantiteTemporaireText, buttonMoins); // 10 est l'espacement que vous pouvez ajuster selon vos besoins
         buttonsBox.setAlignment(Pos.CENTER);
 
-        vueElement.getChildren().addAll(imageContainer, nom, quantite, prixVente, buttonsBox, validerAchat);
+        vueElement.getChildren().addAll(imageContainer, nom, hbox, prixAchat, prixVente, buttonsBox, validerAchat);
 
         return vueElement;
     }

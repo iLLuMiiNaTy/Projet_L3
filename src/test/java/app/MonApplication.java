@@ -73,9 +73,15 @@ public class MonApplication extends Application {
         btnLancerProd.setOnAction(e -> {
         	GestionnaireProduction.produireCommande();
         });
+     // Création et ajout d'un bouton test 'Test' pour appeler des fonctions spécifique pour du débuggage
+        Button btnTest = new Button("Test");
+        btnTest.setOnAction(e -> {
+        	System.out.println("\n_____DEBUT DU TEST_____\n");
+        	GestionnaireStock.test();
+        });
         HBox hboxButton = new HBox();
         hboxButton.setAlignment(Pos.TOP_CENTER);
-        hboxButton.getChildren().add(btnLancerProd);
+        hboxButton.getChildren().addAll(btnLancerProd, btnTest);
         root.add(hboxButton, 0, 3);
     }
 
