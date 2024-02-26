@@ -71,7 +71,7 @@ public class MonApplication extends Application {
      // Création et ajout du bouton 'Lancer la production'
         Button btnLancerProd = new Button("Lancer la production");
         btnLancerProd.setOnAction(e -> {
-        	GestionnaireProduction.produireCommande();
+        	GestionnaireStock.actualiserStock();
         });
      // Création et ajout d'un bouton test 'Test' pour appeler des fonctions spécifique pour du débuggage
         Button btnTest = new Button("Test");

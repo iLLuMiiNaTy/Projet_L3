@@ -19,5 +19,13 @@ public class GestionnaireCommande {
 	public static ObservableList<Commande> getListeCommande(){
 		return listeCommande;
 	}
+	
+	public static void completerCommande() {
+		for (Commande c : listeCommande) {
+			if (c.getRealisable() && !c.getStatut()) {
+				c.setStatut(true);
+			}
+		}
+	}
 
 }

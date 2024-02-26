@@ -16,6 +16,7 @@ public class Commande {
 	private SimpleFloatProperty quantite;
 	private SimpleBooleanProperty realisable;
 	private SimpleBooleanProperty statut;
+	private SimpleBooleanProperty simulee;
 
 	public Commande(String numeroCommande, String client, String codeProduit, String produit, float quantite) {
 		this.numeroCommande = new SimpleStringProperty(numeroCommande);
@@ -25,6 +26,7 @@ public class Commande {
 		this.quantite = new SimpleFloatProperty(quantite);
 		this.realisable = new SimpleBooleanProperty(false);
 		this.statut = new SimpleBooleanProperty(false);
+		this.simulee = new SimpleBooleanProperty(false);
 	}
 
 	@Override
@@ -86,9 +88,18 @@ public class Commande {
 	public BooleanProperty statutProperty() {
 		return statut;
 	}
-
-
-
+	
+	public final boolean getSimulee() {
+		return simulee.get();
+	}
+	
+	public void setSimulee(boolean simulee) {
+		this.simulee.setValue(simulee);
+	}
+	
+	public BooleanProperty simuleeProperty() {
+		return simulee;
+	}
 
 
 }
