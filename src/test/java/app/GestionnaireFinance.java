@@ -98,5 +98,4 @@ public class GestionnaireFinance {
 	public static ObservableList<Transaction> getListeTransaction(){
 		return listeTransactions;
 	}
-
 }
