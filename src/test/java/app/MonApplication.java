@@ -74,15 +74,26 @@ public class MonApplication extends Application {
         	GestionnaireStock.actualiserStock();
         });
      // Création et ajout d'un bouton test 'Test' pour appeler des fonctions spécifique pour du débuggage
-        Button btnTest = new Button("Test");
+        /*Button btnTest = new Button("Test");
         btnTest.setOnAction(e -> {
         	System.out.println("\n_____DEBUT DU TEST_____\n");
-        	GestionnaireStock.test();
+        	GestionnaireFinance.test();
+        });*/
+        
+        Button btnExport = new Button("Exporter résultat financier");
+        btnExport.setOnAction(e -> {
+        	FichierCSV.sauvegarderElements();
         });
-        HBox hboxButton = new HBox();
-        hboxButton.setAlignment(Pos.TOP_CENTER);
-        hboxButton.getChildren().addAll(btnLancerProd, btnTest);
-        root.add(hboxButton, 0, 3);
+        
+        HBox hboxButtonProd = new HBox();
+        hboxButtonProd.setAlignment(Pos.TOP_CENTER);
+        hboxButtonProd.getChildren().add(btnLancerProd);
+        root.add(hboxButtonProd, 0, 3);
+        
+        HBox hboxButtonExport = new HBox();
+        hboxButtonExport.setAlignment(Pos.TOP_CENTER);
+        hboxButtonExport.getChildren().add(btnExport);
+        root.add(hboxButtonExport, 0, 4);
     }
 
     public void sceneCommande(FichierCSV csv, GridPane root, GestionnaireStock GeStock) {

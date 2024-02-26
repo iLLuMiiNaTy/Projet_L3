@@ -49,19 +49,52 @@ public class FichierCSV {
         return listeElement;
     }
 
-	public void sauvegarderElements() {
-        String elementsFilePath = "src/test/resources/elementsExport.csv";
+	public static void sauvegarderElements() {
+        String elementsFilePath = "src/test/resources/resultatFinancier.csv";
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(elementsFilePath))) {
-            writer.write("code;nom;quantite;uniteDeMesure"); // Première ligne du fichier CSV
-
+            writer.write("Total des achats :"); // Première ligne du fichier CSV
+            
+            writer.newLine(); // Deuxième ligne du fichier CSV
+            int totalAchat = GestionnaireFinance.getTotalAchat();
+            String line2 = String.valueOf(totalAchat);
+            writer.write(line2);
+            
+            writer.newLine(); // Troisième ligne
+            writer.write("Total des ventes :");
+            
+            writer.newLine(); // 4ème ligne
+            int totalVente = GestionnaireFinance.getTotalVente();
+            String line4 = String.valueOf(totalVente);
+            writer.write(line4);
+            
+            writer.newLine(); // 5ème ligne
+            writer.write("Résultat financier :");
+            
+            writer.newLine(); // 6ème ligne
+            int resFinancier = GestionnaireFinance.calculerResultatFinancier();
+            String line6 = String.valueOf(resFinancier);
+            writer.write(line6);
+            
+            writer.newLine(); // 7ème ligne
+            writer.write("Liste des transactions :");
+            
+            writer.newLine(); // 8ème ligne
+            writer.write("|------------------------------------------------|");
+            writer.newLine();
+            writer.write("| Type  |    Element         | Quantite | Valeur |");
             writer.newLine();
 
-            for (Element element : GestionnaireStock.getListeElement()) {
-                String line = element.getCode() + ";" + element.getNom() + ";" + element.getQuantite() + ";" + element.getUniteDeMesure();
+            for (Transaction t : GestionnaireFinance.getListeTransaction()) {
+            	String line = "| %5s | %18s | %8d | %5d€ |";
+                //String line = "| "+ t.getType() + " | " + t.getNomElement() + " | " + t.getQuantite() + " | " + t.getPrix() + "€";
+            	line = String.format(line, t.getType(), t.getNomElement(), t.getQuantite(), t.getPrix());
+                writer.write("|------------------------------------------------|");
+                writer.newLine();
                 writer.write(line);
                 writer.newLine();
             }
+            writer.write("|------------------------------------------------|");
 
             writer.flush();
         } catch (IOException e) {

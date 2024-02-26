@@ -14,7 +14,7 @@ public class GestionnaireStock {
     private static ObservableList<Element> listeElement = FXCollections.observableArrayList();
     static HashMap<Element, Float> stockElementCommande = new HashMap<>(); // HashMap pour vérifications de stocks au niveau des commandes
     
-    public static void test() {
+    /*public static void test() {
     	for (Element e : listeElement) {
     		System.out.println("Liste element : " + e);
     	}
@@ -23,7 +23,7 @@ public class GestionnaireStock {
             Float quantite = entry.getValue();
             System.out.println("HashMap element : " + element + " | " + quantite);
     	}
-    }
+    }*/
     
     public static void actualiserStock() {
     	for (Map.Entry<Element, Float> entry : stockElementCommande.entrySet()) {
@@ -32,6 +32,7 @@ public class GestionnaireStock {
             e.setQuantite(q);
             GestionnaireCommande.completerCommande();
             }
+    	GestionnaireFinance.ajouterCommandeListeTransaction();
     }
     
     public static Element trouverElementParCode(String code) {
@@ -62,6 +63,7 @@ public class GestionnaireStock {
             listeElement.add(element);
             //stockElementCommande.put(element, quantite);// Ajoute aussi les éléments dans une liste parallèle qui sert pour des vérifications, sans modifications de stocks réels
         }
+        GestionnaireFinance.nouvelAchat(element, quantite); // Ajoute un achat à ma liste de transactions
         simulationAjouterStock(element, quantite);//Ajouter dans la liste de simulation
     }
     

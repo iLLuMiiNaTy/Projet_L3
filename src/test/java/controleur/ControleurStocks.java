@@ -1,6 +1,7 @@
 package controleur;
 
 import app.Element;
+import app.GestionnaireFinance;
 import app.GestionnaireProduction;
 import app.GestionnaireStock;
 import vue.VueStocks;
