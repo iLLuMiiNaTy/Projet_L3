@@ -19,13 +19,23 @@ public class VueCommandes {
     private ObservableList<Commande> listeCommande;
     private ControleurCommandes ControlCom;
 
+	/**
+	 * Constructeur de la vue des commandes
+	 * 
+	 * @param listeCommande
+	 * @param ControlCom
+	 */
     public VueCommandes(ObservableList<Commande> listeCommande, ControleurCommandes ControlCom) {
         this.listeCommande = listeCommande;
         this.ControlCom = ControlCom;
         creerVueCommandes();
     }
 
+	/**
+	 * Crée la vue des commandes
+	 */
     private void creerVueCommandes() {
+    	// Création des colonnes de la table
         TableColumn<Commande, String> colonneNumero = new TableColumn<>("Numéro de commande");
         colonneNumero.setCellValueFactory(new PropertyValueFactory<>("numeroCommande"));
 
@@ -39,12 +49,14 @@ public class VueCommandes {
         colonneQuantite.setCellValueFactory(new PropertyValueFactory<>("quantite"));
         
         TableColumn<Commande, String> colonneRealisable = new TableColumn<>("Réalisable");
+        // Bindings.when permet de faire un if else dans une cellule de tableau
         colonneRealisable.setCellValueFactory(cellData -> Bindings.when(cellData.getValue().realisableProperty())
         	    .then("Oui")
         	    .otherwise("Non"));
 
         TableColumn<Commande, Void> colonneSimulation = new TableColumn<>("Simulation");
         
+        // Création du bouton "Lancer Vérification"
         Callback<TableColumn<Commande, Void>, TableCell<Commande, Void>> cellFactory = new Callback<TableColumn<Commande, Void>, TableCell<Commande, Void>>() {
             @Override
             public TableCell<Commande, Void> call(final TableColumn<Commande, Void> param) {
@@ -58,6 +70,7 @@ public class VueCommandes {
                         });
                     }
                     
+                    // Affiche le bouton dans la cellule
                     @Override
                     public void updateItem(Void item, boolean empty) {
                         super.updateItem(item, empty);
@@ -78,13 +91,19 @@ public class VueCommandes {
         	    .otherwise("En cours"));
 
         colonneSimulation.setCellFactory(cellFactory);
-
+        
+        // Ajout des colonnes à la table
         table.getColumns().addAll(colonneNumero, colonneClient, colonneProduit, colonneQuantite, colonneRealisable, colonneStatut, colonneSimulation);
         table.setMinWidth(762);
         table.setMaxHeight(300);
         table.setItems(listeCommande);
     }
 
+	/**
+	 * Retourne la vue des commandes
+	 * 
+	 * @return TableView<Commande>
+	 */
     public TableView<Commande> getVue() {
         return table;
     }

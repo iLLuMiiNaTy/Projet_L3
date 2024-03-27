@@ -22,19 +22,36 @@ public class VueChaines {
 	private HBox carrousel;
 	private ControleurChaines ControlChaine;
 
+	/**
+	 * Constructeur
+	 * 
+	 * @param listeChaine   La liste des chaines à afficher
+	 * @param ControlChaine Le controleur des chaines
+	 */
 	public VueChaines(ObservableList<ChaineDeProduction> listeChaine, ControleurChaines ControlChaine) {
 		this.carrousel = new HBox(10); // Espacement de 10 entre chaque élément du carrousel
         carrousel.setPadding(new javafx.geometry.Insets(5)); // Un peu d'espacement autour du carrousel
         this.ControlChaine = ControlChaine;        
         afficherChaines(listeChaine);
 	}
-	
+
+	/**
+	 * Affiche les chaines de production
+	 * 
+	 * @param listeChaine La liste des chaines à afficher
+	 */
 	private void afficherChaines(ObservableList<ChaineDeProduction> listeChaine) {
         for (ChaineDeProduction c : listeChaine) {
             carrousel.getChildren().add(creerVueChaines(c));
         }
     }
-	
+
+	/**
+	 * Crée la vue d'une chaine de production
+	 * 
+	 * @param c La chaine de production à afficher
+	 * @return La vue de la chaine de production
+	 */
 	private Node creerVueChaines(ChaineDeProduction c) {
     	
     	StackPane imageContainer = new StackPane();
@@ -74,7 +91,12 @@ public class VueChaines {
         
         return vueElement;
     }
-    
+
+	/**
+	 * Retourne la vue des chaines
+	 * 
+	 * @return La vue des chaines
+	 */
     public HBox getVue() {
         return carrousel;
     }

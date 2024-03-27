@@ -5,13 +5,11 @@ import vue.VueChaines;
 
 public class ControleurChaines {
 	private GestionnaireProduction GeProd;
-
+	/**
+	 * Constructeur du controleur des chaines de production
+	 * @param GeProd
+	 */
     public ControleurChaines(GestionnaireProduction GeProd) {
         this.GeProd = GeProd;
-        initControleur();
-    }
-
-    private void initControleur() {
-        // Ajoutez la logique pour gérer les actions de l'utilisateur, comme des clics sur des boutons
     }
 }

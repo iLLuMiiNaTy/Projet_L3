@@ -49,13 +49,10 @@ public class GestionnaireStock {
         // Vérifier si l'élément existe déjà dans la liste
         boolean existe = false;
         for (Element e : listeElement) {
-        	System.out.println("Test boucle for listeElement");
             // Si le code de l'élément correspond à un élément existant dans le stock
             if (e.equals(element)) {
-            	System.out.println("Test if e.equals(element)");
             	// On cherche l'index du stockage correspondant à l'élément dans la liste de stockage
             	for (Stockage s : listeStockage) {
-            		System.out.println("Test boucle for listeStockage");
 					if (s.getCode().equals(e.getCodeStockage())) {
 						// On calcule la capacité total de stockage pour un élément
 		            	int totalCapaciteStockage = 0;
@@ -63,8 +60,6 @@ public class GestionnaireStock {
 		            	if (totalCapaciteStockage > quantite + e.getQuantite()) {
 		            		// Mise à jour de la quantité de l'élément
 		                    e.setQuantite(e.getQuantite() + quantite);
-		                    System.out.println("test ajout quantite");
-		                    System.out.println("totalCapaciteStockage : " + totalCapaciteStockage + " quantite : " + quantite + " quantite stock : " + e.getQuantite());
 		                    //stockElementCommande.put(element, quantite);
 		                    existe = true;
 		                    break;

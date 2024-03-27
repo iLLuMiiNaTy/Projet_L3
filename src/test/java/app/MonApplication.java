@@ -23,10 +23,12 @@ import vue.VueStocks;
 public class MonApplication extends Application {
 
     public static void main(String[] args) {
-    	System.out.println("Lancement de l'application Stock Master");
         launch(args);
     }
-
+    /**
+     * Méthode start de la classe Application
+     * @param primaryStage
+     */
     @Override
     public void start(Stage primaryStage) {
         FichierCSV csv = new FichierCSV();
@@ -56,6 +58,12 @@ public class MonApplication extends Application {
         primaryStage.show();
     }
 
+	/**
+	 * Méthode permettant de créer les différentes scènes de l'application
+	 * 
+	 * @param csv
+	 * @param root
+	 */
     public void creerScenes(FichierCSV csv, GridPane root) {
         GestionnaireStock GeStock = new GestionnaireStock();
         sceneStock(csv, root, GeStock);
@@ -63,6 +71,13 @@ public class MonApplication extends Application {
         sceneChaine(csv, root, GeStock);
     }
 
+	/**
+	 * Méthode permettant de créer la scène de gestion des stocks
+	 * 
+	 * @param csv
+	 * @param root
+	 * @param GeStock
+	 */
     public void sceneStock(FichierCSV csv, GridPane root, GestionnaireStock GeStock) {
         ObservableList<Element> listeElement = csv.chargerElements(GeStock);
         ObservableList<Stockage> listeStockage = csv.chargerStockages(GeStock);
@@ -75,12 +90,6 @@ public class MonApplication extends Application {
         btnLancerProd.setOnAction(e -> {
         	GestionnaireStock.actualiserStock();
         });
-     // Création et ajout d'un bouton test 'Test' pour appeler des fonctions spécifique pour du débuggage
-        /*Button btnTest = new Button("Test");
-        btnTest.setOnAction(e -> {
-        	System.out.println("\n_____DEBUT DU TEST_____\n");
-        	GestionnaireFinance.test();
-        });*/
         
         Button btnExport = new Button("Exporter résultat financier");
         btnExport.setOnAction(e -> {
@@ -98,6 +107,13 @@ public class MonApplication extends Application {
         root.add(hboxButtonExport, 0, 4);
     }
 
+	/**
+	 * Méthode permettant de créer la scène de gestion des commandes
+	 * 
+	 * @param csv
+	 * @param root
+	 * @param GeStock
+	 */
     public void sceneCommande(FichierCSV csv, GridPane root, GestionnaireStock GeStock) {
         GestionnaireCommande GeCom = new GestionnaireCommande(GeStock);
         ObservableList<Commande> listeCommande = csv.chargerCommandes(GeCom);
@@ -109,6 +125,13 @@ public class MonApplication extends Application {
         root.add(hbox, 0, 1);
     }
 
+	/**
+	 * Méthode permettant de créer la scène de gestion des chaines de production
+	 * 
+	 * @param csv
+	 * @param root
+	 * @param GeStock
+	 */
     private void sceneChaine(FichierCSV csv, GridPane root, GestionnaireStock GeStock) {
         GestionnaireProduction GeProd = new GestionnaireProduction(GeStock);
         ObservableList<ChaineDeProduction> listeChaine = csv.chargerChaines(GeProd);        

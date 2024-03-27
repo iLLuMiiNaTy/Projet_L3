@@ -8,23 +8,44 @@ import vue.VueStocks;
 
 public class ControleurStocks {
 	private GestionnaireStock GeStock;
-
+	/**
+	 * Constructeur de la classe ControleurStocks
+	 * @param GeStock
+	 */
     public ControleurStocks(GestionnaireStock GeStock) {
         this.GeStock = GeStock;
     }
-    
-    public void augmenterQuantite(Element e, int quantite) {
-    	GeStock.ajouterStock(e, quantite);
+
+	/**
+	 * Methode permettant d'ajouter un element au stock
+	 * 
+	 * @param element
+	 * @param quantite
+	 */
+    public void augmenterQuantite(Element element, int quantite) {
+    	GeStock.ajouterStock(element, quantite);
     }
 
-    public void diminuerQuantite(Element e) {
-        if (e.getQuantite() > 0) {
-            e.setQuantite(e.getQuantite() - 1);
+	/**
+	 * Methode permettant de diminuer la quantite d'un element
+	 * 
+	 * @param element
+	 */
+    public void diminuerQuantite(Element element) {
+        if (element.getQuantite() > 0) {
+        	element.setQuantite(element.getQuantite() - 1);
         }
     }
 
-	public boolean verifierQuantiteDisponible(Element e, int i) {
-		boolean valide = GeStock.verifierQuantiteDisponible(e, i);
+	/**
+	 * Methode permettant de verifier si la quantite d'un element est suffisante
+	 * 
+	 * @param element
+	 * @param quantite
+	 * @return
+	 */
+	public boolean verifierQuantiteDisponible(Element element, int quantite) {
+		boolean valide = GeStock.verifierQuantiteDisponible(element, quantite);
 		return valide;
 	}
 }
