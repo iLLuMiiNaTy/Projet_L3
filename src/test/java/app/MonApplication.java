@@ -64,6 +64,7 @@ public class MonApplication extends Application {
 
     public void sceneStock(FichierCSV csv, GridPane root, GestionnaireStock GeStock) {
         ObservableList<Element> listeElement = csv.chargerElements(GeStock);
+        ObservableList<Stockage> listeStockage = csv.chargerStockages(GeStock);
         ControleurStocks ControlStock = new ControleurStocks(GeStock);
         VueStocks vue = new VueStocks(listeElement, ControlStock);
         root.add(vue.getVue(), 0, 0); // Position dans le GridPane

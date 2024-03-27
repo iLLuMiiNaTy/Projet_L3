@@ -38,8 +38,9 @@ public class FichierCSV {
                 String prixAchat = data[4];
                 String prixVente = data[5];
                 String urlImage = data[6];
+                String codeStockage = data[7];
 
-                Element element = new Element(code, nom, quantite, uniteDeMesure, prixAchat, prixVente, urlImage);
+                Element element = new Element(code, nom, quantite, uniteDeMesure, prixAchat, prixVente, urlImage, codeStockage);
                 listeElement.add(element);
                 GeStock.ajouterStock(element, quantite);
             }
@@ -195,6 +196,40 @@ public class FichierCSV {
 		return listeCommande;
     }
 
+//#########################################################################################################
+													//Stockage
+//#########################################################################################################
+
+	public ObservableList<Stockage> chargerStockages(GestionnaireStock GeStock) {
+		
+		ObservableList<Stockage> listeStockage = FXCollections.observableArrayList();
+		
+        try (BufferedReader reader = new BufferedReader(new FileReader("src/test/resources/stockages.csv"))) {
+            String line;
+            //Partie pour supprimer la première ligne des fichiers csv qui sert uniquement d'en tête
+            boolean firstLine = true; // Variable pour suivre la première ligne
+            while ((line = reader.readLine()) != null) {
+                if (firstLine) {
+                    firstLine = false;
+                    continue; // Ignorer la première ligne
+                }// Suppression de la première ligne terminée
+
+                // Traitement des lignes suivantes
+                String[] data = line.split(";");
+                String code = data[0];
+                String nom = data[1];
+                int capacite = Integer.parseInt(data[2]);
+                int quantite = Integer.parseInt(data[3]);
+
+                Stockage stockage = new Stockage(code, nom, capacite, quantite);
+                listeStockage.add(stockage);
+                GeStock.ajouterStockage(stockage);
+            }
+        } catch (IOException e) {
+            System.out.println("Erreur lors du chargement du fichier elements.csv : " + e.getMessage());
+        }
+        return listeElement;
+    }
 
 
 

@@ -13,6 +13,7 @@ public class GestionnaireStock {
 
     private static ObservableList<Element> listeElement = FXCollections.observableArrayList();
     static HashMap<Element, Float> stockElementCommande = new HashMap<>(); // HashMap pour vérifications de stocks au niveau des commandes
+    private static ObservableList<Stockage> listeStockage = FXCollections.observableArrayList();
     
     /*public static void test() {
     	for (Element e : listeElement) {
@@ -65,6 +66,22 @@ public class GestionnaireStock {
         }
         GestionnaireFinance.nouvelAchat(element, quantite); // Ajoute un achat à ma liste de transactions
         simulationAjouterStock(element, quantite);//Ajouter dans la liste de simulation
+    }
+    
+    public void ajouterStockage(Stockage stockage) {
+		// Vérifier si le stockage existe déjà dans la liste
+		boolean existe = false;
+		for (Stockage s : listeStockage) {
+			// Si le code du stockage correspond à un stockage existant
+			if (s.equals(stockage)) {
+                existe = true;
+                break;
+			}
+		}
+		// Si le stockage n'existe pas, l'ajouter à la liste
+		if (!existe) {
+			listeStockage.add(stockage);
+		}
     }
     
     public void simulationAjouterStock(Element element, float quantite) {

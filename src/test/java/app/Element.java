@@ -15,8 +15,9 @@ public class Element{
 	private int prixVente;
 	private String urlImage;
 	private SimpleIntegerProperty quantiteTemporaire;
+	private String codeStockage;
 
-	public Element(String code, String nom, float quantite, String uniteDeMesure, String prixAchat, String prixVente, String urlImage) {
+	public Element(String code, String nom, float quantite, String uniteDeMesure, String prixAchat, String prixVente, String urlImage, String codeStockage) {
 		this.code = code;
 		this.nom = nom;
 		this.quantite = new SimpleFloatProperty(quantite);
@@ -33,6 +34,7 @@ public class Element{
 		}
 		this.urlImage = urlImage;
 		this.quantiteTemporaire = new SimpleIntegerProperty(0);
+		this.codeStockage = codeStockage;
 	}
 
 	/*@Override
@@ -106,6 +108,14 @@ public class Element{
 
 	public IntegerProperty quantiteTemporaireProperty() {
 		return quantiteTemporaire;
+	}
+
+	public String getCodeStockage() {
+		return codeStockage;
+	}
+	
+	public void setCodeStockage(String codeStockage) {
+		this.codeStockage = codeStockage;
 	}
 
 }
