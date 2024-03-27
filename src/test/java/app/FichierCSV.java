@@ -222,13 +222,14 @@ public class FichierCSV {
                 int quantite = Integer.parseInt(data[3]);
 
                 Stockage stockage = new Stockage(code, nom, capacite, quantite);
+                System.out.println(stockage);
                 listeStockage.add(stockage);
                 GeStock.ajouterStockage(stockage);
             }
         } catch (IOException e) {
             System.out.println("Erreur lors du chargement du fichier elements.csv : " + e.getMessage());
         }
-        return listeElement;
+        return listeStockage;
     }
 
 

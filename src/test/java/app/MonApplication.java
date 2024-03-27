@@ -23,6 +23,7 @@ import vue.VueStocks;
 public class MonApplication extends Application {
 
     public static void main(String[] args) {
+    	System.out.println("Lancement de l'application Stock Master");
         launch(args);
     }
 

@@ -22,4 +22,9 @@ public class ControleurStocks {
             e.setQuantite(e.getQuantite() - 1);
         }
     }
+
+	public boolean verifierQuantiteDisponible(Element e, int i) {
+		boolean valide = GeStock.verifierQuantiteDisponible(e, i);
+		return valide;
+	}
 }

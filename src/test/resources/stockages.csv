@@ -1,5 +1,5 @@
 Code;Nom;Capacite;Quantite
-S001;Stockage Circuit Principaux;200;10
+S001;Stockage Circuit Principaux;200;1
 S002;Stockage Plastiques;500;10
 S003;Stockage Plaques Aluminium;100;5
 S004;Stockage Servomoteurs;250;5

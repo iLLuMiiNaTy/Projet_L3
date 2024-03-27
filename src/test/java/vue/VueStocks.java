@@ -1,5 +1,7 @@
 package vue;
 
+import javax.swing.JOptionPane;
+
 import app.Element;
 import app.GestionnaireStock;
 import controleur.ControleurStocks;
@@ -94,9 +96,18 @@ public class VueStocks{
         
         Button validerAchat = new Button("Valider Achat");
         validerAchat.setOnAction(event ->{
-        	ControlStocks.augmenterQuantite(e, e.getQuantiteTemporaire());//Utilise la méthode du ControleurStocks pour ajouter la quantiteTemporaire au stock
-        	e.setQuantiteTemporaire(0);
-        	//quantite.setText("Quantité: " + e.getQuantite() + " " + e.getUniteDeMesure());
+        	System.out.println("\n_____DEBUT DU TEST_____\n");
+        	System.out.println("Bouton valider achat cliqué");
+			if (ControlStocks.verifierQuantiteDisponible(e, e.getQuantiteTemporaire())) {// Vérifie si le stockage total est suffisant pour l'achat
+				System.out.println("Quantité disponible");
+				ControlStocks.augmenterQuantite(e, e.getQuantiteTemporaire());//Utilise la méthode du ControleurStocks pour ajouter la quantiteTemporaire au stock
+	        	e.setQuantiteTemporaire(0);
+			} else {
+				System.out.println("Quantité non disponible");
+				JOptionPane.showMessageDialog(null,
+					      "** Erreur : Stockage insuffisant pour l'élément " + e.getNom() + " **",
+					      "Alerte", JOptionPane.ERROR_MESSAGE);
+			}
         });
        
 

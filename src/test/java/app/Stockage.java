@@ -12,5 +12,21 @@ public class Stockage {
         this.capacite = capacite;
         this.quantite = quantite;
 	}
+	
+	public String toString() {
+		return this.code + " " + this.nom + " " + this.capacite + " " + this.quantite;
+	}
+
+	public int getCapacite() {
+		return this.capacite;
+	}
+
+	public int getQuantite() {
+		return this.quantite;
+	}
+
+	public String getCode() {
+		return this.code;
+	}
 
 }
