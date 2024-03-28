@@ -5,7 +5,9 @@ import app.GestionnaireFinance;
 import app.GestionnaireProduction;
 import app.GestionnaireStock;
 import vue.VueStocks;
-
+/**
+ * Controleur de stocks
+ */
 public class ControleurStocks {
 	private GestionnaireStock GeStock;
 	/**

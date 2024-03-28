@@ -3,10 +3,24 @@ package app;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleFloatProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableBooleanValue;
 
+/**
+ * Classe Commande
+ * 
+ * Cette classe permet de créer des objets Commande
+ * 
+ * Cette classe contient les attributs suivants :
+ * - numeroCommande : numéro de la commande
+ * - client : nom du client
+ * - codeProduit : code du produit
+ * - produit : nom du produit
+ * - quantite : quantité de produit
+ * - realisable : indique si la commande est réalisable
+ * - statut : indique si la commande est en cours de traitement
+ * - simulee : indique si la commande est simulée
+ * 
+ */
 public class Commande {
 
 	private SimpleStringProperty numeroCommande;
@@ -18,6 +32,15 @@ public class Commande {
 	private SimpleBooleanProperty statut;
 	private SimpleBooleanProperty simulee;
 
+	/**
+	 * Constructeur de la classe Commande
+	 * 
+	 * @param numeroCommande
+	 * @param client
+	 * @param codeProduit
+	 * @param produit
+	 * @param quantite
+	 */
 	public Commande(String numeroCommande, String client, String codeProduit, String produit, float quantite) {
 		this.numeroCommande = new SimpleStringProperty(numeroCommande);
 		this.client = new SimpleStringProperty(client);
@@ -29,6 +52,9 @@ public class Commande {
 		this.simulee = new SimpleBooleanProperty(false);
 	}
 
+	/**
+	 * Méthode toString
+	 */
 	@Override
 	public String toString() {
 		String s = "";
@@ -45,6 +71,9 @@ public class Commande {
 		return s;
 	}
 
+	/**
+	 * Getters et Setters
+	 */
 	public final String getNumeroCommande() {
 		return numeroCommande.get();
 	}

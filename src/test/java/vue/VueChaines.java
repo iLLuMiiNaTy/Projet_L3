@@ -16,7 +16,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-
+/**
+ * Classe VueChaines permet de gérer l'affichage des chaines de production
+ */
 public class VueChaines {
 	
 	private HBox carrousel;

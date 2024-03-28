@@ -4,25 +4,46 @@ import java.util.Map;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
+/**
+ * Classe GestionnaireProduction
+ * 
+ * Cette classe permet de gérer les chaines de production
+ * Elle contient une liste de chaines de production
+ */
 public class GestionnaireProduction {
 
 	private static ObservableList<ChaineDeProduction> listeChaine = FXCollections.observableArrayList();
 	private static GestionnaireStock GeStock;
-	
+
+	/**
+	 * Constructeur de la classe GestionnaireProduction
+	 * 
+	 * @param GeStock
+	 */
 	public GestionnaireProduction(GestionnaireStock GeStock){
 		GestionnaireProduction.GeStock = GeStock;
 	}
-	
+	/**
+	 * Ajoute une chaine de production à la liste de chaine de production
+	 * @param c
+	 */
 	public void ajouterChaine(ChaineDeProduction c) {
 		listeChaine.add(c);
 	}
-	
+	/**
+	 * Renvoi la liste des chaines de production
+	 * @return
+	 */
 	public static ObservableList<ChaineDeProduction> getListeChaine(){
 		return listeChaine;
 	}
-	
-	// Methode pour retrouver une chaine de production basée sur un élément produit en sortie
+
+	/**
+	 * Renvoi une chaine de production par son nom
+	 * 
+	 * @param nom
+	 * @return
+	 */
 	public static ChaineDeProduction getChaineParElementSortie(Element elementSortie) {
 		for (ChaineDeProduction chaine : GestionnaireProduction.getListeChaine()) {
 			if (chaine.getElementsSortie().containsKey(elementSortie)) {
@@ -36,20 +57,21 @@ public class GestionnaireProduction {
 //Définir dynamiquement le niveau d'activation des 3 Chaînes de Production pour réaliser une certaine Commande
 //#########################################################################################################
 	
-	/*
-	 * - Calcul le niveau d'activation pour la commande passée en paramètre
-	 * - Récupère le produit final (produit demandé inscrit sur la commande)
-	 * - Appelle une méthode qui prend en paramètre 
-	 * ce même produit final et la quantité de ce produit demandé sur la commande
-	 */
+		/**
+		 * Calculer le niveau d'activation nécessaire pour produire une commande
+		 * 
+		 * @param commande
+		 */
 	public static void calculerNiveauActivationPourCommande(Commande commande) {
 	    Element produitFinal = GestionnaireStock.trouverElementParCode(commande.getCodeProduit());
 	    calculerNiveauActivation(produitFinal, commande.getQuantite());
 	}
 
-	/*
-	 * - Définit le niveau d'activation adéquat pour la chaîne qui s'occupe de l'élément passé en paramètre
-	 * selon la quantité indiquée
+	/**
+	 * Calculer le niveau d'activation nécessaire pour produire un élément
+	 * 
+	 * @param element
+	 * @param quantiteRequise
 	 */
 	private static void calculerNiveauActivation(Element element, float quantiteRequise) {
 	    ChaineDeProduction chaine = getChaineParElementSortie(element);//renvoie la chaine de production qui produit cet élément
@@ -71,7 +93,11 @@ public class GestionnaireProduction {
 	    	}
 	    }
 	}
-	
+	/**
+	 * Simulation du calcul du niveau d'activation nécessaire pour produire une commande
+	 * @param element
+	 * @param quantiteRequise
+	 */
 	private static void simulationCalculerNiveauActivation(Element element, float quantiteRequise) {
 	    ChaineDeProduction chaine = getChaineParElementSortie(element);//renvoie la chaine de production qui produit cet élément
 	    for (Map.Entry<Element, Float> entry : GestionnaireStock.stockElementCommande.entrySet()) {
@@ -94,26 +120,21 @@ public class GestionnaireProduction {
 	    	}
 	    }
 	}
-	
+
+	/**
+	 * Simulation de la production d'une commande
+	 * 
+	 * @param commande
+	 */
 	public static void simulerProduction(Commande commande) {
 		//calculerNiveauActivationPourCommande(commande);
 		GeStock.verifierStockCommande(commande);
 		simulationProduireCommande(commande);
 		}
-	
-	/*public static void produireTouteCommande() {
-		for (Commande commande : GestionnaireCommande.getListeCommande()) {
-			if (commande.getRealisable() && !commande.getStatut()) { // On regarde si la commande est marqué comme Réalisable avant d'entamer la production
-				commande.setStatut(true);// On passe le statut de la commande à true pour indiquer qu'elle est faite et ne sera donc pas à refaire
-				Element elementProduit = GestionnaireStock.trouverElementParCode(commande.getCodeProduit());
-			    // On suppose que ce produit final est produit par une chaîne principale. L'étape initiale.
-			    produire(elementProduit, commande.getQuantite());
-			    GeStock.retirerStock(elementProduit, commande.getQuantite());
-			    GestionnaireStock.actualiserStockElementCommande();
-			}
-		}
-	}*/
-	
+	/**
+	 * Simulation de la production d'une commande
+	 * @param commande
+	 */
 	public static void simulationProduireCommande(Commande commande) {
 		if (commande.getRealisable() && !commande.getSimulee()) { // On regarde si la commande est marqué comme Réalisable avant d'entamer la production
 			commande.setSimulee(true);;// On passe la valeur simulee de la commande à true pour indiquer qu'elle est faite et ne sera donc pas à refaire
@@ -128,7 +149,13 @@ public class GestionnaireProduction {
 			}
 		}
 	}
-	
+
+	/**
+	 * Simulation de la production d'un élément dans une quantitéé donnée
+	 * 
+	 * @param element
+	 * @param quantiteNecessaire
+	 */
 	public static void simulationProduire(Element element, float quantiteNecessaire) {
 		simulationCalculerNiveauActivation(element, quantiteNecessaire);
 		if (GeStock.simulationVerifierStockElement(element, quantiteNecessaire)) {
@@ -158,39 +185,6 @@ public class GestionnaireProduction {
 		    }
 		}
 	}
-	
-	/*private static void produire(Element element, float quantiteNecessaire) {
-		calculerNiveauActivation(element, quantiteNecessaire);
-		if (GeStock.verifierStockElement(element, quantiteNecessaire)) {
-			System.out.println("  Retirer stock (inter) : " + element + " | " + quantiteNecessaire);
-			GeStock.retirerStock(element, quantiteNecessaire);
-		} else {
-			ChaineDeProduction chainePrincipale = getChaineParElementSortie(element);
-		    if (chainePrincipale != null) {	        
-		        // Pour chaque élément d'entrée de cette chaîne, vérifier si un autre besoin de production est nécessaire
-		        for (Map.Entry<Element, Float> entree : chainePrincipale.getElementsEntree().entrySet()) {
-		            Element elementEntree = entree.getKey();
-		            float quantiteEntreeRequise = entree.getValue() * chainePrincipale.getActivation();
-		            ChaineDeProduction chaineSecondaire = getChaineParElementSortie(elementEntree);
-		            if (chaineSecondaire != null) {
-		                // Si l'élément d'entrée est également produit par une autre chaîne, produire cet élément en premier
-		                produire(elementEntree, quantiteEntreeRequise);
-		                System.out.println("  Retirer stock (if) : " + elementEntree + " | " + quantiteEntreeRequise);
-		                GeStock.retirerStock(elementEntree, quantiteEntreeRequise);
-		            } else {
-		                // Sinon, ça signifie que l'élément doit déjà être disponible en stock
-		            	System.out.println("  Retirer stock (else) : " + elementEntree + " | " + quantiteEntreeRequise);
-		                GeStock.retirerStock(elementEntree, quantiteEntreeRequise);
-		            }
-		        }
-
-		        // Après s'être assuré de la disponibilité des éléments d'entrée, produit l'élément de sortie
-		        float quantiteProduite = chainePrincipale.getElementsSortie().get(element) * chainePrincipale.getActivation();
-		        System.out.println("Ajouter stock : " + element + " | " + quantiteProduite);
-		        GeStock.ajouterStock(element, quantiteProduite);  
-		    }
-		}
-	}*/
 }
 
 

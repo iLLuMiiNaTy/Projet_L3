@@ -13,7 +13,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
-
+/**
+ * Classe VueCommandes permet de créer la vue des commandes
+ */
 public class VueCommandes {
     private TableView<Commande> table = new TableView<>();
     private ObservableList<Commande> listeCommande;

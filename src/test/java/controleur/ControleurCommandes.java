@@ -5,6 +5,9 @@ import app.GestionnaireCommande;
 import app.GestionnaireProduction;
 import vue.VueCommandes;
 
+/**
+ * Controleur des commandes
+ */
 public class ControleurCommandes {
     private GestionnaireCommande GeCom;
 

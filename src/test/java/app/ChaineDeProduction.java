@@ -2,11 +2,35 @@ package app;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import javafx.beans.property.FloatProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-
+/**
+ * Classe ChaineDeProduction
+ * 
+ * Cette classe permet de définir une chaine de production
+ * Elle contient les attributs suivants :
+ * - code : le code de la chaine de production
+ * - nom : le nom de la chaine de production
+ * - elementsEntree : les éléments nécessaires à l'entrée de la chaine de production
+ * - elementsSortie : les éléments produits à la sortie de la chaine de production
+ * - urlImage : l'url de l'image de la chaine de production
+ * - niveauActivation : le niveau d'activation de la chaine de production
+ * 
+ * Elle contient les méthodes suivantes :
+ * - Constructeur ChaineDeProduction
+ * - Méthode toString
+ * - Méthode activer
+ * - Méthode getCode
+ * - Méthode getNom
+ * - Méthode getElementsEntree
+ * - Méthode setElementsEntree
+ * - Méthode getElementsSortie
+ * - Méthode setElementsSortie
+ * - Méthode getActivation
+ * - Méthode setNiveauActivation
+ * - Méthode activationProperty
+ * - Méthode getUrlImage
+ */
 public class ChaineDeProduction {
     private String code;
     private String nom;

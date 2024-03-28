@@ -2,30 +2,25 @@ package app;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-
+/**
+ * Classe GestionnaireStock pour gérer les stocks des éléments
+ * Cette classe contient une liste d'éléments et une liste de stockage
+ * ainsi que liste permettant de simuler la production des commandes
+ */
 public class GestionnaireStock {
-
+	
     private static ObservableList<Element> listeElement = FXCollections.observableArrayList();
     static HashMap<Element, Float> stockElementCommande = new HashMap<>(); // HashMap pour vérifications de stocks au niveau des commandes
     private static ObservableList<Stockage> listeStockage = FXCollections.observableArrayList();
-    
-    /*public static void test() {
-    	for (Element e : listeElement) {
-    		System.out.println("Liste element : " + e);
-    	}
-    	for (Map.Entry<Element, Float> entry : stockElementCommande.entrySet()) {
-            Element element = entry.getKey();
-            Float quantite = entry.getValue();
-            System.out.println("HashMap element : " + element + " | " + quantite);
-    	}
-    }*/
-    
+
+	/**
+	 * Méthode pour récupérer la quantité des stocks après la production des commandes
+	 * et updater la liste d'éléments avec les nouvelles quantités
+	 * 
+	 */
     public static void actualiserStock() {
     	for (Map.Entry<Element, Float> entry : stockElementCommande.entrySet()) {
             Element e = entry.getKey();
@@ -35,7 +30,13 @@ public class GestionnaireStock {
             }
     	GestionnaireFinance.ajouterCommandeListeTransaction();
     }
-    
+
+	/**
+	 * Méthode trouver un élément par son code
+	 * 
+	 * @param code String
+	 * @return Element
+	 */
     public static Element trouverElementParCode(String code) {
         for (Element element : listeElement) {
             if (element.getCode().equals(code)) {
@@ -44,7 +45,13 @@ public class GestionnaireStock {
         }
         return null; // Si aucun élément correspondant n'est trouvé
     }
-    
+
+	/**
+	 * Méthode pour ajouter un élément à la liste d'éléments
+	 * 
+	 * @param element Element
+	 * @param quantite float
+	 */
     public void ajouterStock(Element element, float quantite) {
         // Vérifier si l'élément existe déjà dans la liste
         boolean existe = false;
@@ -70,7 +77,6 @@ public class GestionnaireStock {
             	}
             }
         }
-        
         // Si l'élément n'existe pas, l'ajouter à la liste
         if (!existe) {
             listeElement.add(element);
@@ -79,7 +85,10 @@ public class GestionnaireStock {
         GestionnaireFinance.nouvelAchat(element, quantite); // Ajoute un achat à ma liste de transactions
         simulationAjouterStock(element, quantite);//Ajouter dans la liste de simulation
     }
-    
+    /**
+     * Méthode pour ajouter un stockage à la liste de stockage
+     * @param stockage Stockage
+     */
     public void ajouterStockage(Stockage stockage) {
 		// Vérifier si le stockage existe déjà dans la liste
 		boolean existe = false;
@@ -95,7 +104,12 @@ public class GestionnaireStock {
 			listeStockage.add(stockage);
 		}
     }
-    
+
+	/**
+	 * Méthode simuler l'ajout d'un élément dans le stock
+	 * 
+	 * @param stockage Stockage
+	 */
     public void simulationAjouterStock(Element element, float quantite) {
     	// Vérifier si l'élément existe déjà dans la liste
         boolean existe = false;
@@ -114,7 +128,13 @@ public class GestionnaireStock {
             stockElementCommande.put(element, quantite);// Ajoute aussi les éléments dans une liste parallèle qui sert pour des vérifications, sans modifications de stocks réels
         }
     }
-    
+
+	/**
+	 * Méthode simuler la suppression d'un élément dans le stock
+	 * 
+	 * @param element  Element
+	 * @param quantite float
+	 */
     public void simulationRetirerStock(Element element, float quantiteNecessaire) {
     	for (Map.Entry<Element, Float> entry : stockElementCommande.entrySet()) {
             Element e = entry.getKey();
@@ -127,23 +147,19 @@ public class GestionnaireStock {
                 	String resultatFloatString = resultatFormate.replace(",", ".");
                 	float res = Float.parseFloat(resultatFloatString);
                 	stockElementCommande.put(element, res);
+                	}
     			}
-    		}
             }
-    }
+    	}
     
-    /*public boolean verifierStockElement(Element element, float quantite) {
-    	// Parcourir tous les éléments nécessaires pour vérifier si le stock est suffisant
-        for (Element e: listeElement) {
-        	if (e.equals(element)) {
-        		if (e.getQuantite() >= quantite) {
-        			return true;
-        		}
-        	}
-        }
-        return false;
-    }*/
-    
+		/**
+		 * Méthode pour simuler la vérification si la quantité d'un élément est suffisante dans le
+		 * stock
+		 * 
+		 * @param element  Element
+		 * @param quantite float
+		 * @return boolean
+		 */
     public boolean simulationVerifierStockElement(Element element, float quantite) {
     	// Parcourir tous les éléments nécessaires pour vérifier si le stock est suffisant
     	for (Map.Entry<Element, Float> entry : stockElementCommande.entrySet()) {
@@ -157,7 +173,14 @@ public class GestionnaireStock {
         }
         return false;
     }
-    
+
+	/**
+	 * Méthode pour vérifier si la quantité d'un élément est suffisante dans le
+	 * stock
+	 * 
+	 * @param commande Commande
+	 * @return boolean
+	 */
     public boolean verifierStockCommande(Commande commande) {
         // Trouver le produit fini correspondant au code produit de la commande
         Element produitFinal = trouverElementParCode(commande.getCodeProduit());
@@ -210,7 +233,13 @@ public class GestionnaireStock {
         }
         return false;
         }
-    
+
+		/**
+		 * Méthode pour vérifier si les stocks actuels sont suffisants 
+		 * 
+		 * @param commande Commande
+		 * @return boolean
+		 */
     public boolean verifierStockProduit(HashMap<Element, Float> stockNecessaire) {
     	// Parcourir tous les éléments nécessaires pour vérifier si le stock est suffisant
         for (Map.Entry<Element, Float> entree : stockNecessaire.entrySet()) {
@@ -223,7 +252,14 @@ public class GestionnaireStock {
         }
         return true;
     }    
-    
+    /**
+     * Méthode pour calculer les produits finaux nécessaires pour une quantité de produit donnée
+     * @param element
+     * @param quantite
+     * @param produitsFinauxNecessaires
+     * @param produitsIntermediairesNecessaires
+     * @param matieresPremieresNecessaires
+     */
     private void calculerProduitsFinauxNecessaires(Element element, float quantite, HashMap<Element, Float> produitsFinauxNecessaires, HashMap<Element, Float> produitsIntermediairesNecessaires, HashMap<Element, Float> matieresPremieresNecessaires) {
     	produitsFinauxNecessaires.merge(element, quantite, Float::sum);
         ChaineDeProduction chaine = GestionnaireProduction.getChaineParElementSortie(element); // Méthode pour obtenir la chaîne de production basée sur l'élément de sortie
@@ -239,7 +275,16 @@ public class GestionnaireStock {
         }
         return;
     }
-    
+
+	/**
+	 * Méthode pour calculer les produits intermédiaires nécessaires pour une
+	 * quantité de produit donnée
+	 * 
+	 * @param element
+	 * @param quantite
+	 * @param produitsIntermediairesNecessaires
+	 * @param matieresPremieresNecessaires
+	 */
     private void calculerProduitsIntermediairesNecessaires(Element element, float quantite, HashMap<Element, Float> produitsIntermediairesNecessaires, HashMap<Element, Float> matieresPremieresNecessaires) {
         ChaineDeProduction chaine = GestionnaireProduction.getChaineParElementSortie(element); // Méthode pour obtenir la chaîne de production basée sur l'élément de sortie
         if (chaine != null) {
@@ -258,12 +303,26 @@ public class GestionnaireStock {
         }
         return;
     }
-    
+
+	/**
+	 * Méthode pour calculer les matières premières nécessaires pour une quantité de
+	 * produit donnée
+	 * 
+	 * @param element
+	 * @param quantite
+	 * @param matieresPremieresNecessaires
+	 */
     private void calculerMatieresPremieresNecessaires(Element element, float quantite, HashMap<Element, Float> matieresPremieresNecessaires) {
     	matieresPremieresNecessaires.merge(element, quantite, Float::sum);
         return;
     }
-    
+
+	/**
+	 * Méthode pour vérifier si un élément est une matière première
+	 * 
+	 * @param element
+	 * @return boolean
+	 */
     public boolean estMatierePremiere(Element element) {
     	for (ChaineDeProduction chaine : GestionnaireProduction.getListeChaine()) {
     		if (chaine.getElementsSortie().containsKey(element)) {
@@ -273,11 +332,19 @@ public class GestionnaireStock {
     	//si l'élément n'est dans la sortie d'aucune chaîne, c'est une matière première
     	return true;
     }
-    
+    /**
+     * Méthode pour obtenir la liste d'éléments
+     * @return
+     */
     public static ObservableList<Element> getListeElement() { // Permet d'accéder à ma liste d'élément depuis n'importe où
         return listeElement;
     }
-
+    /**
+     * Méthode pour vérifier les quantité disponibles pour un élément
+     * @param e
+     * @param quantite
+     * @return
+     */
 	public boolean verifierQuantiteDisponible(Element e, int quantite) {
 		boolean valide = false;
 		// On cherche l'index du stockage correspondant à l'élément dans la liste de stockage

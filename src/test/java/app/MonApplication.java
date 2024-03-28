@@ -19,7 +19,10 @@ import vue.VueChaines;
 import vue.VueCommandes;
 import vue.VueStocks;
 
-
+/**
+ * Classe MonApplication permettant de lancer l'application
+ * 
+ */
 public class MonApplication extends Application {
 
     public static void main(String[] args) {

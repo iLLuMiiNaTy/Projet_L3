@@ -3,6 +3,9 @@ package controleur;
 import app.GestionnaireProduction;
 import vue.VueChaines;
 
+/**
+ * Controleur des chaines de production
+ */
 public class ControleurChaines {
 	private GestionnaireProduction GeProd;
 	/**

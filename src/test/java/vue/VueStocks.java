@@ -18,6 +18,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
+/**
+ * Classe VueStocks
+ * 
+ * Cette classe permet de créer la vue des stocks
+ */
 public class VueStocks{
     private HBox carrousel;
     private static ControleurStocks  ControlStocks;

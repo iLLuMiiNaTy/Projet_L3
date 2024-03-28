@@ -9,6 +9,16 @@ import java.util.HashMap;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+/**
+ * Classe FichierCSV
+ * 
+ * Cette classe permet de charger les éléments, les chaînes de production, les
+ * commandes et les stockages depuis les fichiers CSV correspondants.
+ * 
+ * Elle permet également de sauvegarder les éléments dans le fichier
+ * resultatFinancier.csv
+ * 
+ */
 public class FichierCSV {
 
 //#########################################################################################################
